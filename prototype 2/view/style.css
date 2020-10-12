@@ -1,0 +1,199 @@
+    /* common */
+    
+    body {
+        background-color: rgb(51,182,122);
+    }
+
+    h1, h2, h3, label {
+        color: white !important;
+    }
+    
+    header {
+        display: flex;
+    }
+
+    .header-logo {
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    .logos {
+        color: white !important;
+    }
+
+    header>a {
+        display: inline-block;
+        width: auto;
+        margin: 0 auto;
+    }
+
+
+    footer {
+        display: flex;
+        margin: auto;
+        justify-content: space-evenly;
+        position: sticky;
+        bottom: 0;
+        background-color: #8fc0a9;
+    }
+
+    .footer-menu-wrap {
+        display: flex;
+    }
+
+    /* Login */
+
+    #login {  
+        height: 100vh;
+        width: 100vw;
+    }
+
+    form {
+        text-align: center;
+    }
+    
+    .logo {
+        text-align: center;
+        margin: 0 auto;
+        width: auto;
+    }
+
+    .logo>img {
+        width: 80%;
+        margin: 30% auto 5% auto;
+    }
+    
+    .signUp {
+        display: block;
+        text-align: center;
+        width: auto;
+        margin: 0 auto;
+        text-decoration: underline;
+    }
+
+    /* Home */
+
+   #home {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+    #home > .latest-game {
+        margin: 5% auto;
+    }
+
+    .latest-game-info {
+        display: flex;
+        background-color: white;
+        height: auto;
+        text-align: center;
+    }
+
+    .latest-game-info-1 {
+        width: 40%;
+        color: black;
+        text-align: center;
+        margin: auto;
+    }
+
+    .latest-game-info-1>img {
+        height: auto;
+    }
+
+    .latest-game-info-1-modal {
+        width: 40%;
+    }
+
+    .latest-game-info-1-modal>p {
+        text-align: center;
+    }
+
+    .latest-game-info-2 {
+        width: 20%;
+    }
+
+    .modal-title {
+        color: black;
+        text-align: center;
+    }
+
+    .modal-info {
+        text-align: center;
+    }
+
+
+    /* Profile page */
+
+    #profile {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+     /* Registration */
+
+     #registration {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+
+    /* Buy a ticket */
+    #buyTicket {
+        color: white;
+        text-align: center;
+    }
+
+    /* favorite page */
+    #favorite {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+    .favorite-wrap {
+        background-color: rgb(0, 134, 74);
+    }
+
+    .favorite-wrap >p {
+        color: white;
+    }
+
+    /* Settings page */
+    #settings {
+        height: 70vh;
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+    /* team */
+
+    #team {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+    .teams-name {
+        font-size: 35px;
+    }
+
+    .teams-name>p {
+        margin-bottom: 0;
+    }
+
+    .teams {
+        color: white;
+        background-color: rgb(0, 134, 74);
+    }
+
+    .teams-logo-img {
+        width: 50%;
+        margin: auto;
+    }
+
+    .like-icon {
+        color: red;
+    }

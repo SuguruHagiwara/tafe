@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prototype</title>
+        <link rel="stylesheet" href="view/style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div id="login">
+            <div class="logo">
+                <img src="view/images/logo.png" alt="">
+            </div>
+            <form onsubmit="return login()">
+
+                <div class="uk-margin">
+                    <div class="uk-inline username">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input class="uk-input uk-form-large" type="text" id="login-uname" name="login-uname">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-inline password">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input class="uk-input uk-form-large" type="text" id="login-pword" name="login-pword">
+                    </div>
+                </div>
+                <input class="uk-button uk-align-center" type="submit" value="login">
+            </form>
+            <a href="view/pages/home.html" class="signUp" style="font-size: 40px;">Home</a>
+            <a href="view/pages/registration.html" class="signUp" style="font-size: 40px;">Sign Up</a>
+        </div>
+
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+    
+    </body>
+</html>
