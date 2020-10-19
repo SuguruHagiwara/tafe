@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Oct 19, 2020 at 04:39 AM
+-- Generation Time: Oct 19, 2020 at 04:49 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -121,7 +121,8 @@ CREATE TABLE `Log` (
   `IP` int(200) NOT NULL,
   `browser` varchar(200) NOT NULL,
   `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  `action` varchar(200) NOT NULL
+  `action` varchar(200) NOT NULL,
+  `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -268,6 +269,13 @@ ALTER TABLE `HomeTeam`
   ADD KEY `StadiumID` (`StadiumID`);
 
 --
+-- Indexes for table `Log`
+--
+ALTER TABLE `Log`
+  ADD PRIMARY KEY (`LogID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
 -- Indexes for table `MatchInformation`
 --
 ALTER TABLE `MatchInformation`
@@ -377,6 +385,12 @@ ALTER TABLE `FavoriteTeams`
 --
 ALTER TABLE `HomeTeam`
   ADD CONSTRAINT `hometeam_ibfk_1` FOREIGN KEY (`StadiumID`) REFERENCES `Stadium` (`StadiumID`);
+
+--
+-- Constraints for table `Log`
+--
+ALTER TABLE `Log`
+  ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `UserInformation` (`UserID`);
 
 --
 -- Constraints for table `MatchInformation`
