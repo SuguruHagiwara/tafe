@@ -1,6 +1,19 @@
 <?php
-require("db.php"); $db = new dbObj;
+require("db.php"); $dbconn = new dbObj;
 require("se.php"); $_SESSION['se'] = new sessObj;
+
+
+//sanitise data sent via POST and SEND
+function testInput($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    $data = htmlentities($data);
+    return $data;
+}
+
+
+
  if(!isset($_GET['action'])) {
     http_response_code(501);
     die;
@@ -9,19 +22,15 @@ require("se.php"); $_SESSION['se'] = new sessObj;
      case 'login':
         $objJSON = json_decode(file_get_contents("php://input"), true);
 
-        $loginUname = $objJSON['login-uname'];
-        $loginPword = $objJSON['login-pword'];
+        $loginUname = testInput($objJSON['login-uname']);
+        $loginPword = testInput($objJSON['login-pword']);
 
-        //if(isset($objJSON['login-uname']) && isset($objJSON['login-pword'])) {
-            if($db->checkUserAccount($loginUname, $loginPword) == true) {
-                header('location:view/pages/home.html');
+            if($dbconn->checkUserAccount($loginUname, $loginPword)) {
                 http_response_code(202);
             } else {
                 http_response_code(401);
             }
-        /*} else {
-            http_response_code(401);
-        }*/
+
         
      break;
      case 'logout':
@@ -53,7 +62,7 @@ require("se.php"); $_SESSION['se'] = new sessObj;
 
             //echo $obj2 = json_encode($obj);
 
-                if($db->likeTheTeam($likeobj)) {
+                if($dbconn->likeTheTeam($likeobj)) {
                     http_response_code(202);
                 } else {
                     http_response_code(406);
@@ -90,6 +99,8 @@ require("se.php"); $_SESSION['se'] = new sessObj;
         }
 
      break;*/
+
+     
      case 'ticket':
         if($_SESSION['se']->is_logged_in()) {
             $ticketobj = json_decode(file_get_contents("php://input"), true);
@@ -98,7 +109,7 @@ require("se.php"); $_SESSION['se'] = new sessObj;
             $seat = $ticketobj['seat'];
             $method = $ticketobj['method'];
             
-                if($db->buyTicket($amount, $seat, $method)) {
+                if($dbconn->buyTicket($amount, $seat, $method)) {
                     http_response_code(202);
                 } else {
                     http_response_code(406);
@@ -125,7 +136,7 @@ require("se.php"); $_SESSION['se'] = new sessObj;
             /*if(!isset($obj2['uname']) && !isset($obj2['pword']) && !isset($obj2['fname'])){
                 http_response_code(406);
             } else {*/
-                if($db->register($uname, $pword, $fname, $lname, $email, $phone, $address)) {
+                if($dbconn->register($uname, $pword, $fname, $lname, $email, $phone, $address)) {
                     http_response_code(202);
                 } else {
                     http_response_code(406);
