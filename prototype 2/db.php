@@ -14,7 +14,7 @@ class dbObj {
         $this->$dbconn = new PDO($dsn, $user, $password);
         $this->$dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->$dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        echo "Database is connected<br>";
+        echo "<h1>Database is connected</h1><br>";
     } catch(PDOException $e) {
         echo "<h1>Can't connect</h1>" .$e->getMessage();
         exit();
@@ -47,9 +47,10 @@ class dbObj {
         $row = $stmt->fetch();
             if(password_verify($loginPword, $row['Password'])){
                 // assign session variables
-                $_SESSION['User'] = $username;
+                $_SESSION['User'] = $loginUname;
                 $_SESSION['UserID'] = $row["UserID"];
                 $_SESSION['login'] = true;
+                $_SESSION['se']->is_logged_in();
                 return true;
             }
             else {
@@ -80,6 +81,8 @@ class dbObj {
     }
 
 
+
+    /*
     // Match information
 
 
@@ -111,6 +114,19 @@ class dbObj {
 
 
         $stmt = $this->$dbconn->prepare($sql);
+        return $stmt->execute();
+    }
+*/
+
+    // logging
+
+    function loggingDb($ip, $browser, $time, $action) {
+        $sql = "INSERT INTO Log(IP, browser, timestmap, action) VALUES (:ip, :browser, :timestamp, :action)";
+        $stmt = $this->$dbconn->prepare($sql);
+        $stmt->bindValue(':ip', $ip);
+        $stmt->bindValue(':browser', $browser);
+        $stmt->bindValue(':timestamp', $time);
+        $stmt->bindValue(':action', $action);
         return $stmt->execute();
     }
 

@@ -69,8 +69,8 @@ function info() {
 function login() {
 
     var login = {
-        'login-uname': document.getElementById("login-uname").value,
-        'login-pword': document.getElementById("login-pword").value,
+        'login-uname' : document.getElementById("login-uname").value,
+        'login-pword' : document.getElementById("login-pword").value,
     }
 
     var loginJSON = JSON.stringify(login);
@@ -81,6 +81,10 @@ function login() {
         credentails: 'include'
     }
     ).then(function(response) {
+        if(response.status === 200) {
+            document.getElementById("home").style.display = "block";
+            return;
+        }
         if(response.status === 401) {
             alert('Authentication failed', 'warning');
             return;
@@ -115,14 +119,14 @@ function reg() {
         'lname': document.getElementById("lname").value,
         'email': document.getElementById("email").value,
         'phone': document.getElementById("phone").value,
-        'address': document.getElementById("address").value,
+        'address': document.getElementById("address").value
     }
     
-    fetch('../../api.php?action=registration',
+    fetch('api.php?action=registration',
     {
         method: 'POST',
         body: JSON.stringify(reg),
-        mode: 'cors'
+        credentails: 'include'
     }
     ).then(function(response) {
         if(response.status === 200) {
@@ -150,7 +154,7 @@ function reg() {
 
 
 function logout1() {
-    fetch('../../api.php?action=logout')
+    fetch('api.php?action=logout')
     .then(function(response) {
         if(response.status === 200) {
             console.log('200');
@@ -183,8 +187,9 @@ function buyTicket() {
     fetch('../../api.php?action=ticket',
     {
         method: 'POST',
+        mode: 'cors',
         body: JSON.stringify(ticket),
-        mode: 'cors'
+        credentails: 'include'
     }
     ).then(function(response) {
         if(response.status === 200) {
@@ -238,7 +243,7 @@ fetch('../../api.php?action=team')
 
 /* ------------------------------------------------------ Like the team ----------------------------------------------------  */
 
-function like(this) {
+function like() {
 
     var team = this.value;
     var likedTeam = {
@@ -249,8 +254,9 @@ function like(this) {
     fetch('../../api.php?action=like',
     {
         method: 'POST',
+        mode: 'cors',
         body: teamJSON,
-        mode: 'cors'
+        credentails: 'include'
     }
     ).then(function(response) {
         if(response.status === 200) {
@@ -274,7 +280,7 @@ function like(this) {
 }
 
 
-document.getElementById('regForm').addEventListener('submit', function(e) {processForm()});
+//document.getElementById('regForm').addEventListener('submit', function(e) {processForm()});
 
 function processForm(evt) {
     evt.preventDefault();
@@ -315,8 +321,4 @@ function processForm(evt) {
 
 function populateAlert(msg) {
     alertbox.innerHTML = msg;
-}
-
-function animateElement(elem) {
-    
 }

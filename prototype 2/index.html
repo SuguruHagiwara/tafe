@@ -8,9 +8,44 @@
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
         <script src="script.js"></script>
+        <script src="view/js/js.js"></script>
     </head>
     <body>
-        <div id="login">
+
+        <!-- Header & Humburger Menu -->
+        <div id="app-head">
+            <a href="#offcanvas-nav" uk-toggle uk-icon="icon:menu; ratio:3" class="logos"></a>
+            <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+                <div class="uk-offcanvas-bar">
+                    <button class="uk-offcanvas-close" type="button" uk-close></button>
+            
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-text-large">Menu</li>
+                        <br>
+                        <br>
+                        <br>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'home')"><span class="uk-margin-small-right" uk-icon="icon: home"></span>HOME</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'profile')"><span class="uk-margin-small-right" uk-icon="icon: user"></span>PROFILE</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'team')"><span class="uk-margin-small-right" uk-icon="icon: lifesaver"></span>TEAM</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'favorite')"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'settings')"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>SETTINGS</a></li>
+                    </ul>
+            
+                </div>
+            </div>
+            <a class="displaycontent" onclick="openContent(event, 'home')"><img src="view/images/logo.png" class="header-logo uk-align-center" alt=""></a>
+            <a href="" uk-icon="icon:sign-out; ratio:3" class="logos" onclick="logout1()"></a>
+        </div>
+
+
+
+        <!-- login page -->
+
+        <div id="login" class="pagecontent">
             <div class="logo">
                 <img src="view/images/logo.png" alt="">
             </div>
@@ -29,10 +64,707 @@
                         <input class="uk-input uk-form-large" type="text" id="login-pword" name="login-pword">
                     </div>
                 </div>
-                <input class="uk-button uk-align-center" type="submit" value="login">
+                <input class="uk-button uk-align-center" id="login-button" type="submit" value="login">
             </form>
-            <a href="view/pages/home.html" class="signUp" style="font-size: 40px;">Home</a>
-            <a href="view/pages/registration.html" class="signUp" style="font-size: 40px;">Sign Up</a>
+            <a class="signUp displaycontent" onclick="openContent(event, 'home'); showNav()" style="font-size: 40px;">Home</a>
+            <a id="signup" class="signUp displaycontent" onclick="openContent(event, 'registration')" style="font-size: 40px;">Sign Up</a>
+        </div>
+
+
+
+        <!-- Registration page -->
+
+        <div id="registration" class="pagecontent">
+            <form class="uk-position-center" id="regForm" onsubmit="return reg()" name="regForm">
+                <div class="uk-margin">
+                    <label for="">User Name</label>
+                    <input class="uk-input" id="uname" type="text" name="uname" placeholder="User Name" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Password</label>
+                    <input class="uk-input" type="text" id="pword" name="pword" placeholder="Password" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="">First Name</label>
+                    <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Last Name</label>
+                    <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name">
+                </div>
+                <div class="uk-margin">
+                    <label for="">Email</label>
+                    <input class="uk-input" type="email" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="uk-margin">
+                    <label for="">Telephone</label>
+                    <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number">
+                </div>
+                <div class="uk-margin">
+                    <label for="">Home Address</label>
+                    <input class="uk-input" type="text" id="address" name="address" placeholder="Home address">
+                </div>
+                <input type="text" value="member" name="privilege" hidden>
+                <input class="uk-button uk-button-danger" type="submit" value="Register">
+            </form>
+        </div>
+
+
+        <!-- favorite page -->
+
+
+        <div id="favorite" class="pagecontent">
+            <h1>Your favorite Teams</h1>
+            <div class="favorite-wrap uk-margin-xlarge-top uk-margin-large-bottom">
+                <h2>Manchester United</h2>
+                <img src="view/images/logo/manU.png" alt="">
+                <h3 class="uk-margin-small-top">Stadium:</h3>
+                <p class="uk-margin-remove-top uk-margin-remove-bottom">Old Trafford</p>
+                <h3 class="uk-margin-small-top">Location:</h3>
+                <p class="uk-margin-remove-top uk-margin-remove-bottom">Sir Matt Busby Way, Old Trafford, Great Manchester, England</p>
+            </div>
+            <div class="favorite-wrap uk-margin-xlarge-top">
+                <h2>Liverpool</h2>
+                <img src="view/images/logo/liverpool.png" alt="">
+                <h3 class="uk-margin-small-top">Stadium:</h3>
+                <p class="uk-margin-remove-top uk-margin-remove-bottom">Anfield</p>
+                <h3 class="uk-margin-small-top">Location:</h3>
+                <p class="uk-margin-remove-top uk-margin-remove-bottom">Anfield, Liverpool, Merseyhside, England</p>
+            </div>
+        </div>
+
+
+
+
+        <!-- home page -->
+        <div id="home" class="pagecontent">
+            <h1 class="uk-align-center">Latest game</h1>
+               
+
+            <!-- Game 1 -->
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Manchester United</p>
+                        <img src="view/images/logo/manU.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Chelsea</p>
+                        <img src="view/images/logo/chelsea.jpg" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return info()">More Information...</button>
+                <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
+                <div id="modal-example" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Manchester United</p>
+                                <img src="view/images/logo/manU.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large uk-margin-large-bottom">Chelsea</p>
+                                <img class="uk-margin-top" src="view/images/logo/chelsea.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Old Trafford Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Sir Matt Busby Way, Old Trafford, Greater Manchester</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$1000</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                            <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger moreInfo" type="button">Buy a ticket</button></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Game 2 -->
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Liverpool</p>
+                        <img src="view/images/logo/liverpool.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Arsenal</p>
+                        <img src="view/images/logo/arsenal.png" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small moreInfo" type="button" uk-toggle="target: #modal-example1">More Information...</button>
+                <a class="displaycontent" onclick="openContent(event, 'ticket2')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
+                <div id="modal-example1" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Liverpool</p>
+                                <img src="view/images/logo/liverpool.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Arsenal</p>
+                                <img class="" src="view/images/logo/arsenal.png" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Anfield Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Anfield, Liverpool, Merseyhside, England</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$900</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                            <a class="displaycontent" onclick="openContent(event, 'ticket3')"><button class="uk-button uk-button-danger moreInfo" type="button">Buy a ticket</button></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Game 3 -->
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Manchester City</p>
+                        <img src="view/images/logo/manC.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Tottenham Hotspur</p>
+                        <img src="view/images/logo/tottenham.png" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small moreInfo" type="button" uk-toggle="target: #modal-example2">More Information...</button>
+                <a class="displaycontent" onclick="openContent(event, 'ticket3')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button" onclick="buyTicket(this.value)" value="tottenham">Buy a ticket</button></a>
+                <div id="modal-example2" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Manchester CIty</p>
+                                <img src="view/images/logo/manC.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Tottenham Hotspur</p>
+                                <img class="" src="view/images/logo/tottenham.png" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Etihad Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Etihad campus, Manchester, M11 3FF</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$800</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                            <a class="displaycontent" onclick="openContent(event, 'ticket3')"><button class="uk-button uk-button-danger moreInfo" type="button">Buy a ticket</button></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Profile page -->
+        <div id="profile" class="pagecontent">
+            <h1>Profile</h1>
+            <div class="proflie-wrap">
+                <img src="view/images/profile.png" alt="">
+                <div>
+                    <h2>First Name: </h2>
+                    <p>Suguru</p>
+                </div>
+                <div>
+                    <h2>Last Name: </h2>
+                    <p>Hagiwara</p>
+                </div>
+                <div>
+                    <h2>Email: </h2>
+                    <p>suguru.hagiwara@gmail.com</p>
+                </div>
+                <div>
+                    <h2>Phone: </h2>
+                    <p>0432-687-203</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Settings page -->
+
+        <div id="settings" class="pagecontent">
+            <h1>Settings</h1>
+            <div>
+                <h2>Change the background color</h2>
+                <label for="pink">Pink</label>
+                <input type="checkbox" name="bgColor" id="pink" value="pink" onchange="switchBg(this)">
+            </div>
+            <!--<div>
+                <h2>Change the logo</h2>
+                <label for=""></label>
+                <input type="checkbox" name="logo" id="logo" onchange="logoChange(this)">
+            </div>-->
+        </div>
+
+
+
+        <!-- Team page -->
+
+        <div id="team" class="uk-text-middle uk-text-bolder uk-align-center pagecontent">
+            <h1 class="">Teams</h1>
+
+            <!-- Man U -->
+            <div class="teams manU">
+                <div class="teams-name">
+                    <p>Manchester United</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/manU.png" alt="">
+                </div>
+                <div>
+                    <p>Stadium: Old Trafford</p>
+                </div>
+                <div>
+                    <p>Location: Sir Matt Busby Way, Old Trafford, Greater Manchester</p>
+                </div>
+                <div>
+                    <button value="manU" onclick="return like()"><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
+                </div>
+            </div>
+
+            <!-- Chelsea -->
+            <div class="teams chelsea">
+                <div class="teams-name">
+                    <p>Chelsea</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/chelsea.jpg" alt="">
+                </div>
+                <div>
+                    <p>Stamford Bridge</p>
+                </div>
+                <div>
+                    <p>Location: Fulham, London, SW6, England</p>
+                </div>
+                <div>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                </div>
+            </div>
+
+            <!-- Liverpool -->
+            <div class="teams liverpool">
+                <div class="teams-name">
+                    <p>Liverpool</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/liverpool.png" alt="">
+                </div>
+                <div>
+                    <p>Stadium: Anfield</p>
+                </div>
+                <div>
+                    <p>Location: Anfield, liverpool, merseyside, England</p>
+                </div>
+                <div>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Ticket page -->
+
+
+        <div id="ticket" class="pagecontent">
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Manchester United</p>
+                        <img src="view/images/logo/manU.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Chelsea</p>
+                        <img src="view/images/logo/chelsea.jpg" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example3">More Information...</button>
+                <div id="modal-example3" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Manchester United</p>
+                                <img src="view/images/logo/manU.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large uk-margin-large-bottom">Chelsea</p>
+                                <img class="uk-margin-top" src="view/images/logo/chelsea.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Old Trafford Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Sir Matt Busby Way, Old Trafford, Greater Manchester</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$1000</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                        </p>
+                    </div>
+                </div>
+                <div id="modal-example" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body uk-align-center">
+                        <h2 class="uk-modal-title">Ticket information</h2>
+                        <img src="view/images/gameInfo.png" alt="">
+                        <p class="">
+                            <button class="uk-button uk-button-default uk-modal-close uk-align-center" type="button">Back</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buy a ticket -->
+            <div id="buyTicket">
+                <h1 class="uk-align-center">Buy a ticket</h1>
+                <form class="uk-form-horizontal uk-margin-large uk-margin-medium-left uk-margin-medium-right" onsubmit="return buyTicket()">
+        
+                    
+                    <div class="uk-align-center">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Ticket amount</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select" id="amount" name="amount">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <a class="uk-button uk-button-secondary" href="#modal-center" uk-toggle>Choose your seat</a>
+        
+                    <div id="modal-center" class="uk-flex-top" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                    
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                    
+                            <img src="view/images/stadium.png" alt="">
+                            <img src="view/images/seat.jpeg" alt="">
+                        </div>
+                    </div>
+        
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Select your seat No.</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select" id="seat" name="seat">
+                                <option>Seat1</option>
+                                <option>Seat2</option>
+                                <option>Seat3</option>
+                                <option>Seat4</option>
+                                <option>Seat5</option>
+                                <option>Seat6</option>
+                                <option>Seat7</option>
+                                <option>Seat8</option>
+                                <option>Seat9</option>
+                                <option>Seat10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large">Select your payment method</label>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio" type="radio" name="radio" class="radio" id="radio" value="Paypal"> Paypal</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio" type="radio" name="radio" class="radio" id="radio" value="Apple Pay"> Apple Pay</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio" type="radio" name="radio" class="radio" id="radio" value="Credit Card"> Credit Card</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio" type="radio" name="radio" class="radio" id="radio" value="Others"> Others</label>
+                        </div>
+                    </div>
+                    <input type="submit" class="uk-button uk-button-danger uk-button-large" value="Purchase">
+                </form>
+            </div>
+        </div>
+
+
+
+        <!-- Ticket2 page -->
+
+        <div id="ticket2" class="pagecontent">
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Liverpool</p>
+                        <img src="view/images/logo/liverpool.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Arsenal</p>
+                        <img src="view/images/logo/arsenal.png" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example4">More Information...</button>
+                <div id="modal-example4" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Liverpool</p>
+                                <img src="view/images/logo/liverpool.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Arsenal</p>
+                                <img class="" src="view/images/logo/arsenal.png" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Anfield Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Anfield, Liverpool, Merseyhside, England</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$900</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buy a ticket -->
+            <div id="buyTicket">
+                <h1 class="uk-align-center">Buy a ticket</h1>
+                <form class="uk-form-horizontal uk-margin-large uk-margin-medium-left uk-margin-medium-right">
+        
+                    
+                    <div class="uk-align-center">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Ticket amount</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <a class="uk-button uk-button-secondary" href="#modal-center" uk-toggle>Choose your seat</a>
+        
+                    <div id="modal-center" class="uk-flex-top" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                    
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                    
+                            <img src="view/images/stadium.png" alt="">
+                            <img src="view/images/seat.jpeg" alt="">
+                        </div>
+                    </div>
+        
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Select your seat No.</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select">
+                                <option>Seat1</option>
+                                <option>Seat2</option>
+                                <option>Seat3</option>
+                                <option>Seat4</option>
+                                <option>Seat5</option>
+                                <option>Seat6</option>
+                                <option>Seat7</option>
+                                <option>Seat8</option>
+                                <option>Seat9</option>
+                                <option>Seat10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large">Select your payment method</label>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio1"> Paypal</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio2"> Apple Pay</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio3"> Credit Card</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio4"> Others</label>
+                        </div>
+                    </div>
+                    <button class="uk-button uk-button-danger  uk-button-large" type="button">Buy the ticket</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Ticket3 page -->
+
+        <div id="ticket3" class="pagecontent">
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div class="latest-game-info">
+                    <div class="latest-game-info-1">
+                        <p>Manchester City</p>
+                        <img src="view/images/logo/manC.png" alt="">
+                    </div>
+                    <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                    <div class="latest-game-info-1">
+                        <p>Tottenham Hotspur</p>
+                        <img src="view/images/logo/tottenham.png" alt="">
+                    </div>
+                </div>
+                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example5">More Information...</button>
+                <div id="modal-example5" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Manchester City</p>
+                                <img src="view/images/logo/manC.png" alt="">
+                            </div>
+                            <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                            <div class="latest-game-info-1-modal">
+                                <p class="uk-text-large">Tottenham Hotspur</p>
+                                <img class="" src="view/images/logo/tottenham.png" alt="">
+                            </div>
+                        </div>
+                        <div class="modal-info uk-margin-large-top">
+                            <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                            <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                            <p>Stadium:       <span class="uk-text-bold">Old Trafford Staduium</span></p>
+                            <p>Location:      <span class="uk-text-bold">Sir Matt Busby Way, Old Trafford, Greater Manchester</span></p>
+                            <p>Ticket Price:  <span class="uk-text-bold">$1000</span></p>
+                        </div>
+                        <p class="uk-text-center">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buy a ticket -->
+            <div id="buyTicket">
+                <h1 class="uk-align-center">Buy a ticket</h1>
+                <form class="uk-form-horizontal uk-margin-large uk-margin-medium-left uk-margin-medium-right">
+        
+                    
+                    <div class="uk-align-center">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Ticket amount</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <a class="uk-button uk-button-secondary" href="#modal-center" uk-toggle>Choose your seat</a>
+        
+                    <div id="modal-center" class="uk-flex-top" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                    
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                    
+                            <img src="view/images/stadium.png" alt="">
+                            <img src="view/images/seat.jpeg" alt="">
+                        </div>
+                    </div>
+        
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Select your seat No.</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="form-horizontal-select">
+                                <option>Seat1</option>
+                                <option>Seat2</option>
+                                <option>Seat3</option>
+                                <option>Seat4</option>
+                                <option>Seat5</option>
+                                <option>Seat6</option>
+                                <option>Seat7</option>
+                                <option>Seat8</option>
+                                <option>Seat9</option>
+                                <option>Seat10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large">Select your payment method</label>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio1"> Paypal</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio2"> Apple Pay</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio3"> Credit Card</label><br>
+                            <label class="uk-text-medium"><input class="uk-radio" type="radio" name="radio4"> Others</label>
+                        </div>
+                    </div>
+                    <button class="uk-button uk-button-danger  uk-button-large" type="button">Buy the ticket</button>
+                </form>
+            </div>  
+        </div>
+
+        <!-- footer -->
+
+        <div id="app-foot" class="uk-align-center">
+            <div class="footer-menu-wrap">
+                <div class="nav-overlay uk-navbar-left uk-width-1-4">
+
+                    <a class="uk-navbar-toggle logos" uk-icon="icon:search; ratio:3" uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            
+                </div>
+            
+                <div class="nav-overlay uk-navbar-right uk-flex-1" hidden>
+            
+                    <div class="uk-navbar-item uk-width-expand">
+                        <form class="uk-search uk-search-navbar uk-width-1-1">
+                            <input class="uk-search-input logos" type="search" placeholder="Search..." autofocus>
+                        </form>
+                    </div>
+            
+                    <a class="uk-navbar-toggle logos" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            
+                </div>
+                <div class="nav-overlay uk-navbar-right uk-width-3-4">
+    
+                    <ul class="uk-navbar-nav">
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile')" uk-icon="icon:user; ratio:3"></a></li>
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'favorite')" uk-icon="icon:heart; ratio:3"></a></li>
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'settings')" uk-icon="icon:cog; ratio:3"></a></li>
+                    </ul>
+            
+                </div>
+            </div>
         </div>
 
 
