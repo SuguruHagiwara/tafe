@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Oct 19, 2020 at 04:49 AM
+-- Generation Time: Oct 20, 2020 at 12:46 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -27,10 +27,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `AwayTeam` (
-  `AwayTeamID` int(10) NOT NULL,
+  `AwayTeamID` int(11) NOT NULL,
   `TeamName` text NOT NULL,
   `Players` int(100) NOT NULL,
-  `StadiumID` int(10) NOT NULL
+  `StadiumID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -66,9 +66,9 @@ INSERT INTO `AwayTeam` (`AwayTeamID`, `TeamName`, `Players`, `StadiumID`) VALUES
 --
 
 CREATE TABLE `FavoriteTeams` (
-  `FavoriteTeamID` int(10) NOT NULL,
+  `FavoriteTeamID` int(11) NOT NULL,
   `HomeTeamID` int(11) NOT NULL,
-  `UserID` int(10) NOT NULL
+  `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -78,10 +78,10 @@ CREATE TABLE `FavoriteTeams` (
 --
 
 CREATE TABLE `HomeTeam` (
-  `HomeTeamID` int(10) NOT NULL,
+  `HomeTeamID` int(11) NOT NULL,
   `TeamName` varchar(50) NOT NULL,
   `Players` int(100) NOT NULL,
-  `StadiumID` int(10) NOT NULL
+  `StadiumID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -117,7 +117,7 @@ INSERT INTO `HomeTeam` (`HomeTeamID`, `TeamName`, `Players`, `StadiumID`) VALUES
 --
 
 CREATE TABLE `Log` (
-  `LogID` int(10) NOT NULL,
+  `LogID` int(11) NOT NULL,
   `IP` int(200) NOT NULL,
   `browser` varchar(200) NOT NULL,
   `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
@@ -132,12 +132,12 @@ CREATE TABLE `Log` (
 --
 
 CREATE TABLE `MatchInformation` (
-  `MatchInfoID` int(10) NOT NULL,
+  `MatchInfoID` int(11) NOT NULL,
   `DateOfMatch` date NOT NULL,
   `HomeTeamID` int(11) NOT NULL,
   `AwayTeamID` int(11) NOT NULL,
   `Cost` varchar(50) NOT NULL,
-  `StadiumID` int(10) NOT NULL
+  `StadiumID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -156,10 +156,10 @@ INSERT INTO `MatchInformation` (`MatchInfoID`, `DateOfMatch`, `HomeTeamID`, `Awa
 --
 
 CREATE TABLE `ReservedSeat` (
-  `ReservedSeatID` int(10) NOT NULL,
-  `SeatNumber` int(10) NOT NULL,
+  `ReservedSeatID` int(11) NOT NULL,
+  `SeatNumber` int(11) NOT NULL,
   `PaymentMethod` varchar(50) NOT NULL,
-  `TicketInfoID` int(10) NOT NULL,
+  `TicketInfoID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -170,7 +170,7 @@ CREATE TABLE `ReservedSeat` (
 --
 
 CREATE TABLE `Stadium` (
-  `StadiumID` int(10) NOT NULL,
+  `StadiumID` int(11) NOT NULL,
   `StadiumName` text NOT NULL,
   `HomeTeam` text NOT NULL,
   `Location` varchar(100) NOT NULL
@@ -209,12 +209,12 @@ INSERT INTO `Stadium` (`StadiumID`, `StadiumName`, `HomeTeam`, `Location`) VALUE
 --
 
 CREATE TABLE `TicketInformation` (
-  `TicketInfoID` int(10) NOT NULL,
-  `PurchasedAmount` int(10) NOT NULL,
-  `SeatNumber` int(10) NOT NULL,
+  `TicketInfoID` int(11) NOT NULL,
+  `PurchasedAmount` int(11) NOT NULL,
+  `SeatNumber` int(11) NOT NULL,
   `PaymentMethod` varchar(20) NOT NULL,
-  `MatchInfoID` int(10) NOT NULL,
-  `UserID` int(10) NOT NULL
+  `MatchInfoID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -224,9 +224,9 @@ CREATE TABLE `TicketInformation` (
 --
 
 CREATE TABLE `UserInformation` (
-  `UserID` int(10) NOT NULL,
+  `UserID` int(11) NOT NULL,
   `UserName` text NOT NULL,
-  `Password` varchar(20) NOT NULL,
+  `Password` varchar(200) NOT NULL,
   `FirstName` text,
   `LastName` text,
   `Email` varchar(40) DEFAULT NULL,
@@ -240,7 +240,13 @@ CREATE TABLE `UserInformation` (
 
 INSERT INTO `UserInformation` (`UserID`, `UserName`, `Password`, `FirstName`, `LastName`, `Email`, `Phone`, `Address`) VALUES
 (1, 'Suguru', 'suguruhagiwara', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '0432687203', ''),
-(47, 'Suguru', 'suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld');
+(47, 'Suguru', 'suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(48, 'Suguru', 'Suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(49, 'Suguru', 'Suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(50, 'Suguru', 'Suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(51, 'Suguru', 'Suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(52, 'Suguru', 'Suguru', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld'),
+(53, 'Suguru', '$2y$10$7ERFuFkgArBdAK3VhXqQ8uEEkrHKk737TEoQjLwbBNE7fS0t18F1.', 'Suguru', 'Hagiwara', 'suguru.hagiwara@gmail.com', '432687203', '55a Sedgebrook st Springhill qld');
 
 --
 -- Indexes for dumped tables
@@ -258,8 +264,8 @@ ALTER TABLE `AwayTeam`
 --
 ALTER TABLE `FavoriteTeams`
   ADD PRIMARY KEY (`FavoriteTeamID`),
-  ADD KEY `UserID` (`UserID`),
-  ADD KEY `TeamID` (`HomeTeamID`);
+  ADD KEY `HomeTeamID` (`HomeTeamID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indexes for table `HomeTeam`
@@ -319,49 +325,49 @@ ALTER TABLE `UserInformation`
 -- AUTO_INCREMENT for table `AwayTeam`
 --
 ALTER TABLE `AwayTeam`
-  MODIFY `AwayTeamID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `AwayTeamID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `FavoriteTeams`
 --
 ALTER TABLE `FavoriteTeams`
-  MODIFY `FavoriteTeamID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `FavoriteTeamID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `HomeTeam`
 --
 ALTER TABLE `HomeTeam`
-  MODIFY `HomeTeamID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `HomeTeamID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `MatchInformation`
 --
 ALTER TABLE `MatchInformation`
-  MODIFY `MatchInfoID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `MatchInfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ReservedSeat`
 --
 ALTER TABLE `ReservedSeat`
-  MODIFY `ReservedSeatID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `ReservedSeatID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Stadium`
 --
 ALTER TABLE `Stadium`
-  MODIFY `StadiumID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `StadiumID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `TicketInformation`
 --
 ALTER TABLE `TicketInformation`
-  MODIFY `TicketInfoID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `TicketInfoID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `UserInformation`
 --
 ALTER TABLE `UserInformation`
-  MODIFY `UserID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
@@ -377,8 +383,8 @@ ALTER TABLE `AwayTeam`
 -- Constraints for table `FavoriteTeams`
 --
 ALTER TABLE `FavoriteTeams`
-  ADD CONSTRAINT `favoriteteams_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `UserInformation` (`UserID`),
-  ADD CONSTRAINT `favoriteteams_ibfk_2` FOREIGN KEY (`HomeTeamID`) REFERENCES `Team` (`HomeTeamID`);
+  ADD CONSTRAINT `favoriteteams_ibfk_2` FOREIGN KEY (`HomeTeamID`) REFERENCES `HomeTeam` (`HomeTeamID`),
+  ADD CONSTRAINT `favoriteteams_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `UserInformation` (`UserID`);
 
 --
 -- Constraints for table `HomeTeam`
