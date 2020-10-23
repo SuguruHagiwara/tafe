@@ -1,7 +1,7 @@
 <?php
 require("db.php"); $db = new DatabaseObject;
 require("se.php"); $_SESSION['se'] = new sessObj;
-session_start();
+//session_start();
 
 //sanitise data sent via POST and SEND
 function testInput($data){
@@ -17,11 +17,16 @@ function testInput($data){
     if(!isset($_SESSION['se'])) {
         $_SESSION['se'] = new sessObj;
     }
-    if ($_SESSION['se']->rate_limited() == true &&
-    $_SESSION['se']->domainLock() == true){
-        $db->loggingDb();
+    if (/*$_SESSION['se']->rate_limited() == true && */
+    $_SESSION['se']->domainLock() ==true){
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $time = $_SERVER['REQUEST_TIME'];
+            $browser = $_SERVER['HTTP_USER_AGENT'];
+            $action = $_SERVER['QUERY_STRING'];
+
+            $db->loggingDb($ip, $time, $browser, $action);
     } else {
-        throw new APIException("401, not authorised");
+        return false;
     }
     if(!isset($_GET['action'])) {
         http_response_code(501);
@@ -33,7 +38,7 @@ function testInput($data){
        
                $loginUname = testInput($objJSON['login-uname']);
                $loginPword = testInput($objJSON['login-pword']);
-       
+        print_r($objJSON);
                    if($db->checkUserAccount($loginUname, $loginPword)) {
                        http_response_code(202);
                    } else {
@@ -101,8 +106,26 @@ function testInput($data){
                } else {
                    http_response_code(401);
                }
+               case 'information':
+                if($_SESSION['se']->is_logged_in()) {
+                    $info = json_decode(file_get_contents("php://input"), true);
+                    
+                    $gameNum = $info['game'];
+                    
+                        if($db->getGameInfo($gameNum)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                } else {
+                    http_response_code(401);
+                }
             }
         }
+
+
+
+
 ?>
 
  

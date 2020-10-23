@@ -71,7 +71,10 @@ function reg() {
 
 
 function logout1() {
-    fetch('api.php?action=logout')
+    fetch('api.php?action=logout'), {
+        method: 'POST',
+        credentails: 'include'
+    }
     .then(function(response) {
         if(response.status === 202) {
             console.log('202');
@@ -125,43 +128,27 @@ function buyTicket() {
 
 
 
-function processForm(evt) {
-    evt.preventDefault();
-    var validatedArray = Array();
-    alertbox.innderHTML = '';
-    for(var loop = 0;loop < evt.srcElement.length;loop++) {
-        evt.srcElement[loop].setCustomValidity('');
-        if(evt.srcElement[loop].hasAttribute('required')) {
-            if(evt.srcElement[loop].value.length > 0) {
-                if(evt.srcElement[loop].checkValidity()) {
-                    evt.srcElement[loop].setCustomValidity('');
-                    validatedArray.push({type: evt.srcElement[loop].type,
-                                        name: evt.srcElement[loop].name,
-                                        value: evt.srcElement[loop].value});
-                } else {
-                    evt.srcElement[loop].setCustomValidity(evt.srcElement[loop].title);
-                    alertbox.innerHTML = evt.srcElement[loop].title;
-                    validatedArray = Array(); // crush the array
-                    break;
-                }
-                } else {
-                    validatedArray = Array();
-                    break;
-                }
-        } else { // field not required.... Should we still not validate?
-                validatedArray.push({type: evt.srcElement[loop].type,
-                                    name: evt.srcElement[loop].name,
-                                    value: evt.srcElement[loop].value});
-        }
-    }
-    if(validatedArray.length === 0) {
-        console.log('err');
-    } else {
-        console.log(validatedArray);
-        // further processing... but success!
-    }
-}
+function getInfo(info) {
 
-function populateAlert(msg) {
-    alertbox.innerHTML = msg;
-}
+    var information = {
+        'game': info
+    }
+    fetch('api.php?action=information',
+    {
+        method: 'POST',
+        body: JSON.stringify(information),
+        credentails: 'include'
+    }
+    ).then(function(response) {
+        if(response.status === 202) {
+            response.json().then(function(data) {
+                document.getElementById("dis").innerHTML = "Hello";
+            })
+            
+            return true;
+        } else {
+            return false;
+        }
+    });
+    return false;
+    }

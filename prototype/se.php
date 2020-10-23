@@ -34,78 +34,69 @@ class sessObj {
         }
     }
 
-    // logging 
-
-    function logging() {
-
-        /*if(!isset($_SESSION['se'])) {
-            $_SESSION['se'] = new sessObj();
-        }
-        if($_SESSION['se']->session_ok() == true) {*/
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $time = $_SERVER['REQUEST_TIME'];
-            $browser = $_SERVER['HTTP_USER_AGENT'];
-            $action = $_SERVER['PHP_SELF'];
-            $userID = $_SESSION['UserID'];
-
-            $db->loggingDb($ip, $time, $browser, $action, $userID);
-            return true;
-        }
-    
-    } /*else {
-        return false;
-    }*/
-
-   // }
 
 
     //rate limiting per second
 
-    function rate_limited(){    
 
-        if (isset($_SESSION['LAST_CALL'])) {
-          $last = strtotime($_SESSION['LAST_CALL']);
-          $curr = strtotime(date());
-          $sec =  abs($last - $curr);
+    function rate_limited(){   
+        
+        date_default_timezone_set('Asia/Tokyo');
+
+    
+/*
+        $_SESSION['last_session_request'] = time();
+        
+        if($_SESSION['last_session_request'] > time() - 1){
+        die();
+        }
+        
+        echo $_SESSION['last_session_request'];
+        
+*/
+
+    
+        if (isset($_SERVER['REQUEST_TIME'])) {
+            $requestTime = $_SERVER['REQUEST_TIME'];
+            $currentTime = strtotime("now");
+          $sec =  abs($requestTime - $currentTime);
+          echo $sec;
           if ($sec <= 1) {
-            $data = 'Rate Limit Exceeded';  // rate limit
-            header('Content-Type: application/json');
-            die (json_encode($data));        
+            die ("Rate Limit Exceeded");        
+          } else {
+              return true;
           }
         }
-        $_SESSION['LAST_CALL'] = date();
        
         // normal usage
-        $data = "Data Returned from API";
+        /*$data = "Data Returned from API";
         header('Content-Type: application/json');
         die(json_encode($data));
+        return true;*/
     }
 
 
     //rate limiting 1000 in a 24 hour
 
-/*
-A request to happen more than once per second. Throw an error if this happens
-No more than 1000 requests per day. Test with maybe 10 requests per day first, so that you're not refreshing too often
-In the first instance, we have to account for the time every request came in, then compare the current request with the last time one came in.
 
-For part two, we need to log an array of all the requests made in the last 24 hours. Parse and rewrite this array every request to count the total elements.
-
-*/
 
 
     //domain lock
 
     function domainLock() {
-        $referer = $_SERVER['HTTP_REFERER'];
-        $url = parse_url($referer);
-        if($url['host'] == ""){
+
+        //print_r($_SERVER);
+        //$referer = $_SERVER['HTTP_REFERER'];
+        //$url = parse_url($referer);
+        //echo $url;
+        /*if($url == ""){
             die("not available url");
+        } else {*/
+            return true;
         }
-     }
+    // }
 
-
-
+    } 
     
 
 

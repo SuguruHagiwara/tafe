@@ -78,11 +78,25 @@
             <form class="uk-position-center" id="regForm" name="regForm">
                 <div class="uk-margin">
                     <label for="">User Name</label>
-                    <input class="uk-input" id="uname" type="text" name="uname" placeholder="User Name" required>
+                    <input class="uk-input" 
+                           id="uname"
+                           type="text"
+                           name="uname"
+                           pattern="[A-Z]{1,}"
+                           title="Username must have at least one uppercase letter"
+                           placeholder="User Name"
+                           required>
                 </div>
                 <div class="uk-margin">
                     <label for="">Password</label>
-                    <input class="uk-input" type="text" id="pword" name="pword" placeholder="Password" required>
+                    <input class="uk-input"
+                           type="text"
+                           id="pword"
+                           name="pword"
+                           pattern="[A-Z]{1,}"
+                           title="Password must have at least one uppercase letter"
+                           placeholder="Password"
+                           required>
                 </div>
                 <div class="uk-margin">
                     <label for="">First Name</label>
@@ -105,7 +119,7 @@
                     <input class="uk-input" type="text" id="address" name="address" placeholder="Home address">
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
-                <button class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" >submit</button>
+                <input class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" onsubmit="return checkRequired()" >
             </form>
         </div>
 
@@ -154,11 +168,12 @@
                         <img src="view/images/logo/chelsea.jpg" alt="">
                     </div>
                 </div>
-                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return info()">More Information...</button>
+                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return getInfo()">More Information...</button>
                 <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
                 <div id="modal-example" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div id="dis"></div>
                         <div class="latest-game-info">
                             <div class="latest-game-info-1-modal">
                                 <p class="uk-text-large">Manchester United</p>
@@ -393,7 +408,7 @@
                         <img src="view/images/logo/chelsea.jpg" alt="">
                     </div>
                 </div>
-                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example3">More Information...</button>
+                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example3" value="1" onclick="getInfo(this)">More Information...</button>
                 <div id="modal-example3" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <p class="uk-modal-title modal-title">Ticket information</p>

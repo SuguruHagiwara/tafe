@@ -57,3 +57,54 @@ function showNav() {
     document.getElementById("app-head").style.display = "flex";
     document.getElementById("app-foot").style.display = "flex";
 }
+
+
+function checkRequired() {
+    let x = document.getElementById("uname").value;
+    let y = document.getElementById("pword").value;
+    if(x == "" || y == "") {
+        return false;
+    }
+}
+
+
+function processForm(evt) {
+    evt.preventDefault();
+    var validatedArray = Array();
+    alertbox.innderHTML = '';
+    for(var loop = 0;loop < evt.srcElement.length;loop++) {
+        evt.srcElement[loop].setCustomValidity('');
+        if(evt.srcElement[loop].hasAttribute('required')) {
+            if(evt.srcElement[loop].value.length > 0) {
+                if(evt.srcElement[loop].checkValidity()) {
+                    evt.srcElement[loop].setCustomValidity('');
+                    validatedArray.push({type: evt.srcElement[loop].type,
+                                        name: evt.srcElement[loop].name,
+                                        value: evt.srcElement[loop].value});
+                } else {
+                    evt.srcElement[loop].setCustomValidity(evt.srcElement[loop].title);
+                    alertbox.innerHTML = evt.srcElement[loop].title;
+                    validatedArray = Array(); // crush the array
+                    break;
+                }
+                } else {
+                    validatedArray = Array();
+                    break;
+                }
+        } else { // field not required.... Should we still not validate?
+                validatedArray.push({type: evt.srcElement[loop].type,
+                                    name: evt.srcElement[loop].name,
+                                    value: evt.srcElement[loop].value});
+        }
+    }
+    if(validatedArray.length === 0) {
+        console.log('err');
+    } else {
+        console.log(validatedArray);
+        // further processing... but success!
+    }
+}
+
+function populateAlert(msg) {
+    alertbox.innerHTML = msg;
+}

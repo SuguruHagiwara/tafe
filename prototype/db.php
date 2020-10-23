@@ -28,7 +28,7 @@ class DatabaseObject {
         $stmt->bindValue(':username', $loginUname);
         $stmt->execute();
         $row = $stmt->fetch();
-        print_r($row);
+        //print_r($row);
         if(password_verify($loginPword, $row['Password'])) {
                 // assign session variables
                 $_SESSION['User'] = $loginUname;
@@ -87,16 +87,24 @@ class DatabaseObject {
 
     // logging
 
-    function loggingDb($ip, $browser, $time, $action, $userID) {
-        $sql = "INSERT INTO Log(IP, browser, timestmap, action, UserID) VALUES (:ip, :browser, :timestamp, :action, :userID)";
+    function loggingDb($ip, $browser, $time, $action) {
+        $sql = "INSERT INTO Log(IP, browser, timestamp, action) VALUES (:ip, :browser, :timestamp, :action)";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':ip', $ip);
         $stmt->bindValue(':browser', $browser);
         $stmt->bindValue(':timestamp', $time);
         $stmt->bindValue(':action', $action);
-        $stmt->bindValue(':userID', $userID);
+        echo "new row inserted";
         return $stmt->execute();
     }
+
+
+    function getGameInfo($gameNum) {
+        $sql = "SELECT MatchInfoID, DateOfMatch, HomeTeam.TeamName, AwayTeam.TeamName, Cost, Stadium.StadiumName FROM MatchInformation JOIN HomeTeam ON MatchInformation.HomeTeamID = HomeTeam.HomeTeamID JOIN AwayTeam ON MatchInformation.AwayTeamID = AwayTeam.AwayTeamID JOIN Stadium ON MatchInformation.StadiumID = Stadium.StadiumID WHERE MatchInfoID = :matchinfoID";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindValue(':matchinfoID', $gameNum);
+        return $stmt->execute();
+    }å
 
    
 }
