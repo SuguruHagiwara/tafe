@@ -1,7 +1,7 @@
 window.onload = function () {
     if(localStorage.getItem('bg') !== null) {
-        if(localStorage.getItem('bg') === 'rgb(255, 136, 160)') {
-            document.body.style.backgroundColor = 'rgb(255, 136, 160)';
+        if(localStorage.getItem('bg') === 'black') {
+            document.body.style.backgroundColor = 'black';
             pink.checked = true;
         }
         if(localStorage.getItem('bg') === 'rgb(51,182,122)') {
@@ -13,8 +13,8 @@ window.onload = function () {
 
 function switchBg(x) {
     if(x.checked == true) {
-        document.body.style.backgroundColor = 'rgb(255, 136, 160)';
-        localStorage.setItem('bg', 'rgb(255, 136, 160)');
+        document.body.style.backgroundColor = 'black';
+        localStorage.setItem('bg', 'black');
     } else {
         document.body.style.backgroundColor = 'rgb(51,182,122)';
         localStorage.setItem('bg', 'rgb(51,182,122)');
@@ -60,51 +60,31 @@ function showNav() {
 
 
 function checkRequired() {
-    let x = document.getElementById("uname").value;
-    let y = document.getElementById("pword").value;
-    if(x == "" || y == "") {
+    let uname = document.getElementById("uname").value;
+    let pword = document.getElementById("pword").value;
+    if(uname == "") {
+        alert("Username must be filled out");
         return false;
     }
+    if(pword == "") {
+        alert("Password must be filled out");
+        return false;
+    }
+    
+    return true;
 }
 
-
-function processForm(evt) {
-    evt.preventDefault();
-    var validatedArray = Array();
-    alertbox.innderHTML = '';
-    for(var loop = 0;loop < evt.srcElement.length;loop++) {
-        evt.srcElement[loop].setCustomValidity('');
-        if(evt.srcElement[loop].hasAttribute('required')) {
-            if(evt.srcElement[loop].value.length > 0) {
-                if(evt.srcElement[loop].checkValidity()) {
-                    evt.srcElement[loop].setCustomValidity('');
-                    validatedArray.push({type: evt.srcElement[loop].type,
-                                        name: evt.srcElement[loop].name,
-                                        value: evt.srcElement[loop].value});
-                } else {
-                    evt.srcElement[loop].setCustomValidity(evt.srcElement[loop].title);
-                    alertbox.innerHTML = evt.srcElement[loop].title;
-                    validatedArray = Array(); // crush the array
-                    break;
-                }
-                } else {
-                    validatedArray = Array();
-                    break;
-                }
-        } else { // field not required.... Should we still not validate?
-                validatedArray.push({type: evt.srcElement[loop].type,
-                                    name: evt.srcElement[loop].name,
-                                    value: evt.srcElement[loop].value});
-        }
-    }
-    if(validatedArray.length === 0) {
-        console.log('err');
-    } else {
-        console.log(validatedArray);
-        // further processing... but success!
+function checkInvalid() {
+    
+    var uname = uname;
+    /*var pword = pword.value
+    var fname = fname.value
+    var lname = lname.value
+    var email = email.value
+    var phone = phone.value
+    var address = address.value*/
+    if(uname.checkValidity() == false) {
+        uname.style.backgroundColor = "crimson";
     }
 }
 
-function populateAlert(msg) {
-    alertbox.innerHTML = msg;
-}

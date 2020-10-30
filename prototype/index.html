@@ -77,7 +77,7 @@
         <div id="registration" class="pagecontent">
             <form class="uk-position-center" id="regForm" name="regForm">
                 <div class="uk-margin">
-                    <label for="">User Name</label>
+                    <label for="">*User Name</label>
                     <input class="uk-input" 
                            id="uname"
                            type="text"
@@ -85,10 +85,11 @@
                            pattern="[A-Z]{1,}"
                            title="Username must have at least one uppercase letter"
                            placeholder="User Name"
+                           onblur="checkInvalid()"
                            required>
                 </div>
                 <div class="uk-margin">
-                    <label for="">Password</label>
+                    <label for="">*Password</label>
                     <input class="uk-input"
                            type="text"
                            id="pword"
@@ -100,7 +101,7 @@
                 </div>
                 <div class="uk-margin">
                     <label for="">First Name</label>
-                    <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name" required>
+                    <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name">
                 </div>
                 <div class="uk-margin">
                     <label for="">Last Name</label>
@@ -108,7 +109,7 @@
                 </div>
                 <div class="uk-margin">
                     <label for="">Email</label>
-                    <input class="uk-input" type="email" id="email" name="email" placeholder="Email">
+                    <input class="uk-input" type="email" id="email" name="email" placeholder="Email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
                 </div>
                 <div class="uk-margin">
                     <label for="">Telephone</label>
@@ -312,6 +313,39 @@
                     <p>0432-687-203</p>
                 </div>
             </div>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="openContent(event, 'profile-edit');">Edit User Account</button>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Delete User Account" onclick="return deleteUser(); openContent(event, 'login');">Delete User Account</button>
+        </div>
+
+
+        <!-- Profile edit page -->
+        <div id="profile-edit" class="pagecontent">
+            <h1>Profile Edit</h1>
+            <div class="proflie-wrap">
+                <form>
+                    <div>
+                        <h2>First Name: </h2>
+                        <input type="text" name="editFName" id="editFName">
+                    </div>
+                    <div>
+                        <h2>Last Name: </h2>
+                        <input type="text" name="editLName" id="editLName">
+                    </div>
+                    <div>
+                        <h2>Email: </h2>
+                        <input type="email" name="editEmail" id="editEmail">
+                    </div>
+                    <div>
+                        <h2>Phone: </h2>
+                        <input type="tel" name="editPhone" id="editPhone">
+                    </div>
+                    <div>
+                        <h2>Address: </h2>
+                        <input type="text" name="editAddress" id="editAddress">
+                    </div>
+                    <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="return editUser();">Edit</button>
+                </form> 
+            </div>
         </div>
 
 
@@ -321,7 +355,7 @@
             <h1>Settings</h1>
             <div>
                 <h2>Change the background color</h2>
-                <label for="pink">Pink</label>
+                <label for="pink">Dark mode</label>
                 <input type="checkbox" name="bgColor" id="pink" value="pink" onchange="switchBg(this)">
             </div>
         </div>
@@ -348,7 +382,7 @@
                     <p>Location: Sir Matt Busby Way, Old Trafford, Greater Manchester</p>
                 </div>
                 <div>
-                    <button value="manU" onclick="return like()"><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
                 </div>
             </div>
 
@@ -389,6 +423,64 @@
                     <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
                 </div>
             </div>
+
+            <!-- Man C -->
+            <div class="teams manc">
+                <div class="teams-name">
+                    <p>Manchester City</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/manC.png" alt="">
+                </div>
+                <div>
+                    <p>Stadium: Anfield</p>
+                </div>
+                <div>
+                    <p>Location: Anfield, liverpool, merseyside, England</p>
+                </div>
+                <div>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                </div>
+            </div>
+
+            <!-- Arsenal -->
+            <div class="teams arsenal">
+                <div class="teams-name">
+                    <p>Arsenal</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/arsenal.png" alt="">
+                </div>
+                <div>
+                    <p>Stadium: Anfield</p>
+                </div>
+                <div>
+                    <p>Location: Anfield, liverpool, merseyside, England</p>
+                </div>
+                <div>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                </div>
+            </div>
+
+            <!-- Tottenham -->
+            <div class="teams tottenham">
+                <div class="teams-name">
+                    <p>Tottenham</p>
+                </div>
+                <div class="teams-logo-img">
+                    <img src="view/images/logo/tottenham.png" alt="">
+                </div>
+                <div>
+                    <p>Stadium: Anfield</p>
+                </div>
+                <div>
+                    <p>Location: Anfield, liverpool, merseyside, England</p>
+                </div>
+                <div>
+                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                </div>
+            </div>
+
         </div>
 
 
@@ -408,7 +500,7 @@
                         <img src="view/images/logo/chelsea.jpg" alt="">
                     </div>
                 </div>
-                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example3" value="1" onclick="getInfo(this)">More Information...</button>
+                <button class="uk-button uk-button-primary uk-button-small uk-align-center uk-margin-small-top" type="button" uk-toggle="target: #modal-example3" value="1" onclick="getInfo(this);">More Information...</button>
                 <div id="modal-example3" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <p class="uk-modal-title modal-title">Ticket information</p>
@@ -487,16 +579,16 @@
                         <label class="uk-form-label uk-text-large" for="form-horizontal-select">Select your seat No.</label>
                         <div class="uk-form-controls uk-width-small uk-align-center">
                             <select class="uk-select" id="seat" name="seat">
-                                <option>Seat1</option>
-                                <option>Seat2</option>
-                                <option>Seat3</option>
-                                <option>Seat4</option>
-                                <option>Seat5</option>
-                                <option>Seat6</option>
-                                <option>Seat7</option>
-                                <option>Seat8</option>
-                                <option>Seat9</option>
-                                <option>Seat10</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
                             </select>
                         </div>
                     </div>
@@ -769,7 +861,7 @@
                 <div class="nav-overlay uk-navbar-right uk-width-3-4">
     
                     <ul class="uk-navbar-nav">
-                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile')" uk-icon="icon:user; ratio:3"></a></li>
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile'); " uk-icon="icon:user; ratio:3"></a></li>
                         <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'favorite')" uk-icon="icon:heart; ratio:3"></a></li>
                         <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'settings')" uk-icon="icon:cog; ratio:3"></a></li>
                     </ul>

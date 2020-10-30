@@ -11,11 +11,12 @@ function login1() {
 
     fetch('api.php?action=login',
     {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(login),
-        credentails: 'include'
+        credentails: 'same-origin'
     }
     ).then(function(response) {
+        response.json()
         if(response.status === 401) {
             alert('Authentication failed', 'warning');
             return;
@@ -52,14 +53,18 @@ function reg() {
         credentails: 'include'
     }
     ).then(function(response) {
+        response.json()
         if(response.status === 202) {
-            console.log('202')
-            alert("You are now registered!")
-            document.getElementById("login").style.display = "block";
-            document.getElementById("registration").style.display = "none";
-            return;
+            if(checkRequired() == true) {
+                alert("You are now registered!")
+                document.getElementById("login").style.display = "block";
+                document.getElementById("registration").style.display = "none";
+                return;
+            } 
         } else {
-            console.log("failed to register");
+            response.json().then(function(data) {
+                alert("registration error");
+            })
         }
     });
     return false;
@@ -73,15 +78,18 @@ function reg() {
 function logout1() {
     fetch('api.php?action=logout'), {
         method: 'POST',
-        credentails: 'include'
+        credentails: 'same-origin'
     }
     .then(function(response) {
+        response.json()
         if(response.status === 202) {
             console.log('202');
             window.location.assign("index.html")
             return;
         } else {
-            console.log("fail to logout!")
+            response.json().then(function(data) {
+                alert("logging out error");
+            })
             return false;
         }
     })
@@ -112,20 +120,27 @@ function buyTicket() {
     {
         method: 'POST',
         body: JSON.stringify(ticket),
-        credentails: 'include'
+        credentails: 'same-origin'
     }
     ).then(function(response) {
+        response.json()
         if(response.status === 202) {
-            console.log('202')
-            alert("Purchased!")
+            console.log('202');
+            document.getElementById("home").style.display = "block";
+            document.getElementById("ticket").style.display = "none";
+            alert("Purchased!");
             return;
         } else {
-            console.log("couldn't buy a ticket")
+            response.json().then(function(data) {
+                alert("purchasing error");
+            })
         }
     });
     return false;
     }
 
+
+/* ------------------------------------------------------ Get information ----------------------------------------------------  */
 
 
 function getInfo(info) {
@@ -137,9 +152,10 @@ function getInfo(info) {
     {
         method: 'POST',
         body: JSON.stringify(information),
-        credentails: 'include'
+        credentails: 'same-origin'
     }
     ).then(function(response) {
+        response.json()
         if(response.status === 202) {
             response.json().then(function(data) {
                 document.getElementById("dis").innerHTML = "Hello";
@@ -152,3 +168,63 @@ function getInfo(info) {
     });
     return false;
     }
+
+
+/* ------------------------------------------------------ Delete a user account ----------------------------------------------------  */
+
+ function deleteUser() {
+    fetch('api.php?action=deleteUser',
+    {
+        method: 'POST',
+        credentails: 'same-origin'
+    }
+    ).then(function(response) {
+        response.json()
+        if(response.status === 202) {
+            console.log('202');
+            alert("User account deleted!");
+            document.getElementById("login").style.display = "block";
+            document.getElementById("profile").style.display = "none";
+            return;
+        } else {
+            response.json().then(function(data) {
+                alert("failed to delete");
+            })
+        }
+    });
+    return false;
+    }
+
+
+    function editUser() {
+
+        var editcomponent = {
+            'editFName': document.getElementById("editFName").value,
+            'editLName': document.getElementById("editLName").value,
+            'editEmail': document.getElementById("Email").value,
+            'editPhone': document.getElementById("editPhone").value,
+            'editAddress': document.getElementById("editAddress").value
+        }
+        fetch('api.php?action=editUser',
+        {
+            method: 'POST',
+            body: editcomponent,
+            credentails: 'same-origin'
+        }
+        ).then(function(response) {
+            response.json()
+            if(response.status === 202) {
+                console.log('202');
+                alert("User account edited!");
+                document.getElementById("login").style.display = "block";
+                document.getElementById("profile-edit").style.display = "none";
+                return;
+            } else {
+                response.json().then(function(data) {
+                    alert("failed to edit");
+                })
+            }
+        });
+        return false;
+        }
+    

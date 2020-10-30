@@ -1,41 +1,36 @@
 <?php
-        //session_start();
-        //require("se.php"); $_SESSION['se2'] = new sessObj;
 class DatabaseObject {
 
 
     // DB connection
 
-    private $dbconn;
-    public function __construct() {
-        $user = "root";
-        $password = "suguruhagiwara";
-        $dsn = "mysql:host=localhost; dbname=Prototype";
+        private $dbconn;
+        public function __construct() {
+            $user = "root";
+            $password = "suguruhagiwara";
+            $dsn = "mysql:host=localhost; dbname=Prototype";
 
-        $this->dbconn = new PDO($dsn, $user, $password);
-        $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        echo "<h1>Database is connected</h1><br>";
+            $this->dbconn = new PDO($dsn, $user, $password);
+            $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        //echo "<h1>Database is connected</h1><br>";
     }
 
 
     // Login check function
 
     function checkUserAccount($loginUname, $loginPword) {
-
         $sql = "SELECT UserID, UserName, Password FROM UserInformation WHERE UserName = :username";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':username', $loginUname);
         $stmt->execute();
         $row = $stmt->fetch();
-        //print_r($row);
         if(password_verify($loginPword, $row['Password'])) {
                 // assign session variables
                 $_SESSION['User'] = $loginUname;
                 $_SESSION['UserID'] = $row["UserID"];
-                //$_SESSION['login'] = true;
+                $_SESSION['login'] = true;
 
-                //$_SESSION['se']->logging();
                 echo "data is logged";
                 return true;
             }
@@ -62,7 +57,7 @@ class DatabaseObject {
         $stmt->bindValue(':phone', $phone);
         $stmt->bindValue(':address', $address);
 
-        echo "new roll inserted";
+        //echo "new roll inserted";
         return $stmt->execute();
     }
 
@@ -71,7 +66,7 @@ class DatabaseObject {
 
     function buyTicket($amount, $seat, $method, $matchID, $userID) {
 
-        $sql = "INSERT INTO TicketInformation(PurchasedAmount, SeatNumber, PaymentMethod, UserID, MatchInfoID) VALUES (:amount, :seat, :method, :userID, :matchinfo)";
+        $sql = "INSERT INTO TicketInformation(PurchasedAmount, SeatNumber, PaymentMethod, MatchInfoID, UserID) VALUES (:amount, :seat, :method, :matchinfo, :userID)";
         $stmt = $this->dbconn->prepare($sql);
         //how do we stop SQL injection?
         $stmt->bindParam(':amount', $amount);
@@ -80,7 +75,7 @@ class DatabaseObject {
         $stmt->bindParam(':matchinfo', $matchID);
         $stmt->bindParam(':userID', $userID);
 
-        echo "new roll inserted";
+        //echo "new roll inserted";
         return $stmt->execute();
     }
 
@@ -94,7 +89,7 @@ class DatabaseObject {
         $stmt->bindValue(':browser', $browser);
         $stmt->bindValue(':timestamp', $time);
         $stmt->bindValue(':action', $action);
-        echo "new row inserted";
+        //echo "new row inserted";
         return $stmt->execute();
     }
 
@@ -104,7 +99,26 @@ class DatabaseObject {
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':matchinfoID', $gameNum);
         return $stmt->execute();
-    }å
+    }
+
+    function deleteUserAccount() {
+        $sql = "DELETE FROM UserInformation WHERE UserID = :userid";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindValue(':userid', $_SESSION["UserID"]);
+        return $stmt->execute();
+    }
+
+    function editUserAccount($editFName, $editLName, $editEmail, $editPhone, $editAddress) {
+        $sql = "UPDATE UserInformation SET FirstName = :editfname, LastName = :editlname, Email = :editemail, Phone = :editphone, Address = :editaddress WHERE UserID = :userid";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindValue(':editfname', $editFName);
+        $stmt->bindValue(':editlname', $editLName);
+        $stmt->bindValue(':editemail', $editEmail);
+        $stmt->bindValue(':editphone', $editPhone);
+        $stmt->bindValue(':editaddress', $editAddress);
+        $stmt->bindValue(':userid', $_SESSION["UserID"]);
+        return $stmt->execute();
+    }
 
    
 }
