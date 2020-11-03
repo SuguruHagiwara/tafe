@@ -84,9 +84,6 @@ class sessObj {
             $time = time();
             array_push($this->limit, $time);
             $limitCount = count($this->limit);
-
-            echo $this->lastTime;
-            echo time();
         
             if(time() - $this->lastTime < 86400) {
                 if ($limitCount > 1000) {
@@ -114,7 +111,7 @@ class sessObj {
             die("not available url");
         }
         if($data = "127.0.0.1") {
-            echo "you are allowed";
+            //echo "you are allowed";
             return true;
         } else {
             die("not available url");

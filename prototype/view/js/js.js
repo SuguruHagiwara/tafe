@@ -24,20 +24,20 @@ function switchBg(x) {
 
 
 function openContent(event, pageName) {
-    var x = 0;
     var pagecontent = document.getElementsByClassName("pagecontent");
-    var displaycontent = document.getElementsByClassName("displaycontent");
-
-    for (x = 0; x < pagecontent.length; x++) {
+    document.getElementById("app-head").style.display = "none";
+    document.getElementById("app-foot").style.display = "none";
+    for (var x = 0; x < pagecontent.length; x++) {
         pagecontent[x].style.display = "none";
     }
-    for (x = 0; x < pagecontent.length; x++) {
-        displaycontent[x].className = displaycontent[x].className.replace("current", "");
-    }
-    document.getElementById(pageName).style.display = "block";
-    if (event.currentTarget.classList.contains("displaycontent")) {
-        event.currentTarget.className += " current";
-    }
+    document.getElementById("spinner").setAttribute('uk-spinner', "");
+    setTimeout(function(){
+        document.getElementById("spinner").removeAttribute('uk-spinner', "");
+        document.getElementById(pageName).style.display = "block";
+        document.getElementById("app-head").style.display = "flex";
+        document.getElementById("app-foot").style.display = "flex";
+    },1000);
+    
 }
 
 
@@ -51,12 +51,14 @@ window.onload = function() {
         document.getElementById("app-head").style.display = "flex";
         document.getElementById("app-foot").style.display = "flex";
     }
+    
 }
 
 function showNav() {
     document.getElementById("app-head").style.display = "flex";
     document.getElementById("app-foot").style.display = "flex";
 }
+
 
 
 function checkRequired() {
@@ -87,4 +89,3 @@ function checkInvalid() {
         uname.style.backgroundColor = "crimson";
     }
 }
-

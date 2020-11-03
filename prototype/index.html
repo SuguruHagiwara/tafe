@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
+        <link rel="manifest" href="manifest.json" />
         <script src="script.js"></script>
         <script src="view/js/js.js"></script>
     </head>
@@ -30,7 +31,7 @@
                         <li class="uk-nav-divider"></li>
                         <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'team')"><span class="uk-margin-small-right" uk-icon="icon: lifesaver"></span>TEAM</a></li>
                         <li class="uk-nav-divider"></li>
-                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'favorite')"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'favorite'); showFavTeam()"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
                         <li class="uk-nav-divider"></li>
                         <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'settings')"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>SETTINGS</a></li>
                     </ul>
@@ -44,6 +45,8 @@
 
 
         <!-- login page -->
+
+        <div id="spinner"></div>
 
         <div id="login" class="pagecontent">
             <div class="logo">
@@ -130,6 +133,7 @@
 
         <div id="favorite" class="pagecontent">
             <h1>Your favorite Teams</h1>
+            <div id="yourFav"></div>
             <div class="favorite-wrap uk-margin-xlarge-top uk-margin-large-bottom">
                 <h2>Manchester United</h2>
                 <img src="view/images/logo/manU.png" alt="">
@@ -169,7 +173,7 @@
                         <img src="view/images/logo/chelsea.jpg" alt="">
                     </div>
                 </div>
-                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return getInfo()">More Information...</button>
+                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return getInfo(this)">More Information...</button>
                 <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
                 <div id="modal-example" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
@@ -343,7 +347,7 @@
                         <h2>Address: </h2>
                         <input type="text" name="editAddress" id="editAddress">
                     </div>
-                    <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="return editUser();">Edit</button>
+                    <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit');">Edit</button>
                 </form> 
             </div>
         </div>
@@ -381,8 +385,8 @@
                 <div>
                     <p>Location: Sir Matt Busby Way, Old Trafford, Greater Manchester</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button id="ManU-btn" value="3" onclick="createFavTeam(this)"><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 
@@ -400,8 +404,8 @@
                 <div>
                     <p>Location: Fulham, London, SW6, England</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 
@@ -419,8 +423,8 @@
                 <div>
                     <p>Location: Anfield, liverpool, merseyside, England</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 
@@ -438,8 +442,8 @@
                 <div>
                     <p>Location: Anfield, liverpool, merseyside, England</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 
@@ -457,8 +461,8 @@
                 <div>
                     <p>Location: Anfield, liverpool, merseyside, England</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 
@@ -476,8 +480,8 @@
                 <div>
                     <p>Location: Anfield, liverpool, merseyside, England</p>
                 </div>
-                <div>
-                    <p><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></p>
+                <div class="like-btn">
+                    <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
             </div>
 

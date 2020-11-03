@@ -1,0 +1,12 @@
+{
+    "lang": "en",
+    "name": "Soccer App",
+    "short_name": "Soccer App",
+    "icons": [{
+          "src": "view/images/logo.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }],
+    "start_url": "https://example.com/",
+    "display": "standalone"
+  }

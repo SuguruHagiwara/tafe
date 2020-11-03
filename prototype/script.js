@@ -101,7 +101,7 @@ function logout1() {
 
 function buyTicket() {
 
-    var radioValue = document.getElementsByName("radio"),value;
+    var radioValue = document.getElementsByName("radio").value;
 
     for(i=0;i<radioValue.length;i++) {
         if(radioValue[i].checked){
@@ -158,7 +158,7 @@ function getInfo(info) {
         response.json()
         if(response.status === 202) {
             response.json().then(function(data) {
-                document.getElementById("dis").innerHTML = "Hello";
+                document.getElementById("dis").innerHTML = "hello";
             })
             
             return true;
@@ -196,19 +196,21 @@ function getInfo(info) {
     }
 
 
+/* ------------------------------------------------------ Edit a user account ----------------------------------------------------  */
+
     function editUser() {
 
         var editcomponent = {
             'editFName': document.getElementById("editFName").value,
             'editLName': document.getElementById("editLName").value,
-            'editEmail': document.getElementById("Email").value,
+            'editEmail': document.getElementById("editEmail").value,
             'editPhone': document.getElementById("editPhone").value,
             'editAddress': document.getElementById("editAddress").value
         }
         fetch('api.php?action=editUser',
         {
             method: 'POST',
-            body: editcomponent,
+            body: JSON.stringify(editcomponent),
             credentails: 'same-origin'
         }
         ).then(function(response) {
@@ -228,3 +230,113 @@ function getInfo(info) {
         return false;
         }
     
+/* ------------------------------------------------------ Create favorite team ----------------------------------------------------  */
+
+
+    function createFavTeam(team) {
+        var favTeam = {
+            "favTeam": team.value
+        }
+        fetch('api.php?action=favTeam',
+        {
+            method: 'POST',
+            body: JSON.stringify(favTeam),
+            credentails: 'same-origin'
+        }
+        ).then(function(response) {
+            response.json()
+            if(response.status === 202) {
+                console.log('202');
+                return;
+            } else {
+                alert("failed to like");
+                }
+        });
+        return false;
+    }
+
+/* ------------------------------------------------------ Display favorite team ----------------------------------------------------  */
+
+    function showFavTeam() {
+        //if(createFavTeam() == true) {
+            fetch('api.php?action=displayFavTeam',
+            {
+                method: 'POST',
+                credentails: 'same-origin'
+            }
+            ).then(function(response) {
+                response.json();
+                if(response.status === 202) {
+                    //console.log($result);
+                    let output = "";
+                    for(let i in response) {
+                        console.log(response)
+                        output = `<div>
+                            <div>${response[i].FavoriteTeamID}</div>
+                            <div>${response[i].HomeTeamID}</div>
+                            <div>${response[i].UserID}</div>
+                        </div>`
+                    }
+
+                    document.getElementById("yourFav").innerHTML = output;
+                    console.log('202');
+                    return;
+                } else {
+                    alert("failed to like");
+                    }
+            });
+            
+        //} else {
+            //return false;
+        //}
+        
+    }
+
+/* ------------------------------------------------------ Delete favorite team ----------------------------------------------------  */
+
+    function deleteFavTeam(team) {
+        var favTeam = {
+            "favTeam": team.value
+        }
+        fetch('api.php?action=favTeam',
+        {
+            method: 'POST',
+            body: JSON.stringify(favTeam),
+            credentails: 'same-origin'
+        }
+        ).then(function(response) {
+            response.json()
+            if(response.status === 202) {
+                console.log('202');
+                return;
+            } else {
+                alert("failed to like");
+                }
+        });
+        return false;
+    }
+
+
+/* ------------------------------------------------------ Update favorite team ----------------------------------------------------  */
+
+    function updateFavTeam(team) {
+        var favTeam = {
+            "favTeam": team.value
+        }
+        fetch('api.php?action=favTeam',
+        {
+            method: 'POST',
+            body: JSON.stringify(favTeam),
+            credentails: 'same-origin'
+        }
+        ).then(function(response) {
+            response.json()
+            if(response.status === 202) {
+                console.log('202');
+                return;
+            } else {
+                alert("failed to like");
+                }
+        });
+        return false;
+    }

@@ -116,10 +116,29 @@ class DatabaseObject {
         $stmt->bindValue(':editemail', $editEmail);
         $stmt->bindValue(':editphone', $editPhone);
         $stmt->bindValue(':editaddress', $editAddress);
-        $stmt->bindValue(':userid', $_SESSION["UserID"]);
+        $stmt->bindValue(':userid', $_SESSION['UserID']);
         return $stmt->execute();
     }
 
-   
+
+    function createFavoriteTeam($favoriteTeam) {
+        $sql = "INSERT FavoriteTeams SET HomeTeamID = :homeTeamID, UserID = :userid";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindValue(':homeTeamID', $favoriteTeam);
+        $stmt->bindValue(':userid', $_SESSION['UserID']);
+        return $stmt->execute();
+    }
+
+
+    function displayFavoriteTeam() {
+        $sql = "SELECT * FROM FavoriteTeams WHERE UserID = :userid";
+        $stmt = $this->dbconn->prepare($sql);
+        $stmt->bindValue(':userid', $_SESSION['UserID']);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        json_encode($row);
+        return true;
+    }
+
 }
 ?>
