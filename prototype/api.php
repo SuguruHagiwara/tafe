@@ -1,9 +1,12 @@
 <?php
+require("se.php"); 
+if(!isset($_SESSION['se'])) {
+    $_SESSION['se'] = new sessObj;
+}
 require("db.php"); $db = new DatabaseObject;
-require("se.php"); $_SESSION['se'] = new sessObj;
-//session_start();
 
-//sanitise data sent via POST and SEND
+
+//sanitise data sent via POST
 function testInput($data){
     $data = trim($data);
     $data = stripslashes($data);
@@ -12,18 +15,16 @@ function testInput($data){
     return $data;
 }
 
+    if ($_SESSION['se']->rate_limited() == true &&
+        $_SESSION['se']->rateLimitingthousand() == true && 
+        $_SESSION['se']->domainLock() == true){
 
-
-    if(!isset($_SESSION['se'])) {
-        $_SESSION['se'] = new sessObj;
-    }
-    if (/*$_SESSION['se']->rate_limited() == true && */
-    $_SESSION['se']->domainLock() ==true){
+            $_SESSION['se']->login();
             $ip = $_SERVER['REMOTE_ADDR'];
             $time = $_SERVER['REQUEST_TIME'];
             $browser = $_SERVER['HTTP_USER_AGENT'];
             $action = $_SERVER['QUERY_STRING'];
-
+           
             $db->loggingDb($ip, $time, $browser, $action);
     } else {
         return false;
@@ -35,10 +36,10 @@ function testInput($data){
         switch ($_GET['action']) {
             case 'login':
                $objJSON = json_decode(file_get_contents("php://input"), true);
-       
+
                $loginUname = testInput($objJSON['login-uname']);
                $loginPword = testInput($objJSON['login-pword']);
-        print_r($objJSON);
+
                    if($db->checkUserAccount($loginUname, $loginPword)) {
                        http_response_code(202);
                    } else {
@@ -63,7 +64,6 @@ function testInput($data){
                if($_SESSION['se']->is_logged_in()) {
        
                    $ticket = json_decode(file_get_contents("php://input") , true);
-                   echo $ticket;
        
                    $amount = testInput($ticket['amount']);
                    $seat = testInput($ticket['seat']);
@@ -84,8 +84,7 @@ function testInput($data){
             case 'registration':
                if($_SESSION['se']->is_logged_in()) {
                    $obj2 = json_decode(file_get_contents("php://input"), true);
-       
-                   
+
                    $uname = testInput($obj2['uname']);
                    $pword = testInput($obj2['pword']);
                    $fname = testInput($obj2['fname']);
@@ -120,10 +119,106 @@ function testInput($data){
                 } else {
                     http_response_code(401);
                 }
+
+                case 'deleteUser':
+                    if($_SESSION['se']->is_logged_in()) {
+                        if($db->deleteUserAccount()) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+
+                case 'editUser':
+                    if($_SESSION['se']->is_logged_in()) {
+                        $editUserAccount = json_decode(file_get_contents("php://input"), true);
+
+
+                        $editFName = testInput($editUserAccount['editFName']);
+                        $editLName = testInput($editUserAccount['editLName']);
+                        $editEmail = testInput($editUserAccount['editEmail']);
+                        $editPhone = testInput($editUserAccount['editPhone']);
+                        $editAddress = testInput($editUserAccount['editAddress']);
+
+                        if($db->editUserAccount($editFName, $editLName, $editEmail, $editPhone, $editAddress)) {
+                            
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+                case 'favTeam':
+                    if($_SESSION['se']->is_logged_in()) {
+                        $favTeam = json_decode(file_get_contents("php://input"), true);
+                        
+                        $favoriteTeam = $favTeam['favTeam'];
+
+                        print_r($favoriteTeam);
+
+                        if($db->createFavoriteTeam($favoriteTeam)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+
+                case 'deleteFavTeam':
+                    if($_SESSION['se']->is_logged_in()) {
+                        $favTeam = json_decode(file_get_contents("php://input"), true);
+                        
+                        $favoriteTeam = $favTeam['favTeam'];
+
+                        print_r($favoriteTeam);
+
+                        if($db->createFavoriteTeam($favoriteTeam)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+
+                case 'updateFavTeam':
+                    if($_SESSION['se']->is_logged_in()) {
+                        $favTeam = json_decode(file_get_contents("php://input"), true);
+                        
+                        $favoriteTeam = $favTeam['favTeam'];
+
+                        print_r($favoriteTeam);
+
+                        if($db->createFavoriteTeam($favoriteTeam)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+                case 'displayFavTeam':
+                    if($_SESSION['se']->is_logged_in()) {
+                        if($db->displayFavoriteTeam()) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+
+                }
             }
-        }
-
-
 
 
 ?>
