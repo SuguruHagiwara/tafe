@@ -261,7 +261,7 @@ function getInfo(info) {
         //if(createFavTeam() == true) {
             fetch('api.php?action=displayFavTeam',
             {
-                method: 'POST',
+                method: 'GET',
                 credentails: 'same-origin'
             }
             ).then(function(response) {

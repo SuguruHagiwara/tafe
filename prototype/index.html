@@ -78,49 +78,84 @@
         <!-- Registration page -->
 
         <div id="registration" class="pagecontent">
-            <form class="uk-position-center" id="regForm" name="regForm">
-                <div class="uk-margin">
+            <form id="regForm" name="regForm">
+                <div>
                     <label for="">*User Name</label>
-                    <input class="uk-input" 
-                           id="uname"
-                           type="text"
-                           name="uname"
-                           pattern="[A-Z]{1,}"
-                           title="Username must have at least one uppercase letter"
-                           placeholder="User Name"
-                           onblur="checkInvalid()"
-                           required>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="user"></span>
+                            <input class="uk-input" 
+                                id="uname"
+                                type="text"
+                                name="uname"
+                                pattern="[A-Z]{1,}"
+                                title="Username must have at least one uppercase letter"
+                                placeholder="User Name"
+                                onblur="checkInvalid()"
+                                required>
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">*Password</label>
-                    <input class="uk-input"
-                           type="text"
-                           id="pword"
-                           name="pword"
-                           pattern="[A-Z]{1,}"
-                           title="Password must have at least one uppercase letter"
-                           placeholder="Password"
-                           required>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="lock"></span>
+                            <input class="uk-input"
+                                type="text"
+                                id="pword"
+                                name="pword"
+                                pattern="[A-Z]{1,}"
+                                title="Password must have at least one uppercase letter"
+                                placeholder="Password"
+                                required>
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">First Name</label>
-                    <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name">
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="pencil"></span>
+                            <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name">
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Last Name</label>
-                    <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name">
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="pencil"></span>
+                            <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name">
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Email</label>
-                    <input class="uk-input" type="email" id="email" name="email" placeholder="Email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="mail"></span>
+                            <input class="uk-input" type="email" id="email" name="email" placeholder="Email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Telephone</label>
-                    <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number">
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="receiver"></span>
+                            <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number">
+                        </div>
+                    </div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Home Address</label>
-                    <input class="uk-input" type="text" id="address" name="address" placeholder="Home address">
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="location"></span>
+                            <input class="uk-input" type="text" id="address" name="address" placeholder="Home address">
+                        </div>
+                    </div>
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
                 <input class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" onsubmit="return checkRequired()" >
@@ -327,25 +362,50 @@
             <h1>Profile Edit</h1>
             <div class="proflie-wrap">
                 <form>
-                    <div>
-                        <h2>First Name: </h2>
-                        <input type="text" name="editFName" id="editFName">
+                    <div class="uk-margin">
+                        <label for="">First Name</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="pencil"></span>
+                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name">
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Last Name: </h2>
-                        <input type="text" name="editLName" id="editLName">
+                    <div class="uk-margin">
+                        <label for="">Last Name</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="pencil"></span>
+                                <input class="uk-input" type="text" name="editLName" id="editLName" placeholder="Last name">
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Email: </h2>
-                        <input type="email" name="editEmail" id="editEmail">
+                    <div class="uk-margin">
+                        <label for="">Email</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="mail"></span>
+                                <input class="uk-input" type="email" name="editEmail" id="editEmail" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" placeholder="Email">
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Phone: </h2>
-                        <input type="tel" name="editPhone" id="editPhone">
+                    <div class="uk-margin">
+                        <label for="">Telephone</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="receiver"></span>
+                                <input class="uk-input" type="tel" name="editPhone" id="editPhone" placeholder="Phone number">
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Address: </h2>
-                        <input type="text" name="editAddress" id="editAddress">
+                    <div class="uk-margin">
+                        <label for="">Home Address</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="location"></span>
+                                <input class="uk-input" type="text" name="editAddress" id="editAddress" placeholder="Home address">
+                            </div>
+                        </div>
                     </div>
                     <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit');">Edit</button>
                 </form> 
