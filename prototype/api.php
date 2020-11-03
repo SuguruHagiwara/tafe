@@ -59,7 +59,6 @@ function testInput($data){
                }
             break;
        
-       
             case 'ticket':
                if($_SESSION['se']->is_logged_in()) {
        
@@ -105,6 +104,7 @@ function testInput($data){
                } else {
                    http_response_code(401);
                }
+
                case 'information':
                 if($_SESSION['se']->is_logged_in()) {
                     $info = json_decode(file_get_contents("php://input"), true);
@@ -130,7 +130,6 @@ function testInput($data){
                     } else {
                         http_response_code(401);
                     }
-
 
                 case 'editUser':
                     if($_SESSION['se']->is_logged_in()) {
@@ -170,7 +169,6 @@ function testInput($data){
                         http_response_code(401);
                     }
 
-
                 case 'deleteFavTeam':
                     if($_SESSION['se']->is_logged_in()) {
                         $favTeam = json_decode(file_get_contents("php://input"), true);
@@ -187,7 +185,6 @@ function testInput($data){
                     } else {
                         http_response_code(401);
                     }
-
 
                 case 'updateFavTeam':
                     if($_SESSION['se']->is_logged_in()) {
