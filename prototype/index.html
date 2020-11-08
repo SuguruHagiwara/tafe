@@ -14,6 +14,7 @@
     <body>
 
         <!-- Header & Humburger Menu -->
+
         <div id="app-head">
             <a href="#offcanvas-nav" uk-toggle uk-icon="icon:menu; ratio:3" class="logos"></a>
             <div id="offcanvas-nav" uk-offcanvas="overlay: true">
@@ -31,29 +32,37 @@
                         <li class="uk-nav-divider"></li>
                         <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'team')"><span class="uk-margin-small-right" uk-icon="icon: lifesaver"></span>TEAM</a></li>
                         <li class="uk-nav-divider"></li>
-                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'favorite'); showFavTeam()"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
+                        <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'favorite')"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
                         <li class="uk-nav-divider"></li>
                         <li><a class="uk-text-large logos displaycontent" onclick="openContent(event, 'settings')"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>SETTINGS</a></li>
                     </ul>
             
                 </div>
             </div>
-            <a class="displaycontent" onclick="openContent(event, 'home')"><img src="view/images/logo.png" class="header-logo uk-align-center" alt=""></a>
-            <a href="" uk-icon="icon:sign-out; ratio:3" class="logos" onclick="logout1()"></a>
+            <a class="displaycontent" onclick="openContent(event, 'home')"><img src="view/images/logo.png" class="header-logo uk-align-center" id="top-logo" alt=""></a>
+            <a href="" uk-icon="icon:sign-out; ratio:3" class="logos" onclick="logout()"></a>
         </div>
 
+
+        <!-- loading page -->
+
+        <div id="loading">
+
+        </div>
+
+
+        <!-- Spinner -->
+
+        <div id="spinner" uk-spinner="ratio: 3"></div>
 
 
         <!-- login page -->
 
-        <div id="spinner"></div>
-
         <div id="login" class="pagecontent">
             <div class="logo">
-                <img src="view/images/logo.png" alt="">
+                <img src="view/images/logo.png" id="logo-anime" alt="">
             </div>
             <form>
-
                 <div class="uk-margin">
                     <div class="uk-inline username">
                         <span class="uk-form-icon" uk-icon="icon: user"></span>
@@ -67,17 +76,17 @@
                         <input class="uk-input uk-form-large" type="text" id="login-pword" name="login-pword">
                     </div>
                 </div>
-                <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="login" onclick="return login1(); openContent(event, 'home'); showNav();">Login</button>
+                <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="login" onclick="return login(); openContent(event, 'home'); showNav()">Login</button>
             </form>
             <a class="signUp displaycontent" onclick="openContent(event, 'home'); showNav()" style="font-size: 40px;">Home</a>
-            <a id="signup" class="signUp displaycontent" onclick="openContent(event, 'registration')" style="font-size: 40px;">Sign Up</a>
+            <a id="signup" class="signUp displaycontent" onclick="openContent(event, 'registration'); hideNav()" style="font-size: 40px;">Sign Up</a>
         </div>
-
 
 
         <!-- Registration page -->
 
         <div id="registration" class="pagecontent">
+            <a id="goBack" onclick="openContent(event, 'login')"><span uk-icon="icon: arrow-left; ratio: 3"></span>Go back</a>
             <form id="regForm" name="regForm">
                 <div>
                     <label for="">*User Name</label>
@@ -88,10 +97,9 @@
                                 id="uname"
                                 type="text"
                                 name="uname"
-                                pattern="[A-Z]{1,}"
+                                pattern="[A-Z]{1,}."
                                 title="Username must have at least one uppercase letter"
                                 placeholder="User Name"
-                                onblur="checkInvalid()"
                                 required>
                         </div>
                     </div>
@@ -105,7 +113,7 @@
                                 type="text"
                                 id="pword"
                                 name="pword"
-                                pattern="[A-Z]{1,}"
+                                pattern="[A-Z]{1,}."
                                 title="Password must have at least one uppercase letter"
                                 placeholder="Password"
                                 required>
@@ -117,55 +125,58 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="pencil"></span>
-                            <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name">
+                            <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="errorDisplay1()">
                         </div>
                     </div>
+                    <div id="error1"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Last Name</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="pencil"></span>
-                            <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name">
+                            <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="errorDisplay2()">
                         </div>
                     </div>
+                    <div id="error2"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Email</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="mail"></span>
-                            <input class="uk-input" type="email" id="email" name="email" placeholder="Email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+                            <input class="uk-input" type="email" id="email" name="email" placeholder="Email" maxlength="100" pattern="[^\s]+@[^\s]+" onblur="errorDisplay3()">
                         </div>
                     </div>
+                    <div id="error3"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Telephone</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="receiver"></span>
-                            <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number">
+                            <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number" pattern="^[0-9]{10}" onblur="errorDisplay4()">
                         </div>
                     </div>
+                    <div id="error4"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Home Address</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="location"></span>
-                            <input class="uk-input" type="text" id="address" name="address" placeholder="Home address">
+                            <input class="uk-input" type="text" id="address" name="address" placeholder="Home address" maxlength="100" pattern=".{1,}" onblur="errorDisplay5()">
                         </div>
                     </div>
+                    <div id="error5"></div>
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
-                <input class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" onsubmit="return checkRequired()" >
+                <button class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" onsubmit="return formValidation()">Register</button>
             </form>
         </div>
 
 
         <!-- favorite page -->
-
-
         <div id="favorite" class="pagecontent">
             <h1>Your favorite Teams</h1>
             <div id="yourFav"></div>
@@ -188,12 +199,11 @@
         </div>
 
 
-
-
         <!-- home page -->
+
         <div id="home" class="pagecontent">
             <h1 class="uk-align-center">Latest game</h1>
-               
+
 
             <!-- Game 1 -->
             <div class="latest-game uk-text-large uk-text-bolder">
@@ -208,7 +218,7 @@
                         <img src="view/images/logo/chelsea.jpg" alt="">
                     </div>
                 </div>
-                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="return getInfo(this)">More Information...</button>
+                <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example">More Information...</button>
                 <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
                 <div id="modal-example" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
@@ -331,10 +341,12 @@
 
         
         <!-- Profile page -->
+
         <div id="profile" class="pagecontent">
             <h1>Profile</h1>
             <div class="proflie-wrap">
-                <img src="view/images/profile.png" alt="">
+                <img id="default-img" src="view/images/profile.png" alt="" onclick="profileImage()">
+                <p>※Click the image to change from default</p>
                 <div>
                     <h2>First Name: </h2>
                     <p>Suguru</p>
@@ -358,6 +370,7 @@
 
 
         <!-- Profile edit page -->
+
         <div id="profile-edit" class="pagecontent">
             <h1>Profile Edit</h1>
             <div class="proflie-wrap">
@@ -367,47 +380,52 @@
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="pencil"></span>
-                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name">
+                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay1()">
                             </div>
                         </div>
+                        <div id="editerror1"></div>
                     </div>
                     <div class="uk-margin">
                         <label for="">Last Name</label>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="pencil"></span>
-                                <input class="uk-input" type="text" name="editLName" id="editLName" placeholder="Last name">
+                                <input class="uk-input" type="text" name="editLName" id="editLName" placeholder="Last name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay2()">
                             </div>
                         </div>
+                        <div id="editerror2"></div>
                     </div>
                     <div class="uk-margin">
                         <label for="">Email</label>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="mail"></span>
-                                <input class="uk-input" type="email" name="editEmail" id="editEmail" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" placeholder="Email">
+                                <input class="uk-input" type="email" name="editEmail" id="editEmail" placeholder="Email" maxlength="100" pattern="[^\s]+@[^\s]+" onblur="editErrorDisplay3()">
                             </div>
                         </div>
+                        <div id="editerror3"></div>
                     </div>
                     <div class="uk-margin">
                         <label for="">Telephone</label>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="receiver"></span>
-                                <input class="uk-input" type="tel" name="editPhone" id="editPhone" placeholder="Phone number">
+                                <input class="uk-input" type="tel" name="editPhone" id="editPhone" placeholder="Phone number" pattern="^[0-9]{10}" onblur="editErrorDisplay4()">
                             </div>
                         </div>
+                        <div id="editerror4"></div>
                     </div>
                     <div class="uk-margin">
                         <label for="">Home Address</label>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="location"></span>
-                                <input class="uk-input" type="text" name="editAddress" id="editAddress" placeholder="Home address">
+                                <input class="uk-input" type="text" name="editAddress" id="editAddress" placeholder="Home address" maxlength="100" pattern=".{1,}" onblur="editErrorDisplay5()">
                             </div>
                         </div>
+                        <div id="editerror5"></div>
                     </div>
-                    <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit');">Edit</button>
+                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit'); showNav()" onsubmit="return editValidation()">Edit</button>
                 </form> 
             </div>
         </div>
@@ -418,12 +436,30 @@
         <div id="settings" class="pagecontent">
             <h1>Settings</h1>
             <div>
-                <h2>Change the background color</h2>
-                <label for="pink">Dark mode</label>
-                <input type="checkbox" name="bgColor" id="pink" value="pink" onchange="switchBg(this)">
+                <h2>Change to dark mode</h2>
+                <label for="dark">Dark mode</label>
+                <input type="checkbox" name="dark" id="dark" value="dark" onchange="switchBgDark(this)">
+            </div>
+            <div>
+                <h2>Change the background image</h2>
+                <label for="bgImage">Background image 1</label>
+                <input type="checkbox" name="bgImage" id="bgImage" value="bgImage" onchange="switchBgImg(this)">
+            </div>
+            <div>
+                <label for="bgImage2">Background image 2</label>
+                <input type="checkbox" name="bgImage2" id="bgImage2" value="bgImage" onchange="switchBgImg2(this)">
+            </div>
+            <div>
+                <h2>Change the logo</h2>
+                <label for="changelogo">Change logo</label>
+                <input type="checkbox" name="changelogo" id="changelogo" value="changelogo" onchange="changeLogo(this)">
+            </div>
+            <div>
+                <h2>Change the color of footer menu</h2>
+                <label for="changeColor">Change color</label>
+                <input type="checkbox" name="changeColor" id="changeColor" value="changeColor" onchange="changeColor(this)">
             </div>
         </div>
-
 
 
         <!-- Team page -->
@@ -431,7 +467,163 @@
         <div id="team" class="uk-text-middle uk-text-bolder uk-align-center pagecontent">
             <h1 class="">Teams</h1>
 
-            <!-- Man U -->
+            <div id="root"></div>
+            <script type="text/babel">
+
+                ReactDOM.render(
+                    <App />,
+                    document.getElementById('root')
+                );
+
+                function App() {
+                    return (
+                    <div>
+                        <Team 
+                            teamName = "Manchester United"
+                            img = "view/images/logo/manU.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Chelsea"
+                            img = "view/images/logo/chelsea.jpg"
+                            stadium = "Stamford Bridge"
+                            location = "Fulham, London, SW6, England"/>
+                        <Team 
+                            teamName = "Liverpool"
+                            img = "view/images/logo/liverpool.png"
+                            stadium = "liverpool"
+                            location = "Anfield, liverpool, merseyside, England"
+                        />
+                        <Team 
+                            teamName = "Manchester City"
+                            img = "view/images/logo/manC.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Arsenal"
+                            img = "view/images/logo/arsenal.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Tottenham Hotspur"
+                            img = "view/images/logo/tottenham.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Leicester"
+                            img = "view/images/logo/Leicester.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Wolverhampton"
+                            img = "view/images/logo/Wolverhampton.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Sheffield United"
+                            img = "view/images/logo/SheffieldUnited.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Burnley"
+                            img = "view/images/logo/Burnley.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Southampton"
+                            img = "view/images/logo/Southampton.jpeg"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Everton"
+                            img = "view/images/logo/Everton.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Newcastle"
+                            img = "view/images/logo/Newcastle.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Crystal Palace"
+                            img = "view/images/logo/CrystalPalace.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Brighton"
+                            img = "view/images/logo/Brighton.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "West Ham"
+                            img = "view/images/logo/Westham.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Aston Villa"
+                            img = "view/images/logo/AstonVilla.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Bournemouth"
+                            img = "view/images/logo/Bournemouth.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Watford"
+                            img = "view/images/logo/Watford.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                        <Team 
+                            teamName = "Norwich"
+                            img = "view/images/logo/Norwich.png"
+                            stadium = "Old Trafford"
+                            location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        />
+                    </div>);
+                }
+
+                function Team(props) {
+                    return (
+                    <div className="teams manU">
+                        <div className="teams-name">
+                            <p>{props.teamName}</p>
+                        </div>
+                        <div className="teams-logo-img">
+                            <img src={props.img} alt="" />
+                        </div>
+                        <div>
+                            <p>Stadium: <br />{props.stadium}</p>
+                        </div>
+                        <div>
+                            <p>Location: <br />{props.location}</p>
+                        </div>
+                        <div className="like-btn">
+                            <button id="ManU-btn" value="3" onClick="createFavTeam(this)"><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
+                        </div>
+                    </div>);
+                }
+          
+              </script>
+
+            <!-- Man U 
             <div class="teams manU">
                 <div class="teams-name">
                     <p>Manchester United</p>
@@ -448,9 +640,9 @@
                 <div class="like-btn">
                     <button id="ManU-btn" value="3" onclick="createFavTeam(this)"><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Chelsea -->
+            <!-- Chelsea 
             <div class="teams chelsea">
                 <div class="teams-name">
                     <p>Chelsea</p>
@@ -467,9 +659,9 @@
                 <div class="like-btn">
                     <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div>-->
 
-            <!-- Liverpool -->
+            <!-- Liverpool
             <div class="teams liverpool">
                 <div class="teams-name">
                     <p>Liverpool</p>
@@ -486,9 +678,9 @@
                 <div class="like-btn">
                     <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Man C -->
+            <!-- Man C
             <div class="teams manc">
                 <div class="teams-name">
                     <p>Manchester City</p>
@@ -505,9 +697,9 @@
                 <div class="like-btn">
                     <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Arsenal -->
+            <!-- Arsenal
             <div class="teams arsenal">
                 <div class="teams-name">
                     <p>Arsenal</p>
@@ -524,9 +716,9 @@
                 <div class="like-btn">
                     <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Tottenham -->
+            <!-- Tottenham
             <div class="teams tottenham">
                 <div class="teams-name">
                     <p>Tottenham</p>
@@ -543,13 +735,12 @@
                 <div class="like-btn">
                     <button><span class="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
                 </div>
-            </div>
+            </div>-->
 
-        </div>
+        </div> 
 
 
         <!-- Ticket page -->
-
 
         <div id="ticket" class="pagecontent">
             <div class="latest-game uk-text-large uk-text-bolder">
@@ -660,10 +851,10 @@
                     <div class="uk-margin">
                         <label class="uk-form-label uk-text-large">Select your payment method</label>
                         <div class="uk-form-controls uk-form-controls-text">
-                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="radio" value="Paypal"> Paypal</label><br>
-                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="radio" value="Apple Pay"> Apple Pay</label><br>
-                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="radio" value="Credit Card"> Credit Card</label><br>
-                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="radio" value="Others"> Others</label>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="paypal" value="Paypal"> Paypal</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="applePay" value="Apple Pay"> Apple Pay</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="cc" value="Credit Card"> Credit Card</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" id="others" value="Others"> Others</label>
                         </div>
                     </div>
                     <input type="" value="1" id="matchInfo" hidden>
@@ -671,7 +862,6 @@
                 </form>
             </div>
         </div>
-
 
 
         <!-- Ticket2 page -->
@@ -901,6 +1091,7 @@
             </div>  
         </div>
 
+
         <!-- footer -->
 
         <div id="app-foot" class="uk-align-center">
@@ -925,8 +1116,8 @@
                 <div class="nav-overlay uk-navbar-right uk-width-3-4">
     
                     <ul class="uk-navbar-nav">
-                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile'); " uk-icon="icon:user; ratio:3"></a></li>
-                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'favorite')" uk-icon="icon:heart; ratio:3"></a></li>
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile')" uk-icon="icon:user; ratio:3"></a></li>
+                        <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'favorite');" uk-icon="icon:heart; ratio:3"></a></li>
                         <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'settings')" uk-icon="icon:cog; ratio:3"></a></li>
                     </ul>
             
@@ -939,5 +1130,10 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
     
+    <!-- React.js -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="index.js"></script>
     </body>
 </html>

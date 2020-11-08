@@ -1,12 +1,14 @@
 {
     "lang": "en",
-    "name": "Soccer App",
     "short_name": "Soccer App",
+    "name": "Soccer match ticketing App",
+    "description": "Soccer match' ticket buying system",
+    "theme_color": "#8fc0a9",
     "icons": [{
           "src": "view/images/logo.png",
-          "sizes": "144x144",
+          "sizes": "312x312",
           "type": "image/png"
         }],
-    "start_url": "https://example.com/",
+    "start_url": "http://localhost:8888/prototype/",
     "display": "standalone"
   }

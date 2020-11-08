@@ -98,13 +98,14 @@ class DatabaseObject {
         $sql = "SELECT MatchInfoID, DateOfMatch, HomeTeam.TeamName, AwayTeam.TeamName, Cost, Stadium.StadiumName FROM MatchInformation JOIN HomeTeam ON MatchInformation.HomeTeamID = HomeTeam.HomeTeamID JOIN AwayTeam ON MatchInformation.AwayTeamID = AwayTeam.AwayTeamID JOIN Stadium ON MatchInformation.StadiumID = Stadium.StadiumID WHERE MatchInfoID = :matchinfoID";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':matchinfoID', $gameNum);
-        return $stmt->execute();
+        $stmt->execute();
     }
 
     function deleteUserAccount() {
         $sql = "DELETE FROM UserInformation WHERE UserID = :userid";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':userid', $_SESSION["UserID"]);
+        echo $_SESSION["UserID"];
         return $stmt->execute();
     }
 
@@ -135,8 +136,19 @@ class DatabaseObject {
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':userid', $_SESSION['UserID']);
         $stmt->execute();
-        $row = $stmt->fetch();
-        json_encode($row);
+        $userData = array();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $userData[] = array(
+            'favTeam' => $row['FavoriteTeamID'],
+            'homeTeam' => $row['HomeTeamID'],
+            'userID' => $row['UserID']
+            );
+        }
+
+    //jsonとして出力
+        header('Content-type: application/json');
+        echo json_encode($userData);
         return true;
     }
 

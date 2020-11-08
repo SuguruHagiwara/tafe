@@ -35,92 +35,115 @@ function testInput($data){
     } else {
         switch ($_GET['action']) {
             case 'login':
-               $objJSON = json_decode(file_get_contents("php://input"), true);
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $objJSON = json_decode(file_get_contents("php://input"), true);
 
-               $loginUname = testInput($objJSON['login-uname']);
-               $loginPword = testInput($objJSON['login-pword']);
-
-                   if($db->checkUserAccount($loginUname, $loginPword)) {
-                       http_response_code(202);
-                   } else {
-                       http_response_code(401);
-                   }
-       
+                    $loginUname = testInput($objJSON['login-uname']);
+                    $loginPword = testInput($objJSON['login-pword']);
+     
+                        if($db->checkUserAccount($loginUname, $loginPword)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(401);
+                        }
+                } else {
+                    die ("Request method is wrong"); 
+                }
                
             break;
        
             case 'logout':
-               if($_SESSION['se']->is_logged_in()) {
-                   if($_SESSION['se']->logout()) {
-                       http_response_code(202);
-                   } else {
-                       http_response_code(406);
-                   }
-               }
-            break;
-       
-            case 'ticket':
-               if($_SESSION['se']->is_logged_in()) {
-       
-                   $ticket = json_decode(file_get_contents("php://input") , true);
-       
-                   $amount = testInput($ticket['amount']);
-                   $seat = testInput($ticket['seat']);
-                   $method = testInput($ticket['method']);
-                   $matchID = testInput($ticket['matchID']);
-                   $userID = $_SESSION['UserID'];
-                   
-                       if($db->buyTicket($amount, $seat, $method, $matchID, $userID)) {
-                           http_response_code(202);
-                       } else {
-                           http_response_code(406);
-                       }
-                } else {
-                   http_response_code(402);
-               }
-            break;
-       
-            case 'registration':
-               if($_SESSION['se']->is_logged_in()) {
-                   $obj2 = json_decode(file_get_contents("php://input"), true);
-
-                   $uname = testInput($obj2['uname']);
-                   $pword = testInput($obj2['pword']);
-                   $fname = testInput($obj2['fname']);
-                   $lname = testInput($obj2['lname']);
-                   $email = testInput($obj2['email']);
-                   $phone = testInput($obj2['phone']);
-                   $address = testInput($obj2['address']);
-                   
-                   if(!isset($obj2['uname']) && !isset($obj2['pword']) && !isset($obj2['fname'])){
-                       http_response_code(406);
-                   } else {
-                       if($db->register($uname, $pword, $fname, $lname, $email, $phone, $address)) {
-                           http_response_code(202);
-                       } else {
-                           http_response_code(406);
-                       }
-                  }
-               } else {
-                   http_response_code(401);
-               }
-
-               case 'information':
-                if($_SESSION['se']->is_logged_in()) {
-                    $info = json_decode(file_get_contents("php://input"), true);
-                    
-                    $gameNum = $info['game'];
-                    
-                        if($db->getGameInfo($gameNum)) {
+                if($_SERVER['REQUEST_METHOD'] == 'GET') {
+                    if($_SESSION['se']->is_logged_in()) {
+                        if($_SESSION['se']->logout()) {
                             http_response_code(202);
                         } else {
                             http_response_code(406);
                         }
+                    }
                 } else {
-                    http_response_code(401);
+                    die ("Request method is wrong"); 
                 }
 
-                case 'deleteUser':
+            break;
+       
+            case 'ticket':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if($_SESSION['se']->is_logged_in()) {
+            
+                        $ticket = json_decode(file_get_contents("php://input") , true);
+            
+                        $amount = testInput($ticket['amount']);
+                        $seat = testInput($ticket['seat']);
+                        $method = testInput($ticket['method']);
+                        $matchID = testInput($ticket['matchID']);
+                        $userID = $_SESSION['UserID'];
+                        
+                            if($db->buyTicket($amount, $seat, $method, $matchID, $userID)) {
+                                http_response_code(202);
+                            } else {
+                                http_response_code(406);
+                            }
+                        } else {
+                        http_response_code(402);
+                    }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
+       
+            case 'registration':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if($_SESSION['se']->is_logged_in()) {
+                        $obj2 = json_decode(file_get_contents("php://input"), true);
+
+                        $uname = testInput($obj2['uname']);
+                        $pword = testInput($obj2['pword']);
+                        $fname = testInput($obj2['fname']);
+                        $lname = testInput($obj2['lname']);
+                        $email = testInput($obj2['email']);
+                        $phone = testInput($obj2['phone']);
+                        $address = testInput($obj2['address']);
+                        
+                        if(!isset($obj2['uname']) && !isset($obj2['pword']) && !isset($obj2['fname'])){
+                            http_response_code(406);
+                        } else {
+                            if($db->register($uname, $pword, $fname, $lname, $email, $phone, $address)) {
+                                http_response_code(202);
+                            } else {
+                                http_response_code(406);
+                            }
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
+
+            case 'information':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if($_SESSION['se']->is_logged_in()) {
+                        $info = json_decode(file_get_contents("php://input"), true);
+                        
+                        $gameNum = $info['game'];
+                        
+                            if($db->getGameInfo($gameNum)) {
+                                http_response_code(202);
+                            } else {
+                                http_response_code(406);
+                            }
+                    } else {
+                        http_response_code(401);
+                    }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
+
+            case 'deleteUser':
+                if($_SERVER['REQUEST_METHOD'] == 'GET') {
                     if($_SESSION['se']->is_logged_in()) {
                         if($db->deleteUserAccount()) {
                             http_response_code(202);
@@ -130,46 +153,42 @@ function testInput($data){
                     } else {
                         http_response_code(401);
                     }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
 
-                case 'editUser':
-                    if($_SESSION['se']->is_logged_in()) {
-                        $editUserAccount = json_decode(file_get_contents("php://input"), true);
-
-
-                        $editFName = testInput($editUserAccount['editFName']);
-                        $editLName = testInput($editUserAccount['editLName']);
-                        $editEmail = testInput($editUserAccount['editEmail']);
-                        $editPhone = testInput($editUserAccount['editPhone']);
-                        $editAddress = testInput($editUserAccount['editAddress']);
-
-                        if($db->editUserAccount($editFName, $editLName, $editEmail, $editPhone, $editAddress)) {
-                            
-                            http_response_code(202);
+            case 'editUser':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if(isset($_SESSION['UserID'])) {
+                        if($_SESSION['se']->is_logged_in()) {
+                            $editUserAccount = json_decode(file_get_contents("php://input"), true);
+    
+                            $editFName = testInput($editUserAccount['editFName']);
+                            $editLName = testInput($editUserAccount['editLName']);
+                            $editEmail = testInput($editUserAccount['editEmail']);
+                            $editPhone = testInput($editUserAccount['editPhone']);
+                            $editAddress = testInput($editUserAccount['editAddress']);
+    
+                            if($db->editUserAccount($editFName, $editLName, $editEmail, $editPhone, $editAddress)) {
+                                
+                                http_response_code(202);
+                            } else {
+                                http_response_code(406);
+                            }
                         } else {
-                            http_response_code(406);
+                            http_response_code(401);
                         }
                     } else {
-                        http_response_code(401);
+                        die ("You are not logged in"); 
                     }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
 
-                case 'favTeam':
-                    if($_SESSION['se']->is_logged_in()) {
-                        $favTeam = json_decode(file_get_contents("php://input"), true);
-                        
-                        $favoriteTeam = $favTeam['favTeam'];
-
-                        print_r($favoriteTeam);
-
-                        if($db->createFavoriteTeam($favoriteTeam)) {
-                            http_response_code(202);
-                        } else {
-                            http_response_code(406);
-                        }
-                    } else {
-                        http_response_code(401);
-                    }
-
-                case 'deleteFavTeam':
+            case 'favTeam':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if($_SESSION['se']->is_logged_in()) {
                         $favTeam = json_decode(file_get_contents("php://input"), true);
                         
@@ -185,8 +204,13 @@ function testInput($data){
                     } else {
                         http_response_code(401);
                     }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
 
-                case 'updateFavTeam':
+            case 'deleteFavTeam':
+                if($_SERVER['REQUEST_METHOD'] == 'GET') {
                     if($_SESSION['se']->is_logged_in()) {
                         $favTeam = json_decode(file_get_contents("php://input"), true);
                         
@@ -202,8 +226,35 @@ function testInput($data){
                     } else {
                         http_response_code(401);
                     }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
 
-                case 'displayFavTeam':
+            case 'updateFavTeam':
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if($_SESSION['se']->is_logged_in()) {
+                        $favTeam = json_decode(file_get_contents("php://input"), true);
+                        
+                        $favoriteTeam = $favTeam['favTeam'];
+
+                        print_r($favoriteTeam);
+
+                        if($db->createFavoriteTeam($favoriteTeam)) {
+                            http_response_code(202);
+                        } else {
+                            http_response_code(406);
+                        }
+                    } else {
+                        http_response_code(401);
+                    }
+                } else {
+                    die ("Request method is wrong"); 
+                }
+            break;
+
+            case 'displayFavTeam':
+                if($_SERVER['REQUEST_METHOD'] == 'GET') {
                     if($_SESSION['se']->is_logged_in()) {
                         if($db->displayFavoriteTeam()) {
                             http_response_code(202);
@@ -214,10 +265,13 @@ function testInput($data){
                         http_response_code(401);
                     }
 
+                } else {
+                    die ("Request method is wrong");
                 }
+            break;
             }
+        }
 
 
 ?>
-
  
