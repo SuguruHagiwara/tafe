@@ -57,6 +57,7 @@
 
 	3rd party framework that I used is UIKIT.
 
+	3rd party framework for Javascript that I used is React.js
 
 
 
