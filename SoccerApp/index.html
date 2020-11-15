@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prototype</title>
+        <link rel="stylesheet" href="view/style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
+        <link rel="manifest" href="manifest.json" />
+        <script src="script.js"></script>
+        <!--<script src="view/js/sw.js"></script>-->
+        <script src="view/js/js.js"></script>
+    </head>
+    <body>
+
+<!-- For user interface -->
+
+        <!-- Header & Humburger Menu -->
+
+        <div id="app-head">
+            <a href="#offcanvas-nav" uk-toggle uk-icon="icon:menu; ratio:3" class="logos"></a>
+            <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+                <div class="uk-offcanvas-bar">
+                    <button class="uk-offcanvas-close" type="button" uk-close></button>
+            
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-text-large">Menu</li>
+                        <br>
+                        <br>
+                        <br>
+                        <li><a class="uk-text-large logos displaycontent" id="homebtn" value="homebtn" onclick="openContent(event, 'home'); displayMatch(); addClass(this)"><span class="uk-margin-small-right" uk-icon="icon: home"></span>HOME</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" id="profilebtn" value="profilebtn" onclick="openContent(event, 'profile'); displayProfile(); displayTicket()"><span class="uk-margin-small-right" uk-icon="icon: user"></span>PROFILE</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" id="teambtn" value="teambtn" onclick="openContent(event, 'team'); displayTeam()"><span class="uk-margin-small-right" uk-icon="icon: lifesaver"></span>TEAM</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" id="favoritebtn" value="favoritebtn" onclick="openContent(event, 'favorite'); showFavTeam()"><span class="uk-margin-small-right" uk-icon="icon: heart"></span>LIKED</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a class="uk-text-large logos displaycontent" id="settingsbtn" value="settingsbtn" onclick="openContent(event, 'settings')"><span class="uk-margin-small-right" uk-icon="icon: cog"></span>SETTINGS</a></li>
+                    </ul>
+            
+                </div>
+            </div>
+            <a class="displaycontent" onclick="openContent(event, 'home'); displayMatch()"><img src="view/images/logo.png" class="header-logo uk-align-center" id="top-logo" alt=""></a>
+            <a uk-icon="icon:sign-out; ratio:3" class="logos" onclick="logout()"></a>
+        </div>
+
+
+        <!-- loading page -->
+
+        <div id="spinner" style="position: fixed;" uk-spinner="ratio: 3">
+        </div>
+
+
+        <!-- login page -->
+
+        <div id="login" class="pagecontent">
+            <div class="logo">
+                <img src="view/images/logo.png" id="logo-anime" alt="">
+            </div>
+            <form>
+                <div class="uk-margin">
+                    <div class="uk-inline username">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input class="uk-input uk-form-large" type="text" id="login-uname" name="login-uname">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-inline password">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input class="uk-input uk-form-large" type="text" id="login-pword" name="login-pword">
+                    </div>
+                </div>
+                <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="login" onclick="displayMatch(); return login(); openContent(event, 'home'); showNav();">Login</button>
+            </form>
+            <!--<a class="signUp displaycontent" onclick="openContent(event, 'home'); showNav(); displayMatch()" style="font-size: 30px;">Home</a>-->
+            <a id="signup" class="signUp displaycontent" onclick="openContent(event, 'registration'); hideNav()" style="font-size: 30px;">Sign Up</a>
+            <button class="uk-button uk-button-primary uk-align-center" onclick="openContent(event, 'admin-login'); hideNav();" style="font-size: 30px;">Admin</button>
+        </div>
+
+
+        <!-- Registration page -->
+
+        <div id="registration" class="pagecontent">
+            <a id="goBack" onclick="openContent(event, 'login'); hideNav()"><span uk-icon="icon: arrow-left; ratio: 3"></span>Go back</a>
+            <form id="regForm" name="regForm">
+                <div>
+                    <label for="">*User Name</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="user"></span>
+                            <input class="uk-input" 
+                                id="uname"
+                                type="text"
+                                name="uname"
+                                pattern="[A-Z]{1,}."
+                                title="Username must have at least one uppercase letter"
+                                placeholder="User Name"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">*Password</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="lock"></span>
+                            <input class="uk-input"
+                                type="text"
+                                id="pword"
+                                name="pword"
+                                pattern="[A-Z]{1,}."
+                                title="Password must have at least one uppercase letter"
+                                placeholder="Password"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">First Name</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="pencil"></span>
+                            <input class="uk-input" type="text" id="fname" name="fname" placeholder="First Name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="errorDisplay1()">
+                        </div>
+                    </div>
+                    <div id="error1"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Last Name</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="pencil"></span>
+                            <input class="uk-input" type="text" id="lname" name="lname" placeholder="Last Name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="errorDisplay2()">
+                        </div>
+                    </div>
+                    <div id="error2"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Email</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="mail"></span>
+                            <input class="uk-input" type="email" id="email" name="email" placeholder="Email" maxlength="100" pattern="[^\s]+@[^\s]+" onblur="errorDisplay3()">
+                        </div>
+                    </div>
+                    <div id="error3"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Telephone</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="receiver"></span>
+                            <input class="uk-input" type="tel" id="phone" name="phone" placeholder="Phone number" pattern="^[0-9]{10}" onblur="errorDisplay4()">
+                        </div>
+                    </div>
+                    <div id="error4"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Home Address</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="location"></span>
+                            <input class="uk-input" type="text" id="address" name="address" placeholder="Home address" maxlength="100" pattern=".{1,}" onblur="errorDisplay5()">
+                        </div>
+                    </div>
+                    <div id="error5"></div>
+                </div>
+                <input type="text" value="member" name="privilege" hidden>
+                <button class="uk-button uk-button-danger" type="submit" value="Register" onclick="return reg()" onsubmit="return formValidation()">Register</button>
+            </form>
+        </div>
+
+
+        <!-- favorite page -->
+        <div id="favorite" class="pagecontent">
+            <h1>Your favorite Team</h1>
+            <div id="yourFav"></div>
+        </div>
+
+
+        <!-- home page -->
+
+        <div id="home" class="pagecontent">
+            <h1 class="uk-align-center">Latest game</h1>
+            <div id="matchInfo"></div>
+            <div class="latest-game uk-text-large uk-text-bolder">
+                <div id="modal-example" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <p class="uk-modal-title modal-title">Ticket information</p>
+                        <div id="matchInfoDetail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Team page -->
+
+        <div id="team" class="uk-text-middle uk-text-bolder uk-align-center pagecontent">
+            <h1 class="">Teams</h1>
+            <div id="teamInfo"></div>
+        </div> 
+
+
+        <!-- Ticket page -->
+
+        <div id="ticket" class="pagecontent">
+
+            <!-- Buy a ticket -->
+            <div id="buyTicket">
+                <h1 class="uk-align-center">Buy a ticket</h1>
+                <div id="ticketMatchInfo"></div>
+                <!-- This is the modal -->
+                <div id="modal-ticketmatchInfo" uk-modal>
+                    <div id="matchInfoDetailTicket"></div>
+                </div>
+                <form class="uk-form-horizontal uk-margin-large uk-margin-medium-left uk-margin-medium-right">
+                    <hr class="uk-divider-icon">
+                    <div class="uk-align-center">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Ticket amount</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="amount" name="amount">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <hr class="uk-divider-icon">
+                    <a class="uk-button uk-button-secondary" href="#modal-center" uk-toggle>Choose your seat</a>
+        
+                    <div id="modal-center" class="uk-flex-top" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                    
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                    
+                            <img src="view/images/stadium.png" alt="">
+                            <img src="view/images/seat.jpeg" alt="">
+                        </div>
+                    </div>
+        
+                    <br>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large" for="form-horizontal-select">Select your seat No.</label>
+                        <div class="uk-form-controls uk-width-small uk-align-center">
+                            <select class="uk-select" id="seat" name="seat">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <hr class="uk-divider-icon">
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-text-large">Select your payment method</label>
+                        <div class="uk-form-controls uk-form-controls-text">
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" value="Paypal"> Paypal</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" value="Apple Pay"> Apple Pay</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" value="Credit Card"> Credit Card</label><br>
+                            <label class="uk-text-medium" for="radio"><input class="uk-radio method" type="radio" name="radio" value="Others"> Others</label>
+                        </div>
+                    </div>
+                    <hr class="uk-divider-icon">
+                    <input type="hidden" value="1" name="matchInfo" id="matchInfo" hidden>
+                    <div id="ticketSubmit"></div>
+                </form>
+            </div>
+        </div>
+       
+
+        <!-- Profile page -->
+
+        <div id="profile" class="pagecontent">
+            <h1>Profile</h1>
+            <img id="default-img" src="view/images/profile.png" alt="" onclick="profileImage()">
+                <p>※Click the image to change from default</p>
+            <div id="profileDisplay"></div>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Edit User Account" onclick="openContent(event, 'profile-edit');">Edit User Account</button>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Delete User Account" onclick="return deleteUser(); openContent(event, 'login');">Delete User Account</button>
+            <br>
+            <h1>Purchased tickets</h1>
+            <div id="ticketDisplay"></div>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Delete Ticket" onclick="return deleteTicket(); openContent(event, 'profile-edit');">Delete ticket</button>
+        </div>
+
+
+        <!-- Profile edit page -->
+
+        <div id="profile-edit" class="pagecontent">
+            <h1>Profile Edit</h1>
+            <div class="proflie-wrap">
+                <form>
+                    <div class="uk-margin">
+                        <label for="">First Name</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="pencil"></span>
+                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay1()">
+                            </div>
+                        </div>
+                        <div id="editerror1"></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="">Last Name</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="pencil"></span>
+                                <input class="uk-input" type="text" name="editLName" id="editLName" placeholder="Last name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay2()">
+                            </div>
+                        </div>
+                        <div id="editerror2"></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="">Email</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="mail"></span>
+                                <input class="uk-input" type="email" name="editEmail" id="editEmail" placeholder="Email" maxlength="100" pattern="[^\s]+@[^\s]+" onblur="editErrorDisplay3()">
+                            </div>
+                        </div>
+                        <div id="editerror3"></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="">Telephone</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="receiver"></span>
+                                <input class="uk-input" type="tel" name="editPhone" id="editPhone" placeholder="Phone number" pattern="^[0-9]{10}" onblur="editErrorDisplay4()">
+                            </div>
+                        </div>
+                        <div id="editerror4"></div>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="">Home Address</label>
+                        <div>
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="location"></span>
+                                <input class="uk-input" type="text" name="editAddress" id="editAddress" placeholder="Home address" maxlength="100" pattern=".{1,}" onblur="editErrorDisplay5()">
+                            </div>
+                        </div>
+                        <div id="editerror5"></div>
+                    </div>
+                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit'); showNav();" onsubmit="return editValidation()">Edit</button>
+                </form> 
+            </div>
+        </div>
+
+
+        <!-- Settings page -->
+
+        <div id="settings" class="pagecontent">
+            <h1>Settings</h1>
+            <div>
+                <h2>Change to dark mode</h2>
+                <label for="dark">Dark mode</label>
+                <input type="checkbox" name="dark" id="dark" value="dark" onchange="switchBgDark(this)">
+            </div>
+            <div>
+                <h2>Change the background image</h2>
+                <label for="bgImage">Background image 1</label>
+                <input type="checkbox" name="bgImage" id="bgImage" value="bgImage" onchange="switchBgImg(this)">
+            </div>
+            <div>
+                <label for="bgImage2">Background image 2</label>
+                <input type="checkbox" name="bgImage2" id="bgImage2" value="bgImage" onchange="switchBgImg2(this)">
+            </div>
+            <div>
+                <h2>Change the logo</h2>
+                <label for="changelogo">Change logo</label>
+                <input type="checkbox" name="changelogo" id="changelogo" value="changelogo" onchange="changeLogo(this)">
+            </div>
+            <div>
+                <h2>Change the color of footer menu</h2>
+                <label for="changeColor">Change color</label>
+                <input type="checkbox" name="changeColor" id="changeColor" value="changeColor" onchange="changeColor(this)">
+            </div>
+        </div>
+
+
+         <!-- footer -->
+
+         <div id="app-foot" class="uk-align-center">
+            <div class="footer-menu-wrap">
+                <ul class="uk-navbar-nav">
+                    <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'team'); displayTeam()" uk-icon="icon:lifesaver; ratio:3"></a></li>
+                    <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'profile'); displayProfile(); displayTicket()" uk-icon="icon:user; ratio:3"></a></li>
+                    <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'favorite'); showFavTeam()" uk-icon="icon:heart; ratio:3"></a></li>
+                    <li><a class="footer-icon logos displaycontent" onclick="openContent(event, 'settings')" uk-icon="icon:cog; ratio:3"></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+<!-- Admin interface -->
+
+         <!-- Admin login page -->
+
+         <div id="admin-login" class="pagecontent">
+            <div class="logo">
+                <img src="view/images/admin-logo.png" alt="">
+            </div>
+            <form method="POST">
+                <div class="uk-margin">
+                    <div class="uk-inline username">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input class="uk-input uk-form-large" type="text" id="admin-login-uname" name="admin-login-uname">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-inline password">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input class="uk-input uk-form-large" type="text" id="admin-login-pword" name="admin-login-pword">
+                    </div>
+                </div>
+                <button class="uk-button uk-align-center displaycontent" id="admin-login-button" type="submit" value="admin-login" onclick="return adminLogin(); openContent(event, 'admin-panel'); hideNav();">Login</button>
+            </form>
+            <a class="signUp displaycontent" onclick="openContent(event, 'login'); hideNav()" style="font-size: 30px;"><span uk-icon="icon: arrow-left; ratio: 3"></span>Go back</a>
+            <!--<button class="uk-button uk-button-primary uk-button-large uk-align-center" onclick="openContent(event, 'admin-panel'); hideNav();" style="font-size: 30px;">Admin panel</button>-->
+        </div>
+
+
+
+        <!-- Admin panel -->
+        
+        <div id="admin-panel" class="pagecontent">
+
+        
+            <!-- Admin header -->
+            <div id="reactAdmin"></div>
+            <div id="admin-head">
+                <a onclick="openContent(event, 'admin-login'); hideNav()" uk-toggle uk-icon="icon:arrow-left; ratio:3" class="logos"></a>
+                <a class="displaycontent"><img src="view/images/admin-logo.png" class="header-logo uk-align-center" id="top-logo" alt=""></a>
+                <a uk-icon="icon:sign-out; ratio:3" class="logos" onclick="adminLogout()"></a>
+            </div>
+
+            <h1 class="uk-text-center">Admin Panel</h1>
+            <br>
+            <h2 class="uk-text-center">Modify matches</h2>
+            <button class="uk-button uk-align-center displaycontent" id="modify-admin-matches" type="button" onclick="openContent(event, 'adminMatchInfo'); hideNav(); adminDisplayMatch()">Click</button>
+
+            <h2 class="uk-text-center">Modify teams</h2>
+            <button class="uk-button uk-align-center displaycontent" id="modify-admin-teams" type="button" onclick="openContent(event, 'adminTeamInfo'); hideNav(); adminDisplayTeam()">Click</button>
+
+            <!--
+            <form action="db.php" method="POST">
+                <input type="text" name="adminName">
+                <input type="text" name="adminPword">
+                <input type="submit">
+            </form>-->
+        </div>
+
+       
+
+
+        <!-- Admin modify match page -->
+
+        <div id="adminMatchInfo" class="pagecontent uk-align-center">
+            <a class="signUp displaycontent" onclick="openContent(event, 'admin-panel'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Match selection</h1>
+            <button class="uk-button uk-align-center uk-button-secondary uk-button-large displaycontent" onclick="openContent(event, 'insertMatch'); hideNav();">Insert a new match</button>
+            <div id="modify-matches"></div>
+        </div>
+
+
+        <!-- Admin insert match -->
+
+        <div id="insertMatch" class="pagecontent">
+            <div id="reactInsertMatch"></div>
+            <a class="signUp displaycontent" onclick="openContent(event, 'adminMatchInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Insert a new match</h1>
+            <form id="insertMatchForm" name="insertMatchForm">
+                <div class="uk-margin">
+                    <label for="">Date of the match</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="calendar"></span>
+                            <input class="uk-input" type="text" id="matchDate" name="matchDate" placeholder="Date of the match" maxlength="20" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror1"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Home Team ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="home"></span>
+                            <input class="uk-input" type="number" id="homeTeamID" name="homeTeamID" placeholder="Home Team ID" maxlength="20" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror2"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Away Team ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="user"></span>
+                            <input class="uk-input" type="number" id="awayTeamID" name="awayTeamID" placeholder="Away Team ID" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror3"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Ticket price</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="credit-card"></span>
+                            <input class="uk-input" type="text" id="cost" name="cost" placeholder="Ticket price" pattern="" placeholder="Ticket price" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror4"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Stadium ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="location"></span>
+                            <input class="uk-input" type="text" id="stadiumID" name="stadiumID" placeholder="Stadium ID" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror5"></div>
+                </div>
+                <input type="text" value="member" name="privilege" hidden>
+                <button class="uk-button uk-button-danger" type="submit" value="insertMatch" onclick="return insertMatch(); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Insert</button>
+            </form>
+        </div>
+
+
+        <!-- Admin React insert match 
+
+        <script type="text/babel">
+
+            ReactDOM.render(
+                <MatchInsertForm />,
+                document.getElementById('reactInsertMatch')
+            );
+
+            // there was a repitition on input, so using React can make it more efficient and concise in this part.
+            function MatchInsertForm() {
+                return
+                (
+                <form id="insertMatchForm" name="insertMatchForm">
+                    <a class="signUp displaycontent" onclick="openContent(event, 'adminMatchInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+                    <h1 class="uk-text-center">Insert a new match</h1>
+                    <MatchInsertInput 
+                        label = "Date of the match"
+                        icon = "calender"
+                        type = "text"
+                        id = "matchDate"
+                        name = "matchDate"
+                        placeholder = "Date of the match"
+                        maxlength = "20"
+                        pattern = ""
+                        onblur = ""
+                        errormessage = ""
+                    />
+                    <MatchInsertInput 
+                        label = "Home Team ID"
+                        icon = "home"
+                        type = "number"
+                        id = "homeTeamID"
+                        name = "homeTeamID"
+                        placeholder = "Home Team ID"
+                        maxlength = "20"
+                        pattern = ""
+                        onblur = ""
+                        errormessage = ""
+                    />
+                    <MatchInsertInput 
+                        label = "Away Team ID"
+                        icon = "user"
+                        type = "number"
+                        id = "awayTeamID"
+                        name = "awayTeamID"
+                        placeholder = "Away Team ID"
+                        maxlength = ""
+                        pattern = ""
+                        onblur = ""
+                        errormessage = ""
+                    />
+                    <MatchInsertInput 
+                        label = "Ticket price"
+                        icon = "credit-card"
+                        type = "text"
+                        id = "cost"
+                        name = "cost"
+                        placeholder = "Ticket price"
+                        maxlength = ""
+                        pattern = ""
+                        onblur = ""
+                        errormessage = ""
+                    />
+                    <MatchInsertInput 
+                        label = "Stadium ID"
+                        icon = "location"
+                        type = "text"
+                        id = "stadiumID"
+                        name = "stadiumID"
+                        placeholder = "Stadium ID"
+                        maxlength = ""
+                        pattern = ""
+                        onblur = ""
+                        errormessage = ""
+                    />
+                <button class="uk-button uk-button-danger" type="submit" value="insertMatch" onclick="return insertMatch(); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Insert</button>
+                </form>
+                );
+            }
+
+            function MatchInsertInput(props) {
+                return
+                (
+                <div class="uk-margin">
+                    <label for="">{props.label}Date of the match</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon={props.icon}></span>
+                            <input class="uk-input" type={props.type} id={props.id} name={props.name} placeholder={props.placeholder} maxlength={props.maxlength} pattern={props.pattern} onBlur={props.onblur} />
+                        </div>
+                    </div>
+                    <div id={props.errorMessage}></div>
+                </div>
+                )
+            }
+
+        </script>-->
+
+
+        <!-- Admin update match -->
+
+        <div id="updateMatch" class="pagecontent">
+            <a class="signUp displaycontent" onclick="openContent(event, 'adminMatchInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Update this match</h1>
+            <form id="updateMatchForm" name="insertMatchForm">
+                <div class="uk-margin">
+                    <label for="">Date of the match</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="calendar"></span>
+                            <input class="uk-input" type="text" id="updateMatchDate" name="updateMatchDate" placeholder="Date of the match" maxlength="20" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror1"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Home Team ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="home"></span>
+                            <input class="uk-input" type="number" id="updateHomeTeamID" name="updateHomeTeamID" placeholder="Home Team ID" maxlength="20" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror2"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Away Team ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="user"></span>
+                            <input class="uk-input" type="number" id="updateAwayTeamID" name="updateAwayTeamID" placeholder="Away Team ID" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror3"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Ticket price</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="credit-card"></span>
+                            <input class="uk-input" type="text" id="updateCost" name="updateCost" placeholder="Ticket price" pattern="" placeholder="Ticket price" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror4"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Stadium ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="location"></span>
+                            <input class="uk-input" type="text" id="updateStadiumID" name="updateStadiumID" placeholder="Stadium ID" pattern="" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror5"></div>
+                </div>
+                <input type="text" value="member" name="privilege" hidden>
+                <div id="AdminMatchID"></div>
+                <button class="uk-button uk-button-danger" id="updateBtn" type="submit" onclick="return updateAdminMatch(this.value); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Update</button>
+            </form>
+        </div>
+
+
+        <!-- Admin modify team page -->
+
+        <div id="adminTeamInfo" class="pagecontent uk-align-center">
+            <a class="signUp displaycontent" onclick="openContent(event, 'admin-panel'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Team selection</h1>
+            <button class="uk-button uk-align-center uk-button-secondary uk-button-large displaycontent" onclick="openContent(event, 'insertTeam'); hideNav();">Insert a new team</button>
+            <div id="modify-teams" class="uk-align-center"></div>
+        </div>
+
+
+        <!-- Admin insert team -->
+
+        <div id="insertTeam" class="pagecontent">
+            <a class="signUp displaycontent" onclick="openContent(event, 'adminTeamInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Insert a new team</h1>
+            <form id="insertTeamForm" name="insertTeamForm">
+                <div class="uk-margin">
+                    <label for="">Team Name</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="lifesaver"></span>
+                            <input class="uk-input" type="text" id="insertTeamName" name="teamName" placeholder="Team name" onblur="">
+                        </div>
+                    </div>
+                    <!--<div id="adminerror1"></div>-->
+                </div>
+                <div class="uk-margin">
+                    <label for="">Stadium ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="home"></span>
+                            <input class="uk-input" type="number" id="insertTeamStadiumID" name="TeamstadiumID" placeholder="Stadium ID" maxlength="20" onblur="">
+                        </div>
+                    </div>
+                    <!--<div id="adminerror2"></div>-->
+                </div>
+                <div class="uk-margin">
+                    <label for="">Logo image path</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="image"></span>
+                            <input class="uk-input" type="text" id="insertLogoImagePath" name="logoImagePath" placeholder="Logo image path" onblur="">
+                        </div>
+                    </div>
+                    <!--<div id="adminerror3"></div>-->
+                </div>
+                <button class="uk-button uk-button-danger" value="insertTeam" onclick="return insertAdminTeam(); openContent(event, 'adminTeamInfo')">Insert</button>
+            </form>
+        </div>
+
+
+        <!-- Admin update team-->
+
+
+        <div id="updateTeam" class="pagecontent">
+            <a class="signUp" onclick="openContent(event, 'adminTeamInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+            <h1 class="uk-text-center">Update this team</h1>
+            <form id="updateTeamForm" name="updateTeamForm">
+                <div class="uk-margin">
+                    <label for="">Team Name</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="lifesaver"></span>
+                            <input class="uk-input" type="text" id="updateTeamName" name="updateTeamName" placeholder="Team name" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror1"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Stadium ID</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="home"></span>
+                            <input class="uk-input" type="number" id="updateTeamstadiumID" name="updateTeamstadiumID" placeholder="Stadium ID" maxlength="20" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror2"></div>
+                </div>
+                <div class="uk-margin">
+                    <label for="">Logo image path</label>
+                    <div>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="image"></span>
+                            <input class="uk-input" type="text" id="updatelogoImagePath" name="updatelogoImagePath" placeholder="Logo image path" onblur="">
+                        </div>
+                    </div>
+                    <div id="adminerror3"></div>
+                </div>
+                <div id="AdminTeamID"></div>
+                <button class="uk-button uk-button-danger" id="updateTeamBtn" onclick="return updateAdminTeam(this.value); openContent(event, 'adminTeamInfo')" onsubmit="return adminformValidation()">Update</button>
+            </form>
+        </div>
+
+        <!-- React -->
+<!--
+        <script type="text/babel">
+
+            ReactDOM.render(
+                <App />,
+                document.getElementById('root')
+            );
+
+            function App() {
+                return (
+                <div>
+                    <Team 
+                        teamName = "Manchester United"
+                        img = "view/images/logo/manU.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "2"
+                    />
+                    <Team 
+                        teamName = "Chelsea"
+                        img = "view/images/logo/chelsea.jpg"
+                        stadium = "Stamford Bridge"
+                        location = "Fulham, London, SW6, England"
+                        value= "4"    
+                    />
+                    <Team 
+                        teamName = "Liverpool"
+                        img = "view/images/logo/liverpool.png"
+                        stadium = "liverpool"
+                        location = "Anfield, liverpool, merseyside, England"
+                        value= "1"
+                    />
+                    <Team 
+                        teamName = "Manchester City"
+                        img = "view/images/logo/manC.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "2"
+                    />
+                    <Team 
+                        teamName = "Arsenal"
+                        img = "view/images/logo/arsenal.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "8"
+                    />
+                    <Team 
+                        teamName = "Tottenham Hotspur"
+                        img = "view/images/logo/tottenham.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "6"
+                    />
+                    <Team 
+                        teamName = "Leicester"
+                        img = "view/images/logo/Leicester.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "5"
+                    />
+                    <Team 
+                        teamName = "Wolverhampton"
+                        img = "view/images/logo/Wolverhampton.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "7"
+                    />
+                    <Team 
+                        teamName = "Sheffield United"
+                        img = "view/images/logo/SheffieldUnited.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "9"
+                    />
+                    <Team 
+                        teamName = "Burnley"
+                        img = "view/images/logo/Burnley.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "10"
+                    />
+                    <Team 
+                        teamName = "Southampton"
+                        img = "view/images/logo/Southampton.jpeg"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "11"
+                    />
+                    <Team 
+                        teamName = "Everton"
+                        img = "view/images/logo/Everton.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "12"
+                    />
+                    <Team 
+                        teamName = "Newcastle"
+                        img = "view/images/logo/Newcastle.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "13"
+                    />
+                    <Team 
+                        teamName = "Crystal Palace"
+                        img = "view/images/logo/CrystalPalace.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "14"
+                    />
+                    <Team 
+                        teamName = "Brighton"
+                        img = "view/images/logo/Brighton.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "15"
+                    />
+                    <Team 
+                        teamName = "West Ham"
+                        img = "view/images/logo/Westham.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "16"
+                    />
+                    <Team 
+                        teamName = "Aston Villa"
+                        img = "view/images/logo/AstonVilla.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "17"
+                    />
+                    <Team 
+                        teamName = "Bournemouth"
+                        img = "view/images/logo/Bournemouth.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "18"
+                    />
+                    <Team 
+                        teamName = "Watford"
+                        img = "view/images/logo/Watford.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "19"
+                    />
+                    <Team 
+                        teamName = "Norwich"
+                        img = "view/images/logo/Norwich.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                        value= "20"
+                    />
+                </div>);
+            }
+
+            function Team(props) {
+                return (
+                <div className="teams manU">
+                    <div className="teams-name">
+                        <p>{props.teamName}</p>
+                    </div>
+                    <div className="teams-logo-img">
+                        <img src={props.img} alt="" />
+                    </div>
+                    <div>
+                        <p>Stadium: <br />{props.stadium}</p>
+                    </div>
+                    <div>
+                        <p>Location: <br />{props.location}</p>
+                    </div>
+                    <div className="like-btn">
+                        <button id="ManU-btn" value={props.value} onClick="createFavTeam(this)"><span className="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
+                    </div>
+                </div>);
+            }
+        
+        </script>
+
+
+
+        <div id="gameinfo"></div>
+        <script type="text/babel">
+
+            ReactDOM.render(
+                <Home />,
+                document.getElementById('gameinfo')
+            );
+
+            function Home() {
+                return (
+                <div>
+                    <Info 
+                        teamNameHome = "Manchester United"
+                        teamNameAway = "Chelsea"
+                        matchID = "1"
+                        imgHome = "view/images/logo/manU.png"
+                        imgAway = "view/images/logo/chelsea.png"
+                        stadium = "Old Trafford"
+                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
+                    />
+                    <Info 
+                        teamNameHome = "Liverpool"
+                        teamNameAway = "Arsenal"
+                        matchID = "2"
+                        imgHome = "view/images/logo/liverpool.png"
+                        imgAway = "view/images/logo/arsenal.png"
+                        stadium = "Anfield"
+                        location = "Fulham, London, SW6, England"
+                    />
+                    <Info  
+                        teamNameHome = "Manchester City"
+                        teamNameAway = "Tottenham Hotspur"
+                        matchID = "3"
+                        imgHome = "view/images/logo/manC.png"
+                        imgAway = "view/images/logo/tottenham.png"
+                        stadium = "Stamford Bridge"
+                        location = "Anfield, liverpool, merseyside, England"
+                    />
+                    <Info 
+                        teamNameHome = "Leicester"
+                        teamNameAway = "Wolverhampton"
+                        matchID = "4"
+                        imgHome = "view/images/logo/Leicester.png"
+                        imgAway = "view/images/logo/Wolverhampton.png"
+                        stadium = "King Power Stadium"
+                        location = ""
+                    />
+                    <Info  
+                        teamNameHome = "Sheffield United"
+                        teamNameAway = "Burnley"
+                        matchID = "5"
+                        imgHome = "view/images/logo/SheffieldUnited.png"
+                        imgAway = "view/images/logo/Burnley.png"
+                        stadium = "Bramall Lane"
+                        location = ""
+                    />
+                    <Info 
+                        teamNameHome = "Southampton"
+                        teamNameAway = "Everton"
+                        matchID = "6"
+                        imgHome = "view/images/logo/Southampton.png"
+                        imgAway = "view/images/logo/Everton.png"
+                        stadium = "St. Mary's Stadium"
+                        location = ""
+                    />
+                    <Info 
+                        teamNameHome = "Newcastle"
+                        teamNameAway = "Crystal Palace"
+                        matchID = "7"
+                        imgHome = "view/images/logo/Newcastle.png"
+                        imgAway = "view/images/logo/CrystalPalace.png"
+                        stadium = "St. Jame's Park"
+                        location = ""
+                    />
+                    <Info 
+                        teamNameHome = "Brighton"
+                        teamNameAway = "West Ham"
+                        matchID = "8"
+                        imgHome = "view/images/logo/Brighton.png"
+                        imgAway = "view/images/logo/Westham.png"
+                        stadium = "Amex Stadium"
+                        location = ""
+                    />
+                    <Info 
+                        teamNameHome = "Aston Villa"
+                        teamNameAway = "Boutnemouth"
+                        matchID = "9"
+                        imgHome = "view/images/logo/AstonVilla.png"
+                        imgAway = "view/images/logo/Bournemouth.png"
+                        stadium = "Villa Park"
+                        location = ""
+                    />
+                    <Info 
+                        teamNameHome = "Watford"
+                        teamNameAway = "Norwich"
+                        matchID = "10"
+                        imgHome = "view/images/logo/Watford.png"
+                        imgAway = "view/images/logo/Norwich.png"
+                        stadium = "Vicarage Road"
+                        location = ""
+                    />
+                </div>);
+            }
+
+            function Info(props) {
+                return (
+                    <div class="latest-game uk-text-large uk-text-bolder">
+                        <div class="latest-game-info">
+                            <div class="latest-game-info-1">
+                                <p>{props.teamNameHome}</p>
+                                <img src={props.imgHome} alt="" />
+                            </div>
+                            <div class="latest-game-info-1 latest-game-info-2">VS</div>
+                            <div class="latest-game-info-1">
+                                <p>{props.teamNameAway}</p>
+                                <img src={props.imgAway} alt="" />
+                            </div>
+                        </div>
+                        <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example">More Information...</button>
+                        <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
+                        <div id="modal-example" uk-modal>
+                            <div class="uk-modal-dialog uk-modal-body">
+                                <p class="uk-modal-title modal-title">Ticket information</p>
+                                <div id="dis"></div>
+                                <div class="latest-game-info">
+                                    <div class="latest-game-info-1-modal">
+                                        <p class="uk-text-large">{props.teamNameHome}</p>
+                                        <img src={props.imgHome} alt="" />
+                                    </div>
+                                    <div class="latest-game-info-1-modal latest-game-info-2 uk-align-center uk-text-middle">VS</div>
+                                    <div class="latest-game-info-1-modal">
+                                        <p class="uk-text-large uk-margin-large-bottom">{props.teamNameAway}</p>
+                                        <img class="uk-margin-top" src={imgAway} alt="" />
+                                    </div>
+                                </div>
+                                <div class="modal-info uk-margin-large-top">
+                                    <p>Date:          <span class="uk-text-bold">01/12/2020</span></p>
+                                    <p>Time:          <span class="uk-text-bold">19:00  Kick Off</span></p>
+                                    <p>Stadium:       <span class="uk-text-bold">{props.stadium}</span></p>
+                                    <p>Location:      <span class="uk-text-bold">Sir Matt Busby Way, Old Trafford, Greater Manchester</span></p>
+                                    <p>Ticket Price:  <span class="uk-text-bold">$1000</span></p>
+                                </div>
+                                <p class="uk-text-center">
+                                    <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
+                                    <a class="displaycontent" onclick="openContent(event, 'ticket')"><button class="uk-button uk-button-danger moreInfo" type="button">Buy a ticket</button></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>);
+                 }
+      
+          </script>-->
+
+
+
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+    
+    <!-- React.js -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!--<script src="index.js"></script>-->
+    </body>
+</html>
