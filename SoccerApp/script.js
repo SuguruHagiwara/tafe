@@ -473,7 +473,7 @@ function passInfo(num) {
                 </div>`
 
                 var btn = 
-                `<button class="uk-button uk-button-danger" value="` + row.MatchInfoID + `" type="submit" onclick="return buyTicket(this)">Buy a ticket</button>`
+                `<button class="uk-button uk-button-danger" value="` + row.MatchInfoID + `" type="button" onclick="return buyTicket(this)">Buy a ticket</button>`
             document.getElementById("ticketMatchInfo").innerHTML = output;
             document.getElementById("ticketSubmit").innerHTML = btn;
             return true;
@@ -532,8 +532,8 @@ function displayTeam() {
                                 <div class="uk-text-center">Location:</div>
                                 <div class="uk-text-center" style="font-size: 20px; color:black;">` + row[4] +`</div>
                             </div>
-                            <button class="uk-button uk-button-primary uk-button-large uk-align-center displaycontent" style="margin: 5% auto 0 auto;" onclick="openContent(event, 'updateTeam'); passTeamID(` + row[0] +`); hideNav()">Update this team</button>
-                        <button class="uk-button uk-button-danger uk-button-large uk-align-center displaycontent" style="margin: 5% auto;" onclick="deleteAdminTeam(` + row[0] + `)">Delete this team</button>
+                            <button class="uk-button uk-button-primary uk-button-large uk-align-center" style="margin: 5% auto 0 auto;" onclick="openContent(event, 'updateTeam'); passTeamID(` + row[0] +`); hideNav()">Update this team</button>
+                        <button class="uk-button uk-button-danger uk-button-large uk-align-center" style="margin: 5% auto;" onclick="deleteAdminTeam(` + row[0] + `)">Delete this team</button>
                         </div>
                     </div>
                     `
