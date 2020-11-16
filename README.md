@@ -68,6 +68,10 @@
 	Password: Suguru
 
 
+Admin User name: Hagiwara123
+Admin Password: Hagiwara123
+
+
 
 6. UI
 
