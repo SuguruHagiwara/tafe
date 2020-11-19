@@ -1,5 +1,16 @@
 1. How to install an app
 
+	Upon iOS devices, PWA currently works only upon Safari Browsers.
+	
+	On safari, 
+	Make sure that you have cleared the browsing data.
+	Visit the PWA website
+	Tap the Share button (at the browser options)
+	From the options tap the Add to Homescreen option, you can notice an icon of the website or 	screenshot of website added to your devices homescreen instantly.
+	Tap the icon from homescreen, then the Progressive Web App of your website will be loaded.
+
+
+
 
 2. What I completed
 	
