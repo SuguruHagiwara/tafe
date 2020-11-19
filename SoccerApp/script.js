@@ -21,10 +21,14 @@ function login() {
             return;
         }
         if(response.status === 202) {
+            alert("Hello! admin!");
+            document.getElementById("login").style.display = "none";
+            document.getElementById("admin-panel").style.display = "block";
+        }
+        if(response.status === 203) {
             document.getElementById("login").style.display = "none";
             document.getElementById("home").style.display = "block";
             showNav();
-            return;
         }
     })
     return false;
@@ -42,6 +46,7 @@ function logout() {
         credentails: 'same-origin'
     }
     ).then(function(response) {
+        response.json()
         if(response.status === 202) {
             alert("logging out");
             window.location.assign("index.html")
@@ -377,7 +382,7 @@ function displayTicket() {
                     return false;
                 }
             });
-        return 
+        return false;
     }
 
     
@@ -418,7 +423,7 @@ function displayMatch() {
                             </div>
                         </div>
                         <button class="uk-button uk-button-primary uk-button-small" type="button" uk-toggle="target: #modal-example" onclick="matchInfo(` + row.MatchInfoID +`)">More Information...</button>
-                        <a class="displaycontent" onclick="openContent(event, 'ticket'); passInfo(` + row.MatchInfoID + `)"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
+                        <button class="uk-button uk-button-danger uk-button-small moreInfo" type="button" onclick="openContent(event, 'ticket'); passInfo(` + row.MatchInfoID + `)">Buy a ticket</button>
                     </div>
                     `
                     document.getElementById("matchInfo").innerHTML = output;
@@ -533,7 +538,7 @@ function displayTeam() {
                                 <div class="uk-text-center" style="font-size: 20px; color:black;">` + row[4] +`</div>
                             </div>
                             <button class="uk-button uk-button-primary uk-button-large uk-align-center" style="margin: 5% auto 0 auto;" onclick="openContent(event, 'updateTeam'); passTeamID(` + row[0] +`); hideNav()">Update this team</button>
-                        <button class="uk-button uk-button-danger uk-button-large uk-align-center" style="margin: 5% auto;" onclick="deleteAdminTeam(` + row[0] + `)">Delete this team</button>
+                            <button class="uk-button uk-button-danger uk-button-large uk-align-center" style="margin: 5% auto;" onclick="deleteAdminTeam(` + row[0] + `)">Delete this team</button>
                         </div>
                     </div>
                     `
@@ -604,7 +609,7 @@ function matchInfo(info) {
                         </div>
                         <p class="uk-text-center">
                             <button class="uk-button uk-button-default uk-modal-close" type="button">Back</button>
-                            <a class="displaycontent uk-modal-close" onclick="openContent(event, 'ticket'); passInfo(` + row.MatchInfoID + `)"><button class="uk-button uk-button-danger uk-button-small moreInfo" type="button">Buy a ticket</button></a>
+                            <button class="uk-button uk-button-danger uk-button-small moreInfo" type="button" onclick="openContent(event, 'ticket'); passInfo(` + row.MatchInfoID + `)">Buy a ticket</button>
                         </p>
                     </div>
                     `
@@ -685,7 +690,6 @@ function passMatchInfo(infoID) {
         }
     });
 }
-
 
 
 
