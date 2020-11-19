@@ -12,6 +12,12 @@
 	Tap the icon from homescreen, then the Progressive Web App of your website will be loaded.
 
 
+	Upon Android device, open Chrome Chrome.
+	
+	Go to a website you want to install.
+	Tap Add to home screen.
+	Follow the onscreen instructions to install.
+
 
 2. What I completed
 	
