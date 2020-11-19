@@ -169,7 +169,7 @@
                     <div id="error5"></div>
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
-                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="return reg(); return formValidation()">Register</button>
+                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="formValidation(); return reg();">Register</button>
             </form>
         </div>
 
@@ -359,7 +359,7 @@
                         </div>
                         <div id="editerror5"></div>
                     </div>
-                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="button" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit'); showNav(); return editValidation()">Edit</button>
+                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="button" value="Edit User Account" onclick="editValidation(); return editUser(); openContent(event, 'Edit'); showNav()">Edit</button>
                 </form> 
             </div>
         </div>
