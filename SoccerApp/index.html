@@ -169,7 +169,7 @@
                     <div id="error5"></div>
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
-                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="return reg()" onsubmit="return formValidation()">Register</button>
+                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="return reg(); return formValidation()">Register</button>
             </form>
         </div>
 
@@ -299,7 +299,7 @@
             <br>
             <h1>Purchased tickets</h1>
             <div id="ticketDisplay"></div>
-            <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="Delete Ticket" onclick="return deleteTicket(); openContent(event, 'profile-edit');">Delete ticket</button>
+            <button class="uk-button uk-align-center" id="login-button" type="button" value="Delete Ticket" onclick="return deleteTicket(); openContent(event, 'profile-edit');">Delete ticket</button>
         </div>
 
 
@@ -359,7 +359,7 @@
                         </div>
                         <div id="editerror5"></div>
                     </div>
-                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="submit" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit'); showNav();" onsubmit="return editValidation()">Edit</button>
+                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="button" value="Edit User Account" onclick="return editUser(); openContent(event, 'Edit'); showNav(); return editValidation()">Edit</button>
                 </form> 
             </div>
         </div>
