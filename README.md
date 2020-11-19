@@ -1,6 +1,7 @@
 # tafe
 
 1. How to install an app
+
 	Upon iOS devices, PWA currently works only upon Safari Browsers.
 	
 	On safari, 
