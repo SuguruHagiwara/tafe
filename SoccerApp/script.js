@@ -125,7 +125,7 @@ function displayProfile() {
                     `</div></div>`
                 })
                 document.getElementById("profileDisplay").innerHTML = output;
-                return;
+                //return;
             } else {
                alert("failed to display");
             }
@@ -181,7 +181,7 @@ function displayProfile() {
             response.json()
             if(response.status === 202) {
                 if(editValidation() == true) {
-                    //alert("User account edited!");
+                    alert("User account edited!");
                     displayProfile()
                     document.getElementById("profile").style.display = "block";
                     document.getElementById("profile-edit").style.display = "none";
@@ -690,8 +690,6 @@ function passMatchInfo(infoID) {
         }
     });
 }
-
-
 
 
 
