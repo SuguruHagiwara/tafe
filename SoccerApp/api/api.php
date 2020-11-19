@@ -34,6 +34,7 @@ if ($_SESSION['se']->rate_limited() == true &&
         http_response_code(501);
         die;
     } else {
+        //On the first if statement inside the switch statement, each case is checking if the request is whether POST or GET using $SERVER[REQUEST_METHOD]. If the request method is wrong, it will return die.
         switch ($_GET['action']) {
             case 'login':
                 if($_SERVER['REQUEST_METHOD'] == 'POST') {
