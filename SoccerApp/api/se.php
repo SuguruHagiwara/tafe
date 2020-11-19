@@ -1,4 +1,6 @@
 <?php
+//Data base object and session object are inside the db.php file and the se.php file.
+//These files are inside the api folder to differentiate from Client side files like HTML and CSS.
     session_start();
 class sessObj {
 
