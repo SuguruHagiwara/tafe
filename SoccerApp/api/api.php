@@ -1,5 +1,7 @@
 <?php
 require("se.php"); 
+
+// Checking a session in here if it pre-exits or not. If it doesn't exist it sets a new session object to a $_SESSION['se'] variables. It it exists already, it will allow to access the api.
 if(!isset($_SESSION['se'])) {
     $_SESSION['se'] = new sessObj;
 } 
