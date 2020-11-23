@@ -73,11 +73,11 @@
                         <input class="uk-input uk-form-large" type="text" id="login-pword" name="login-pword">
                     </div>
                 </div>
-                <button class="uk-button uk-align-center displaycontent" id="login-button" type="submit" value="login" onclick="displayMatch(); return login(); openContent(event, 'home'); showNav();">Login</button>
+                <button class="uk-button uk-align-center displaycontent" id="login-button" type="button" value="login" onclick="displayMatch(); return login(); openContent(event, 'home'); showNav();">Login</button>
             </form>
             <!--<a class="signUp displaycontent" onclick="openContent(event, 'home'); showNav(); displayMatch()" style="font-size: 30px;">Home</a>-->
             <a id="signup" class="signUp displaycontent" onclick="openContent(event, 'registration'); hideNav()" style="font-size: 30px;">Sign Up</a>
-            <button class="uk-button uk-button-primary uk-align-center" onclick="openContent(event, 'admin-login'); hideNav();" style="font-size: 30px;">Admin</button>
+            <!--<button class="uk-button uk-button-primary uk-align-center" onclick="openContent(event, 'admin-login'); hideNav();" style="font-size: 30px;">Admin</button>-->
         </div>
 
 
@@ -169,7 +169,7 @@
                     <div id="error5"></div>
                 </div>
                 <input type="text" value="member" name="privilege" hidden>
-                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="formValidation(); return reg();">Register</button>
+                <button class="uk-button uk-button-danger" type="button" value="Register" onclick="formValidation(); return reg()">Register</button>
             </form>
         </div>
 
@@ -280,7 +280,6 @@
                         </div>
                     </div>
                     <hr class="uk-divider-icon">
-                    <input type="hidden" value="1" name="matchInfo" id="matchInfo" hidden>
                     <div id="ticketSubmit"></div>
                 </form>
             </div>
@@ -294,12 +293,12 @@
             <img id="default-img" src="view/images/profile.png" alt="" onclick="profileImage()">
                 <p>※Click the image to change from default</p>
             <div id="profileDisplay"></div>
-            <button class="uk-button uk-align-center displaycontent" id="login-button" type="button" value="Edit User Account" onclick="openContent(event, 'profile-edit');">Edit User Account</button>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="button" value="Edit User Account" onclick="openContent(event, 'profile-edit'); return displayCurrentProfile()">Edit User Account</button>
             <button class="uk-button uk-align-center displaycontent" id="login-button" type="button" value="Delete User Account" onclick="return deleteUser(); openContent(event, 'login');">Delete User Account</button>
             <br>
             <h1>Purchased tickets</h1>
             <div id="ticketDisplay"></div>
-            <button class="uk-button uk-align-center" id="login-button" type="button" value="Delete Ticket" onclick="return deleteTicket(); openContent(event, 'profile-edit');">Delete ticket</button>
+            <button class="uk-button uk-align-center displaycontent" id="login-button" type="button" value="Delete Ticket" onclick="return deleteTicket(); openContent(event, 'profile-edit'); hideNav()">Delete ticket</button>
         </div>
 
 
@@ -311,16 +310,18 @@
                 <form>
                     <div class="uk-margin">
                         <label for="">First Name</label>
+                        <div id="displayFirstName"></div>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="pencil"></span>
-                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay1()">
+                                <input class="uk-input" type="text" name="editFName" id="editFName" placeholder="First name" maxlength="20" pattern="[A-Za-z]{2,}" onblur="editErrorDisplay1()" required>
                             </div>
                         </div>
                         <div id="editerror1"></div>
                     </div>
                     <div class="uk-margin">
                         <label for="">Last Name</label>
+                        <div id="displayLastName"></div>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="pencil"></span>
@@ -331,6 +332,7 @@
                     </div>
                     <div class="uk-margin">
                         <label for="">Email</label>
+                        <div id="displayEmail"></div>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="mail"></span>
@@ -341,6 +343,7 @@
                     </div>
                     <div class="uk-margin">
                         <label for="">Telephone</label>
+                        <div id="displayTel"></div>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="receiver"></span>
@@ -351,6 +354,7 @@
                     </div>
                     <div class="uk-margin">
                         <label for="">Home Address</label>
+                        <div id="displayAddress"></div>
                         <div>
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="location"></span>
@@ -359,7 +363,7 @@
                         </div>
                         <div id="editerror5"></div>
                     </div>
-                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="button" value="Edit User Account" onclick="editValidation(); return editUser(); openContent(event, 'Edit'); showNav()">Edit</button>
+                    <button class="uk-button uk-align-center displaycontent" id="edit-button" type="button" value="Edit User Account" onclick="editValidation(); return editUser(); openContent(event, 'Edit'); showNav();">Edit</button>
                 </form> 
             </div>
         </div>
@@ -414,33 +418,6 @@
 
 <!-- Admin interface -->
 
-         <!-- Admin login page -->
-
-         <div id="admin-login" class="pagecontent">
-            <div class="logo">
-                <img src="view/images/admin-logo.png" alt="">
-            </div>
-            <form method="POST">
-                <div class="uk-margin">
-                    <div class="uk-inline username">
-                        <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input class="uk-input uk-form-large" type="text" id="admin-login-uname" name="admin-login-uname">
-                    </div>
-                </div>
-            
-                <div class="uk-margin">
-                    <div class="uk-inline password">
-                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input class="uk-input uk-form-large" type="text" id="admin-login-pword" name="admin-login-pword">
-                    </div>
-                </div>
-                <button class="uk-button uk-align-center displaycontent" id="admin-login-button" type="submit" value="admin-login" onclick="return adminLogin(); openContent(event, 'admin-panel'); hideNav();">Login</button>
-            </form>
-            <a class="signUp displaycontent" onclick="openContent(event, 'login'); hideNav()" style="font-size: 30px;"><span uk-icon="icon: arrow-left; ratio: 3"></span>Go back</a>
-            <!--<button class="uk-button uk-button-primary uk-button-large uk-align-center" onclick="openContent(event, 'admin-panel'); hideNav();" style="font-size: 30px;">Admin panel</button>-->
-        </div>
-
-
 
         <!-- Admin panel -->
         
@@ -448,11 +425,10 @@
 
         
             <!-- Admin header -->
-            <div id="reactAdmin"></div>
             <div id="admin-head">
-                <a onclick="openContent(event, 'admin-login'); hideNav()" uk-toggle uk-icon="icon:arrow-left; ratio:3" class="logos"></a>
+                <a onclick="openContent(event, 'login'); hideNav()" uk-toggle uk-icon="icon:arrow-left; ratio:3" class="logos"></a>
                 <a class="displaycontent"><img src="view/images/admin-logo.png" class="header-logo uk-align-center" id="top-logo" alt=""></a>
-                <a uk-icon="icon:sign-out; ratio:3" class="logos" onclick="adminLogout()"></a>
+                <a uk-icon="icon:sign-out; ratio:3" class="logos" onclick="logout()"></a>
             </div>
 
             <h1 class="uk-text-center">Admin Panel</h1>
@@ -464,14 +440,13 @@
             <button class="uk-button uk-align-center displaycontent" id="modify-admin-teams" type="button" onclick="openContent(event, 'adminTeamInfo'); hideNav(); adminDisplayTeam()">Click</button>
 
             <!--
-            <form action="db.php" method="POST">
+            <form action="api/db.php" method="POST">
                 <input type="text" name="adminName">
                 <input type="text" name="adminPword">
                 <input type="submit">
             </form>-->
         </div>
 
-       
 
 
         <!-- Admin modify match page -->
@@ -488,7 +463,7 @@
 
         <div id="insertMatch" class="pagecontent">
             <div id="reactInsertMatch"></div>
-            <a class="signUp displaycontent" onclick="openContent(event, 'adminMatchInfo'); hideNav()" style="font-size: 30px;">Go back</a>
+            <a class="signUp" onclick="openContent(event, 'adminMatchInfo'); hideNav()" style="font-size: 30px;">Go back</a>
             <h1 class="uk-text-center">Insert a new match</h1>
             <form id="insertMatchForm" name="insertMatchForm">
                 <div class="uk-margin">
@@ -496,7 +471,7 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="calendar"></span>
-                            <input class="uk-input" type="text" id="matchDate" name="matchDate" placeholder="Date of the match" maxlength="20" pattern="" onblur="">
+                            <input class="uk-input" type="text" id="matchDate" name="matchDate" placeholder="Date of the match" maxlength="20" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
                     <div id="adminerror1"></div>
@@ -506,7 +481,7 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="home"></span>
-                            <input class="uk-input" type="number" id="homeTeamID" name="homeTeamID" placeholder="Home Team ID" maxlength="20" pattern="" onblur="">
+                            <input class="uk-input" type="number" id="homeTeamID" name="homeTeamID" placeholder="Home Team ID" maxlength="20" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
                     <div id="adminerror2"></div>
@@ -516,7 +491,7 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="user"></span>
-                            <input class="uk-input" type="number" id="awayTeamID" name="awayTeamID" placeholder="Away Team ID" pattern="" onblur="">
+                            <input class="uk-input" type="number" id="awayTeamID" name="awayTeamID" placeholder="Away Team ID" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
                     <div id="adminerror3"></div>
@@ -526,7 +501,7 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="credit-card"></span>
-                            <input class="uk-input" type="text" id="cost" name="cost" placeholder="Ticket price" pattern="" placeholder="Ticket price" onblur="">
+                            <input class="uk-input" type="number" id="cost" name="cost" placeholder="Ticket price" pattern="" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
                     <div id="adminerror4"></div>
@@ -536,13 +511,12 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="location"></span>
-                            <input class="uk-input" type="text" id="stadiumID" name="stadiumID" placeholder="Stadium ID" pattern="" onblur="">
+                            <input class="uk-input" type="number" id="stadiumID" name="stadiumID" placeholder="Stadium ID" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
                     <div id="adminerror5"></div>
                 </div>
-                <input type="text" value="member" name="privilege" hidden>
-                <button class="uk-button uk-button-danger" type="submit" value="insertMatch" onclick="return insertMatch(); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Insert</button>
+                <button class="uk-button uk-button-danger" type="button" onclick="return AdminInsertValidation(); return insertMatch(); openContent(event, 'adminMatchInfo')">Insert</button>
             </form>
         </div>
 
@@ -573,7 +547,7 @@
                         maxlength = "20"
                         pattern = ""
                         onblur = ""
-                        errormessage = ""
+                        errorMessage = ""
                     />
                     <MatchInsertInput 
                         label = "Home Team ID"
@@ -585,7 +559,7 @@
                         maxlength = "20"
                         pattern = ""
                         onblur = ""
-                        errormessage = ""
+                        errorMessage = ""
                     />
                     <MatchInsertInput 
                         label = "Away Team ID"
@@ -597,7 +571,7 @@
                         maxlength = ""
                         pattern = ""
                         onblur = ""
-                        errormessage = ""
+                        errorMessage = ""
                     />
                     <MatchInsertInput 
                         label = "Ticket price"
@@ -609,7 +583,7 @@
                         maxlength = ""
                         pattern = ""
                         onblur = ""
-                        errormessage = ""
+                        errorMessage = ""
                     />
                     <MatchInsertInput 
                         label = "Stadium ID"
@@ -621,9 +595,9 @@
                         maxlength = ""
                         pattern = ""
                         onblur = ""
-                        errormessage = ""
+                        errorMessage = ""
                     />
-                <button class="uk-button uk-button-danger" type="submit" value="insertMatch" onclick="return insertMatch(); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Insert</button>
+                    <button class="uk-button uk-button-danger" type="submit" value="insertMatch" onclick="return insertMatch(); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Insert</button>
                 </form>
                 );
             }
@@ -658,54 +632,53 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="calendar"></span>
-                            <input class="uk-input" type="text" id="updateMatchDate" name="updateMatchDate" placeholder="Date of the match" maxlength="20" pattern="" onblur="">
+                            <input class="uk-input" type="text" id="updateMatchDate" name="updateMatchDate" placeholder="Date of the match" maxlength="20" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror1"></div>
+                    <div id="adminUpdateMatchError1"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Home Team ID</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="home"></span>
-                            <input class="uk-input" type="number" id="updateHomeTeamID" name="updateHomeTeamID" placeholder="Home Team ID" maxlength="20" pattern="" onblur="">
+                            <input class="uk-input" type="number" id="updateHomeTeamID" name="updateHomeTeamID" placeholder="Home Team ID" maxlength="20" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror2"></div>
+                    <div id="adminUpdateMatchError2"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Away Team ID</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="user"></span>
-                            <input class="uk-input" type="number" id="updateAwayTeamID" name="updateAwayTeamID" placeholder="Away Team ID" pattern="" onblur="">
+                            <input class="uk-input" type="number" id="updateAwayTeamID" name="updateAwayTeamID" placeholder="Away Team ID" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror3"></div>
+                    <div id="adminUpdateMatchError3"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Ticket price</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="credit-card"></span>
-                            <input class="uk-input" type="text" id="updateCost" name="updateCost" placeholder="Ticket price" pattern="" placeholder="Ticket price" onblur="">
+                            <input class="uk-input" type="number" id="updateCost" name="updateCost" placeholder="Ticket price" pattern="" placeholder="Ticket price" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror4"></div>
+                    <div id="adminUpdateMatchError4"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Stadium ID</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="location"></span>
-                            <input class="uk-input" type="text" id="updateStadiumID" name="updateStadiumID" placeholder="Stadium ID" pattern="" onblur="">
+                            <input class="uk-input" type="text" id="updateStadiumID" name="updateStadiumID" placeholder="Stadium ID" pattern="[0-9]{1,}" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror5"></div>
+                    <div id="adminUpdateMatchError5"></div>
                 </div>
-                <input type="text" value="member" name="privilege" hidden>
                 <div id="AdminMatchID"></div>
-                <button class="uk-button uk-button-danger" id="updateBtn" type="submit" onclick="return updateAdminMatch(this.value); openContent(event, 'adminMatchInfo')" onsubmit="return adminformValidation()">Update</button>
+                <button class="uk-button uk-button-danger" id="updateBtn" type="button" onclick="return adminUpdateMatchValidation(); return updateAdminMatch(this.value); openContent(event, 'adminMatchInfo')">Update</button>
             </form>
         </div>
 
@@ -731,32 +704,32 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="lifesaver"></span>
-                            <input class="uk-input" type="text" id="insertTeamName" name="teamName" placeholder="Team name" onblur="">
+                            <input class="uk-input" type="text" id="insertTeamName" name="teamName" placeholder="Team name" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <!--<div id="adminerror1"></div>-->
+                    <div id="adminInsertTeamError1"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Stadium ID</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="home"></span>
-                            <input class="uk-input" type="number" id="insertTeamStadiumID" name="TeamstadiumID" placeholder="Stadium ID" maxlength="20" onblur="">
+                            <input class="uk-input" type="number" id="insertTeamStadiumID" name="TeamstadiumID" placeholder="Stadium ID" pattern="[0-9]{1,}" maxlength="20" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <!--<div id="adminerror2"></div>-->
+                    <div id="adminInsertTeamError2"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Logo image path</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="image"></span>
-                            <input class="uk-input" type="text" id="insertLogoImagePath" name="logoImagePath" placeholder="Logo image path" onblur="">
+                            <input class="uk-input" type="text" id="insertLogoImagePath" name="logoImagePath" placeholder="Logo image path" onblur="adminErrorDisplay(this)">
                         </div>
                     </div>
-                    <!--<div id="adminerror3"></div>-->
+                    <div id="adminInsertTeamError3"></div>
                 </div>
-                <button class="uk-button uk-button-danger" value="insertTeam" onclick="return insertAdminTeam(); openContent(event, 'adminTeamInfo')">Insert</button>
+                <button class="uk-button uk-button-danger" type="button" id="insertTeamBtn" onclick="return AdminInsertTeamValidation(); return insertAdminTeam(); openContent(event, 'adminTeamInfo');">Insert</button>
             </form>
         </div>
 
@@ -773,33 +746,33 @@
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="lifesaver"></span>
-                            <input class="uk-input" type="text" id="updateTeamName" name="updateTeamName" placeholder="Team name" onblur="">
+                            <input class="uk-input" type="text" id="updateTeamName" name="updateTeamName" placeholder="Team name" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror1"></div>
+                    <div id="adminUpdateTeamError1"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Stadium ID</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="home"></span>
-                            <input class="uk-input" type="number" id="updateTeamstadiumID" name="updateTeamstadiumID" placeholder="Stadium ID" maxlength="20" onblur="">
+                            <input class="uk-input" type="number" id="updateTeamstadiumID" name="updateTeamstadiumID" placeholder="Stadium ID" pattern="[0-9]{1,}" maxlength="20" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror2"></div>
+                    <div id="adminUpdateTeamError2"></div>
                 </div>
                 <div class="uk-margin">
                     <label for="">Logo image path</label>
                     <div>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="image"></span>
-                            <input class="uk-input" type="text" id="updatelogoImagePath" name="updatelogoImagePath" placeholder="Logo image path" onblur="">
+                            <input class="uk-input" type="text" id="updatelogoImagePath" name="updatelogoImagePath" placeholder="Logo image path" onblur="adminErrorDisplay(this)" required>
                         </div>
                     </div>
-                    <div id="adminerror3"></div>
+                    <div id="adminUpdateTeamError3"></div>
                 </div>
                 <div id="AdminTeamID"></div>
-                <button class="uk-button uk-button-danger" id="updateTeamBtn" onclick="return updateAdminTeam(this.value); openContent(event, 'adminTeamInfo')" onsubmit="return adminformValidation()">Update</button>
+                <button class="uk-button uk-button-danger" type="button" id="updateTeamBtn" onclick="return adminUpdateTeamValidation(); return updateAdminTeam(this.value); openContent(event, 'adminTeamInfo');">Update</button>
             </form>
         </div>
 

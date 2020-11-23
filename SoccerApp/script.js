@@ -199,6 +199,53 @@ function displayProfile() {
         });
         return false;
         }
+
+
+/* ------------------------------------------------------ Display current user account ----------------------------------------------------  */
+
+    function displayCurrentProfile() {
+        var displayFName = "";
+        var displayLName = "";
+        var displayEmail = "";
+        var displayPhone = "";
+        var displayAddress = "";
+        fetch('api/api.php?action=displayCurrentProfile',
+        {
+            method: 'GET',
+            credentails: 'same-origin'
+        }
+        ). then(function(response) {
+            console.log(response);
+            response.json().then(function(data) {
+                
+            if(response.status === 202) {
+                data.forEach(row => {
+                    displayFName =
+                    `<div>` + row.FirstName + `</div>`
+
+                    displayLName =
+                    `<div>` + row.LastName + `</div>`
+
+                    displayEmail =
+                    `<div>` + row.Email + `</div>`
+
+                    displayPhone =
+                    `<div>` + row.Phone + `</div>`
+                    
+                    displayAddress =
+                    `<div>` + row.Address + `</div>`
+                })
+                document.getElementById("displayFirstName").innerHTML = displayFName ;
+                document.getElementById("displayLastName").innerHTML = displayLName ;
+                document.getElementById("displayEmail").innerHTML = displayEmail;
+                document.getElementById("displayTel").innerHTML = displayPhone;
+                document.getElementById("displayAddress").innerHTML = displayAddress;
+            } else {
+                alert("fail to display");
+            }
+        })
+        })
+    }
     
 
 
@@ -694,12 +741,16 @@ function passMatchInfo(infoID) {
 
 
 
+
+
+
 /* ------------------------------------------------------ Admin functions----------------------------------------------------  */
 
 
 
 
 /* ------------------------------ login ---------------------------  */
+
 
 function adminLogin() {
     var adminlogin = {
@@ -738,9 +789,10 @@ function adminLogin() {
             credentails: 'same-origin'
         }
         ).then(function(response) {
+            response.json()
             if(response.status === 202) {
                 alert("logged out!");
-                document.getElementById("admin-login").style.display = "block";
+                document.getElementById("login").style.display = "block";
                 document.getElementById("admin-panel").style.display = "none";
                 return true;
             } else {
@@ -817,13 +869,14 @@ function adminDisplayMatch() {
             credentails: 'same-origin'
         }
         ).then(function(response) {
+            response.json()
             if(response.status === 202) {
                 alert("The new match was inserted!");
-                document.getElementById("admin-login").style.display = "block";
-                document.getElementById("admin-panel").style.display = "none";
+                document.getElementById("admin-panel").style.display = "block";
+                document.getElementById("insertMatch").style.display = "none";
                 return true;
             } else {
-                alert("Inserting error!");
+                alert("Inserting error!, Check your form again!");
                 return false;
             }
         })
@@ -877,12 +930,11 @@ function adminDisplayMatch() {
         response.json()
         if(response.status === 202) {
             alert("The match was updated!");
-            document.getElementById("login").style.display = "block";
-            document.getElementById("profile").style.display = "none";
+            document.getElementById("admin-panel").style.display = "block";
+            document.getElementById("updateMatch").style.display = "none";
             return;
         } else {
-            document.getElementById("profile").style.display = "block";
-            showNav()
+            document.getElementById("updateMatch").style.display = "block";
             alert("failed to update the match");
         }
     })
@@ -931,207 +983,6 @@ function adminDisplayTeam() {
     });
 }
 
-
-/*
-function adminDisplayTeam() {
-    var adminOutput3 = "";
-    fetch('api/api.php?action=adminDisplayTeam',
-    {
-        method: 'GET',
-        credentails: 'same-origin'
-    }
-    ).then(function(response) {
-        if(response.status === 200) {
-            response.json().then(function(data) {
-                data.forEach(row => {
-                    adminOutput3 += 
-
-
-                
-
-            ReactDOM.render(
-                <App />,
-                document.getElementById('root')
-            );
-
-            function App() {
-                return (
-                <div>
-                    <Team 
-                        teamName = "Manchester United"
-                        img = "view/images/logo/manU.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "2"
-                    />
-                    <Team 
-                        teamName = "Chelsea"
-                        img = "view/images/logo/chelsea.jpg"
-                        stadium = "Stamford Bridge"
-                        location = "Fulham, London, SW6, England"
-                        value= "4"    
-                    />
-                    <Team 
-                        teamName = "Liverpool"
-                        img = "view/images/logo/liverpool.png"
-                        stadium = "liverpool"
-                        location = "Anfield, liverpool, merseyside, England"
-                        value= "1"
-                    />
-                    <Team 
-                        teamName = "Manchester City"
-                        img = "view/images/logo/manC.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "2"
-                    />
-                    <Team 
-                        teamName = "Arsenal"
-                        img = "view/images/logo/arsenal.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "8"
-                    />
-                    <Team 
-                        teamName = "Tottenham Hotspur"
-                        img = "view/images/logo/tottenham.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "6"
-                    />
-                    <Team 
-                        teamName = "Leicester"
-                        img = "view/images/logo/Leicester.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "5"
-                    />
-                    <Team 
-                        teamName = "Wolverhampton"
-                        img = "view/images/logo/Wolverhampton.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "7"
-                    />
-                    <Team 
-                        teamName = "Sheffield United"
-                        img = "view/images/logo/SheffieldUnited.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "9"
-                    />
-                    <Team 
-                        teamName = "Burnley"
-                        img = "view/images/logo/Burnley.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "10"
-                    />
-                    <Team 
-                        teamName = "Southampton"
-                        img = "view/images/logo/Southampton.jpeg"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "11"
-                    />
-                    <Team 
-                        teamName = "Everton"
-                        img = "view/images/logo/Everton.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "12"
-                    />
-                    <Team 
-                        teamName = "Newcastle"
-                        img = "view/images/logo/Newcastle.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "13"
-                    />
-                    <Team 
-                        teamName = "Crystal Palace"
-                        img = "view/images/logo/CrystalPalace.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "14"
-                    />
-                    <Team 
-                        teamName = "Brighton"
-                        img = "view/images/logo/Brighton.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "15"
-                    />
-                    <Team 
-                        teamName = "West Ham"
-                        img = "view/images/logo/Westham.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "16"
-                    />
-                    <Team 
-                        teamName = "Aston Villa"
-                        img = "view/images/logo/AstonVilla.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "17"
-                    />
-                    <Team 
-                        teamName = "Bournemouth"
-                        img = "view/images/logo/Bournemouth.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "18"
-                    />
-                    <Team 
-                        teamName = "Watford"
-                        img = "view/images/logo/Watford.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "19"
-                    />
-                    <Team 
-                        teamName = "Norwich"
-                        img = "view/images/logo/Norwich.png"
-                        stadium = "Old Trafford"
-                        location = "Sir Matt Busby Way, Old Trafford, Greater Manchester"
-                        value= "20"
-                    />
-                </div>);
-            }
-
-            function Team(props) {
-                return (
-                <div className="teams manU">
-                    <div className="teams-name">
-                        <p>{props.teamName}</p>
-                    </div>
-                    <div className="teams-logo-img">
-                        <img src={props.img} alt="" />
-                    </div>
-                    <div>
-                        <p>Stadium: <br />{props.stadium}</p>
-                    </div>
-                    <div>
-                        <p>Location: <br />{props.location}</p>
-                    </div>
-                    <div className="like-btn">
-                        <button id="ManU-btn" value={props.value} onClick="createFavTeam(this)"><span className="like-icon" uk-icon="icon:heart; ratio:3"></span></button>
-                    </div>
-                </div>);
-            }
-        
-
-
-                    document.getElementById("modify-teams").innerHTML = adminOutput3;
-                    return true;
-                });
-            });
-        } else {
-            alert("failed to display");
-        }
-    });
-}*/
 
 
 /* ------------------------------ Insert Team ---------------------------  */

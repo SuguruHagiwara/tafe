@@ -429,112 +429,178 @@ function passTeamID(num1) {
 }
 
 
-/* Admin form validation */
-
-function AdminCheckRequired() {
-    let uname = document.getElementById("uname").value;
-    let pword = document.getElementById("pword").value;
-    if(uname == "") {
-        alert("Username must be filled out");
-        return false;
-    }
-    if(pword == "") {
-        alert("Password must be filled out");
-        return false;
-    }
-    
-    return true;
-}
+/* Admin Insert form validation */
 
 
-function formValidation() {
-    let fname = document.getElementById("fname");
-    let lname = document.getElementById("lname");
-    let email = document.getElementById("email");
-    let phone = document.getElementById("phone");
-    let address = document.getElementById("address");
-    
-    if(fname.checkValidity() == false) {
-        error1.innerHTML = "Please check Your First Name!"
-        fname.style.backgroundColor = "pink";
-        return false;
-        } else {
-        fname.style.backgroundColor = "lightgreen";
-        }
 
-    if(lname.checkValidity() == false) {
-        error2.innerHTML = "Please check Your Last Name!"
-        lname.style.backgroundColor = "pink";
-        return false;
-        } else {
-        lname.style.backgroundColor = "lightgreen";
-        }
-
-    if(email.checkValidity() == false) {
-        error3.innerHTML = "Please check Your Email Address!"
-        email.style.backgroundColor = "pink";
-        return false;
-        } else {
-        email.style.backgroundColor = "lightgreen";
-        }
-
-    if(phone.checkValidity() == false) {
-        error4.innerHTML = "Please check Your Phone Number!"
-        phone.style.backgroundColor = "pink";
-        return false;
-        } else {
-        phone.style.backgroundColor = "lightgreen";
-        }
-
-    if(address.checkValidity() == false) {
-        error5.innerHTML = "Please check Your Address!"
-        address.style.backgroundColor = "pink";
-        return false;
-        } else {
-        address.style.backgroundColor = "lightgreen";
-        }
-
-    return checkRequired();
-}
-
-
-function errorDisplay1() {
-    if(fname.checkValidity() == false){
-        fname.style.backgroundColor = "pink";
+function adminErrorDisplay(num) {
+    if(num.checkValidity() == false){
+        num.classList.add("uk-form-danger");
     } else {
-        fname.style.backgroundColor = "lightgreen";
+        num.classList.add("uk-form-success");
     }
 }
 
-function errorDisplay2() {
-     if(lname.checkValidity() == false){
-        lname.style.backgroundColor = "pink";
-    } else {
-        lname.style.backgroundColor = "lightgreen";
-    }
+
+
+function AdminInsertValidation() {
+    let matchDate = document.getElementById("matchDate");
+    let homeTeamID = document.getElementById("homeTeamID");
+    let awayTeamID = document.getElementById("awayTeamID");
+    let cost = document.getElementById("cost");
+    let stadiumID = document.getElementById("stadiumID");
+
+    
+    if(matchDate.checkValidity() == false) {
+        adminerror1.innerHTML = "The format must be yyyy-mm-dd"
+        matchDate.classList.add("uk-form-danger");
+        } else {
+        matchDate.classList.add("uk-form-success");
+        }
+
+    if(homeTeamID.checkValidity() == false) {
+        adminerror2.innerHTML = "Please check Your Home Team ID!"
+        //homeTeamID.classList.add("uk-form-danger");
+        } else {
+        //homeTeamID.classList.add("uk-form-success");
+        }
+
+    if(awayTeamID.checkValidity() == false) {
+        adminerror3.innerHTML = "Please check Your Away Team ID!"
+        //awayTeamID.classList.add("uk-form-danger");
+        } else {
+        //awayTeamID.classList.add("uk-form-success");
+        }
+
+    if(cost.checkValidity() == false) {
+        adminerror4.innerHTML = "Please fill in the Cost!"
+        //cost.classList.add("uk-form-danger");
+        } else {
+        //cost.classList.add("uk-form-success");
+        }
+
+    if(stadiumID.checkValidity() == false) {
+        adminerror5.innerHTML = "Please check the Stadium ID!"
+        //stadiumID.classList.add("uk-form-danger");
+        } else {
+        //stadiumID.classList.add("uk-form-success");
+        }
+
+    return alert("check your form again");
 }
 
-function errorDisplay3() {
-    if(email.checkValidity() == false){
-       email.style.backgroundColor = "pink";
-   } else {
-       email.style.backgroundColor = "lightgreen";
-   }
+
+
+/* Admin update form validation */
+
+
+function adminUpdateMatchValidation() {
+    let updateMatchDate = document.getElementById("updateMatchDate");
+    let updateHomeTeamID = document.getElementById("updateHomeTeamID");
+    let updateAwayTeamID = document.getElementById("updateAwayTeamID");
+    let updateCost = document.getElementById("updateCost");
+    let updateStadiumID = document.getElementById("updateStadiumID");
+    
+    if(updateMatchDate.checkValidity() == false) {
+        adminUpdateMatchError1.innerHTML = "The format must be yyyy-mm-dd"
+        updateMatchDate.classList.add("uk-form-danger");
+        } else {
+        updateMatchDate.classList.add("uk-form-success");
+        }
+
+    if(updateHomeTeamID.checkValidity() == false) {
+        adminUpdateMatchError2.innerHTML = "Please check Your Home Team ID!"
+        updateHomeTeamID.classList.add("uk-form-danger");
+        } else {
+        updateHomeTeamID.classList.add("uk-form-success");
+        }
+
+    if(updateAwayTeamID.checkValidity() == false) {
+        adminUpdateMatchError3.innerHTML = "Please check Your Away Team ID!"
+        updateAwayTeamID.classList.add("uk-form-danger");
+        } else {
+        updateAwayTeamID.classList.add("uk-form-success");
+        }
+
+    if(updateCost.checkValidity() == false) {
+        adminUpdateMatchError4.innerHTML = "Please check Your Phone Number!"
+        updateCost.classList.add("uk-form-danger");
+        } else {
+        updateCost.classList.add("uk-form-success");
+        }
+
+    if(updateStadiumID.checkValidity() == false) {
+        adminUpdateMatchError5.innerHTML = "Please check the Stadium ID!"
+        updateStadiumID.classList.add("uk-form-danger");
+        } else {
+        updateStadiumID.classList.add("uk-form-success");
+        }
+
+    return alert("check your form again");
 }
 
-function errorDisplay4() {
-    if(phone.checkValidity() == false){
-       phone.style.backgroundColor = "pink";
-   } else {
-       phone.style.backgroundColor = "lightgreen";
-   }
+
+
+
+
+function AdminInsertTeamValidation() {
+    let insertTeamName = document.getElementById("insertTeamName");
+    let insertTeamStadiumID = document.getElementById("insertTeamStadiumID");
+    let logoImagePath = document.getElementById("insertLogoImagePath");
+
+    
+    if(insertTeamName.checkValidity() == false) {
+        adminInsertTeamError1.innerHTML = "The format must be yyyy-mm-dd"
+        matchDate.classList.add("uk-form-danger");
+        } else {
+        matchDate.classList.add("uk-form-success");
+        }
+
+    if(insertTeamStadiumID.checkValidity() == false) {
+        adminInsertTeamError2.innerHTML = "Please fill in the Cost!"
+        homeTeamID.classList.add("uk-form-danger");
+        } else {
+        homeTeamID.classList.add("uk-form-success");
+        }
+
+    if(logoImagePath.checkValidity() == false) {
+        adminInsertTeamError3.innerHTML = "Please check Your logo path!"
+        awayTeamID.classList.add("uk-form-danger");
+        } else {
+        awayTeamID.classList.add("uk-form-success");
+        }
+
+    return alert("check your form again");
 }
 
-function errorDisplay5() {
-    if(address.checkValidity() == false){
-       address.style.backgroundColor = "pink";
-   } else {
-       address.style.backgroundColor = "lightgreen";
-   }
- 
+
+
+
+function adminUpdateTeamValidation() {
+    let updateTeamName = document.getElementById("insertTeamName");
+    let updateTeamStadiumID = document.getElementById("insertTeamStadiumID");
+    let updateLogoImagePath = document.getElementById("insertLogoImagePath");
+    
+    if(updateTeamName .checkValidity() == false) {
+        adminUpdateTeamError1.innerHTML = "The format must be yyyy-mm-dd!"
+        matchDate.classList.add("uk-form-danger");
+        } else {
+        matchDate.classList.add("uk-form-success");
+        }
+
+    if(updateTeamStadiumID.checkValidity() == false) {
+        adminUpdateTeamError2.innerHTML = "Please check your stadium ID!"
+        homeTeamID.classList.add("uk-form-danger");
+        } else {
+        homeTeamID.classList.add("uk-form-success");
+        }
+
+    if(updateLogoImagePath.checkValidity() == false) {
+        adminUpdateTeamError3.innerHTML = "Please check Your logo path!"
+        awayTeamID.classList.add("uk-form-danger");
+        } else {
+        awayTeamID.classList.add("uk-form-success");
+        }
+
+    return alert("check your form again");
 }

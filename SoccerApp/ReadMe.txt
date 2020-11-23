@@ -9,15 +9,7 @@
 	From the options tap the Add to Homescreen option, you can notice an icon of the website or 	screenshot of website added to your devices homescreen instantly.
 	Tap the icon from homescreen, then the Progressive Web App of your website will be loaded.
 
-
-
-	Upon Android device, open Chrome Chrome.
-
-	Go to a website you want to install. 
-	Tap Add to home screen. 
-	Follow the onscreen instructions to install.
-
-
+	
 2. What I completed
 	
 	An app for buying a ticket (Soccer game).
@@ -68,13 +60,33 @@
 	MySQL
 
 
+	The places for each languages were used
+
+	HTML		(index.html)
+	CSS  		(style.css)
+	JavaScript	(script.js, js.js, sw.js)
+	PHP		(api.php, db.php, se.php)
+	MySQL		(db.php)
+	
+
+
+	Versions I recommend for each languages
+
+	HTML 5
+	CSS 3
+	JavaScript ECMAScript 2020
+	PHP 7.4.11
+	MySQL 8.0
+
+
 
 
 4. What framework I used
 
 	3rd party framework that I used is UIKIT.
 
-	3rd party framework for Javascript that I used is React.js
+	3rd party framework for Javascript that I used is React.js (recommended version 17.0.1)
+
 
 
 

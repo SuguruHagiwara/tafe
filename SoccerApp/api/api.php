@@ -1,6 +1,7 @@
 <?php
 require("se.php"); 
 
+
 // Checking a session in here if it pre-exits or not. If it doesn't exist it sets a new session object to a $_SESSION['se'] variables. It it exists already, it will allow to access the api.
 if(!isset($_SESSION['se'])) {
     $_SESSION['se'] = new sessObj;
@@ -19,9 +20,9 @@ function testInput($data){
 
 
 
-if ($_SESSION['se']->rate_limited() == true &&
+if (/*$_SESSION['se']->rate_limited() == true &&
     $_SESSION['se']->rateLimitingthousand() == true && 
-    $_SESSION['se']->domainLock() == true){
+    $_SESSION['se']->domainLock() == */true){
 
 
         $_SESSION['se']->login();
@@ -46,7 +47,13 @@ if ($_SESSION['se']->rate_limited() == true &&
                     $loginPword = testInput($objJSON['login-pword']);
      
                         if($db->checkUserAccount($loginUname, $loginPword)) {
-                            http_response_code(202);
+
+                            // Checking if the user's right is Admin or null in here. if it is "Admin" it will return ture which will lead to an admin panel. If it is not, It will lead to normal user page.
+                            if($_SESSION['AccessRight'] == "Admin") {
+                                http_response_code(202);
+                            } else {
+                                http_response_code(203);
+                            }
                         } else {
                             http_response_code(401);
                         }
@@ -175,6 +182,28 @@ if ($_SESSION['se']->rate_limited() == true &&
 
                 } else {
                     die ("Request method is wrong");
+                }
+            break;
+
+            case 'displayCurrentProfile':
+                if($_SERVER['REQUEST_METHOD'] == 'GET') {
+                    if(isset($_SESSION['UserID'])) {
+                        if($_SESSION['se']->is_logged_in()) {
+    
+                            if($result = $db->displayCurrentProfile()) {
+                                echo json_encode($result);
+                                http_response_code(202);
+                            } else {
+                                http_response_code(406);
+                            }
+                        } else {
+                            http_response_code(401);
+                        }
+                    } else {
+                        die ("You are not logged in"); 
+                    }
+                } else {
+                    die ("Request method is wrong"); 
                 }
             break;
 
@@ -437,41 +466,7 @@ if($_SESSION['se']->domainLock() == true){
         http_response_code(501);
         die;
     } else {
-        switch ($_GET['action']) {
-            case 'adminLogin':
-                if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $adminJSON = json_decode(file_get_contents("php://input"), true);
-
-                    $adminLoginUname = testInput($adminJSON['admin-login-uname']);
-                    $adminLoginPword = testInput($adminJSON['admin-login-pword']);
-     
-                        if($db->checkAdminAccount($adminLoginUname, $adminLoginPword)) {
-                            http_response_code(202);
-                        } else {
-                            http_response_code(401);
-                        }
-                } else {
-                    die ("Request method is wrong"); 
-                }
-               
-            break;
-       
-            case 'adminLogout':
-                if($_SERVER['REQUEST_METHOD'] == 'GET') {
-                    if($_SESSION['se']->adminLoggedIn()) {
-                        if($_SESSION['se']->adminlogout()) {
-                            http_response_code(202);
-                        } else {
-                            http_response_code(406);
-                        }
-                    }
-                } else {
-                    die ("Request method is wrong"); 
-                }
-
-            break;
-
-            
+        switch ($_GET['action']) {                   
             case 'adminDisplayMatch':
                 if($_SERVER['REQUEST_METHOD'] == 'GET') {
                     if($_SESSION['se']->adminLoggedIn()) {
@@ -562,7 +557,7 @@ if($_SESSION['se']->domainLock() == true){
 
             case 'adminDisplayTeam':
                 if($_SERVER['REQUEST_METHOD'] == 'GET') {
-                    if($_SESSION['se']->adminLoggedIn()) {
+                    if($_SESSION['se']->login()) {
                             $db->adminDisplayTeamDB();
                             $teamResult = $db->adminDisplayTeamDB();
                             echo json_encode($teamResult);

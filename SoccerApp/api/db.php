@@ -1,6 +1,8 @@
 <?php
 //Data base object and session object are inside the db.php file and the se.php file.
 //These files are inside the api folder to differentiate from Client side files like HTML and CSS.
+
+
 class DatabaseObject {
 
 
@@ -22,17 +24,20 @@ class DatabaseObject {
     // Login check function
 
     function checkUserAccount($loginUname, $loginPword) {
-        $sql = "SELECT UserID, UserName, Password FROM UserInformation WHERE UserName = :username";
+        $sql = "SELECT UserID, UserName, Password, AccessRights FROM UserInformation WHERE UserName = :username";
         $stmt = $this->dbconn->prepare($sql);
         $stmt->bindValue(':username', $loginUname);
         $stmt->execute();
         $row = $stmt->fetch();
+
         if(password_verify($loginPword, $row['Password'])) {
+            print_r($row);
                 // assign session variables
                 $_SESSION['User'] = $loginUname;
                 $_SESSION['UserID'] = $row["UserID"];
+                $_SESSION['AccessRight'] = $row["AccessRights"];
                 $_SESSION['login'] = true;
-
+                
                 echo "data is logged";
                 return true;
             }
@@ -67,7 +72,6 @@ class DatabaseObject {
     // Buy a ticket
 
     function buyTicketDb($amount, $seat, $method, $matchID, $userID) {
-        echo "hello";
         $sql = "INSERT INTO TicketInformation(PurchasedAmount, SeatNumber, PaymentMethod, MatchInfoID, UserID) VALUES (:amount, :seat, :method, :matchinfo, :userID)";
         $stmt = $this->dbconn->prepare($sql);
         //how do we stop SQL injection?
@@ -143,6 +147,21 @@ class DatabaseObject {
         return $stmt->execute();
     }
 
+    function displayCurrentProfile() {
+        try {
+            $sql = "SELECT * FROM UserInformation WHERE UserID = :userid";
+            $stmt = $this->dbconn->prepare($sql);
+            $stmt->bindValue(':userid', $_SESSION['UserID']);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            return $result;
+        }
+        catch (PDOEXCEPTION $ex) {
+            throw $ex;
+        }
+    }
+
+
     function editUserAccount($editFName, $editLName, $editEmail, $editPhone, $editAddress) {
         $sql = "UPDATE UserInformation SET FirstName = :editfname, LastName = :editlname, Email = :editemail, Phone = :editphone, Address = :editaddress WHERE UserID = :userid";
         $stmt = $this->dbconn->prepare($sql);
@@ -198,29 +217,7 @@ class DatabaseObject {
             throw $ex;
         }
     }
-
-    /*
-    function updateFavoriteTeam($favoriteTeamNum) {
-
-        $sql = "SELECT COUNT(1) FROM FavoriteTeams WHERE UserID = :userid";
-        $q = $this->dbconn->prepare($sql);
-        $q->bindValue(':userid', $_SESSION['UserID']);
-        $q->execute();
-        $Result = $q->fetch();
-        print_r($Result);
-        //Now to check, we use an if() statement 
-        if($Result > 1) {
-            $sql = "UPDATE FavoriteTeams SET HomeTeamID = :favteamid";
-            $stmt = $this->dbconn->prepare($sql);
-            $stmt->bindValue(':favteamid', $favoriteTeamNum);
-            $stmt->execute();
-            $favResult = $stmt->fetchAll();
-            return $favResult;
-        } else {
-        print "Record doesn't exist";
-        }
-        
-    }*/
+    
 
     function deleteFavoriteTeam() {
         $sql = "DELETE FROM FavoriteTeams WHERE UserID = :userid";
@@ -318,29 +315,6 @@ class DatabaseObject {
         catch (PDOEXCEPTION $ex) {
             throw $ex;
         }
-    }
-
-
-
-
-    // Admin
-
-    function checkAdminAccount($adminLoginUname, $adminLoginPword) {
-        $sql = "SELECT AdminID, AdminName, AdminPassword FROM Admin WHERE AdminName = :adminname";
-        $stmt = $this->dbconn->prepare($sql);
-        $stmt->bindValue(':adminname', $adminLoginUname);
-        $stmt->execute();
-        $row = $stmt->fetch();
-        print_r($adminLoginPword);
-        if(password_verify($adminLoginPword, $row['AdminPassword'])) {
-                $_SESSION['Admin'] = $adminLoginUname;
-                $_SESSION['AdminID'] = $row["AdminID"];
-                $_SESSION['adminlogin'] = true;
-                return true;
-            }
-            else {
-                return false;
-            }
     }
 
 
@@ -463,8 +437,8 @@ class DatabaseObject {
 <?php
 
 
-/* For admin username and password */
-/*
+/* For admin username and password 
+
 $user = "root";
 $password = "suguruhagiwara";
 $dsn = "mysql:host=localhost; dbname=Prototype";
@@ -475,13 +449,14 @@ $dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 echo $_POST["adminName"];
 
-$sql = "INSERT INTO Admin(AdminName, AdminPassword) VALUES (:uname, :pword)";
+$sql = "INSERT INTO UserInformation(userName, Password, AccessRights) VALUES (:uname, :pword, :accessRight)";
 $stmt = $dbconn->prepare($sql);
 //how do we stop SQL injection?
 $hadminpassword = password_hash($_POST["adminPword"], PASSWORD_BCRYPT);
 $stmt->bindValue(':uname', $_POST["adminName"]);
 $stmt->bindValue(':pword', $hadminpassword);
+$stmt->bindValue(':accessRight', "Admin");
 
-$stmt->execute();*/
-
+$stmt->execute();
+*/
 ?>

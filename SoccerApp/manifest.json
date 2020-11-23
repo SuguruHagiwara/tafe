@@ -9,6 +9,6 @@
           "sizes": "312x312",
           "type": "image/png"
         }],
-    "start_url": "http://localhost:8888/prototype/",
+    "start_url": "http://localhost:8888/SoccerApp",
     "display": "standalone"
   }

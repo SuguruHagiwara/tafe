@@ -1,6 +1,8 @@
 <?php
+
 //Data base object and session object are inside the db.php file and the se.php file.
 //These files are inside the api folder to differentiate from Client side files like HTML and CSS.
+
     session_start();
 class sessObj {
 
@@ -73,11 +75,6 @@ class sessObj {
         // Check if last request is the same as now
         if($_SESSION["last_session_request"] >= time() - 1 ) {
 
-                        /*print_r($_SESSION["last_session_request"]);
-                        ?>
-                        <br>
-                        <?php
-                        print_r(time());*/
             // if last sessionrequest is bigger or same as current time minus 1 second, return die
             die ("Rate Limit Exceeded");  
         } else {
@@ -110,7 +107,7 @@ class sessObj {
                     return true;
                 }
             } else {
-                echo "All good";
+                return true;
             }
         }
         
@@ -143,8 +140,8 @@ class sessObj {
 
 
     function adminLoggedIn() {
-        if(isset($_SESSION['adminlogin'])) {
-            if($_SESSION['adminlogin'] == true) {
+        if(isset($_SESSION['login'])) {
+            if($_SESSION['login'] == true) {
                 return true;
             } else {
                 return false;
