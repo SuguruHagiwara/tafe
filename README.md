@@ -1,5 +1,3 @@
-# tafe
-
 1. How to install an app
 
 	Upon iOS devices, PWA currently works only upon Safari Browsers.
@@ -8,15 +6,26 @@
 	Make sure that you have cleared the browsing data.
 	Visit the PWA website
 	Tap the Share button (at the browser options)
-	From the options tap the Add to Homescreen option, you can notice an icon of the website or screenshot of website added to your devices homescreen 	instantly.
+	From the options tap the Add to Homescreen option, you can notice an icon of the website or 	screenshot of website added to your devices homescreen instantly.
 	Tap the icon from homescreen, then the Progressive Web App of your website will be loaded.
 
 
+
 	Upon Android device, open Chrome Chrome.
+
+Go to a website you want to install. Tap Add to home screen. Follow the onscreen instructions to install.
 	
-	Go to a website you want to install.
-	Tap Add to home screen.
-	Follow the onscreen instructions to install.
+
+
+
+	Admin panel
+
+	1. Go to your command line
+	2. Change directory to the file called "my-app" which is the React file
+	3. Type "npm start" inside "my-app" file
+	4. The admin panel will show up on your browser
+
+
 
 
 2. What I completed
@@ -69,28 +78,57 @@
 	MySQL
 
 
+	The places for each languages were used
+
+	HTML		(index.html)
+	CSS  		(style.css)
+	JavaScript	(script.js, js.js, sw.js)
+	PHP		(api.php, db.php, se.php)
+	MySQL		(db.php)
+	React		(my-app) entire file
+	ANT Design	(Panel.jsx) UI design for the form
+
+
+	Versions I recommend for each languages
+
+	HTML 5
+	CSS 3
+	JavaScript ECMAScript 2020
+	PHP 7.4.11
+	MySQL 8.0
+	React 17.0.1
+	ANT Design 4.x
 
 
 4. What framework I used
 
+	For Project2,3 and UX2
+
 	3rd party framework that I used is UIKIT.
+
+	3rd party framework for Javascript that I used is React.js (recommended version 17.0.1)
 
 
 
 
 5. UserName and the Password
 
+	
+	For the app
+	
 	User name: Suguru
 	Password: Suguru
 
 
-Admin User name: Hagiwara123
-Admin Password: Hagiwara123
-
-
+	For the admin panel
+	
+	User name: Suguru
+	Password: Suguru
 
 6. UI
 
+
+-------------------- For the app ----------------------
 
 Login
 	On login page, you can enter the user name and the password to login.
@@ -198,8 +236,42 @@ Footer
 
 
 
+
+
+
+-------------------- For the admin panel ----------------------
+
+
+
+
+
+
+	On the header part you will see
+	
+	Admin: logo
+
+	ID INFO: Information table for TeamID and Stadium ID (Whenever you want to insert, update a team or matches, you need this as a reference to input TeamID and StadiumID)
+
+	View Team: You can view the whole team which is in the database. You can update or delete a particular team from here
+
+	Create Team: You can create a new team from here
+
+	View Match: You can view the whole match is in the database. You can update or delete a match from here.
+
+	Create Match: You can create a match from here
+
+	Login: You can login from here. To view all the menu content, you have to login from here.
+
+	Logout: When the admin is logged in, Logout menu will show up in the same location as Login menu
+
+
+
+
+
 7. File structure
 
+
+-------------------- For the app ----------------------
 
 |-- api
 |    |
@@ -208,7 +280,43 @@ Footer
 |    |-- se.php
 |    |-- sw.js
 |
-|-- Protoype.sql
+|-- index.html
+|-- script.js
+|-- manifest.json
+|-- ReadMe.md
+|-- view
+      |-- style.css
+      |-- js
+      |   |-- js.js
+      |   |-- sw.js
+      |
+      |-- images
+             |
+             |-- admin-logo.png
+             |-- logo.png
+             |-- logo2.png
+             |-- profile.png
+             |-- profileImage.png
+             |-- seat.jpeg
+             |-- soccer1.png
+             |-- soccer2.png
+             |-- stadium.png
+             |-- admin.logo
+             |
+             |-- logo
+                   |
+                   |-- 20 logo images for each team 
+
+
+-------------------- For the admin panel ----------------------
+
+|-- api
+|    |
+|    |-- api.php
+|    |-- db.php
+|    |-- se.php
+|    |-- sw.js
+|
 |-- index.html
 |-- script.js
 |-- manifest.json
@@ -236,6 +344,4 @@ Footer
                    |
                    |-- 20 logo images for each team 
    
-
-
 
