@@ -308,40 +308,4 @@ Footer
                    |-- 20 logo images for each team 
 
 
--------------------- For the admin panel ----------------------
-
-|-- api
-|    |
-|    |-- api.php
-|    |-- db.php
-|    |-- se.php
-|    |-- sw.js
-|
-|-- index.html
-|-- script.js
-|-- manifest.json
-|-- ReadMe.md
-|-- view
-      |-- style.css
-      |-- js
-      |   |-- js.js
-      |   |-- sw.js
-      |
-      |-- images
-             |
-             |-- admin-logo.png
-             |-- logo.png
-             |-- logo2.png
-             |-- profile.png
-             |-- profileImage.png
-             |-- seat.jpeg
-             |-- soccer1.png
-             |-- soccer2.png
-             |-- stadium.png
-             |-- admin.logo
-             |
-             |-- logo
-                   |
-                   |-- 20 logo images for each team 
-   
 
