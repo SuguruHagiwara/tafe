@@ -16,6 +16,18 @@
 Go to a website you want to install. Tap Add to home screen. Follow the onscreen instructions to install.
 	
 
+
+
+	Admin panel
+
+	1. Go to your command line
+	2. Change directory to the file called "my-app" which is the React file
+	3. Type "npm start" inside "my-app" file
+	4. The admin panel will show up on your browser
+
+
+
+
 2. What I completed
 	
 	An app for buying a ticket (Soccer game).
@@ -74,6 +86,7 @@ Go to a website you want to install. Tap Add to home screen. Follow the onscreen
 	PHP		(api.php, db.php, se.php)
 	MySQL		(db.php)
 	React		(my-app) entire file
+	ANT Design	(Panel.jsx) UI design for the form
 
 
 	Versions I recommend for each languages
@@ -84,7 +97,7 @@ Go to a website you want to install. Tap Add to home screen. Follow the onscreen
 	PHP 7.4.11
 	MySQL 8.0
 	React 17.0.1
-	
+	ANT Design 4.x
 
 
 4. What framework I used
@@ -109,8 +122,8 @@ Go to a website you want to install. Tap Add to home screen. Follow the onscreen
 
 	For the admin panel
 	
-	User name: Hagiwara
-	Password: Hagiwara
+	User name: Suguru
+	Password: Suguru
 
 6. UI
 
@@ -230,7 +243,6 @@ Footer
 
 
 
-It is a SPA so there are no page transition
 
 
 
@@ -296,40 +308,4 @@ It is a SPA so there are no page transition
                    |-- 20 logo images for each team 
 
 
--------------------- For the admin panel ----------------------
-
-|-- api
-|    |
-|    |-- api.php
-|    |-- db.php
-|    |-- se.php
-|    |-- sw.js
-|
-|-- index.html
-|-- script.js
-|-- manifest.json
-|-- ReadMe.md
-|-- view
-      |-- style.css
-      |-- js
-      |   |-- js.js
-      |   |-- sw.js
-      |
-      |-- images
-             |
-             |-- admin-logo.png
-             |-- logo.png
-             |-- logo2.png
-             |-- profile.png
-             |-- profileImage.png
-             |-- seat.jpeg
-             |-- soccer1.png
-             |-- soccer2.png
-             |-- stadium.png
-             |-- admin.logo
-             |
-             |-- logo
-                   |
-                   |-- 20 logo images for each team 
-   
-
+-
